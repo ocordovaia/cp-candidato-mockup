@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP Evaluación Legal — Panel Evaluador</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cp-primary: #E75849;
+      --cp-primary-hover: #D04A3C;
+      --cp-primary-light: #FEF2F1;
+      --cp-black: #010101;
+      --cp-bg: #F9FAFB;
+      --cp-white: #FFFFFF;
+      --cp-surface: #FFFFFF;
+      --cp-border: #E5E7EB;
+      --cp-text: #111827;
+      --cp-muted: #6B7280;
+      --cp-success: #16A34A;
+      --cp-success-light: #F0FDF4;
+      --cp-warning: #F59E0B;
+      --cp-warning-light: #FFFBEB;
+      --cp-danger: #DC2626;
+      --cp-danger-light: #FEF2F2;
+      --cp-info: #2563EB;
+      --cp-info-light: #EFF6FF;
+      --sidebar-w: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cp-text);
+      background: var(--cp-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ====== LOGIN SCREEN ====== */
+    .screen { display: none; min-height: 100vh; }
+    .screen.active { display: flex; }
+
+    #login-screen {
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #FAFAFA 0%, #F3F4F6 50%, #FEF2F1 100%);
+      flex-direction: column;
+    }
+
+    .login-card {
+      background: var(--cp-white);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 48px 40px;
+      width: 420px;
+      max-width: 90vw;
+      text-align: center;
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .login-logo .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--cp-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .login-logo h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--cp-black);
+      letter-spacing: -0.5px;
+    }
+
+    .login-logo h1 span { color: var(--cp-primary); }
+
+    .login-subtitle {
+      color: var(--cp-muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--cp-text);
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--cp-border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--cp-primary);
+      box-shadow: 0 0 0 3px rgba(231,88,73,0.1);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--cp-primary);
+      color: white;
+      width: 100%;
+      padding: 12px;
+      font-weight: 600;
+    }
+    .btn-primary:hover { background: var(--cp-primary-hover); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cp-text);
+      border-color: var(--cp-border);
+    }
+    .btn-outline:hover { background: var(--cp-bg); border-color: #D1D5DB; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cp-muted);
+      border: none;
+      padding: 6px 10px;
+    }
+    .btn-ghost:hover { color: var(--cp-text); background: var(--cp-bg); }
+
+    .btn-success {
+      background: var(--cp-success);
+      color: white;
+    }
+    .btn-success:hover { background: #15803D; }
+
+    .btn-sm { padding: 6px 12px; font-size: 13px; }
+
+    .login-footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--cp-muted);
+    }
+
+    /* ====== ADMIN LAYOUT ====== */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--cp-black);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 50;
+    }
+
+    .sidebar-logo {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .sidebar-logo .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--cp-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .sidebar-logo .logo-text span { color: var(--cp-primary); }
+
+    .sidebar-nav { padding: 16px 12px; flex: 1; }
+
+    .sidebar-section {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 8px 12px 8px;
+      margin-top: 16px;
+    }
+
+    .sidebar-section:first-child { margin-top: 0; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
+    .nav-item.active { background: rgba(231,88,73,0.15); color: var(--cp-primary); font-weight: 500; }
+
+    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+    .nav-item.active svg { opacity: 1; }
+
+    .nav-item .badge-count {
+      margin-left: auto;
+      background: var(--cp-primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 10px;
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-footer .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--cp-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer .user-info { flex: 1; min-width: 0; }
+    .sidebar-footer .user-name { font-size: 13px; font-weight: 500; }
+    .sidebar-footer .user-role { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+    /* Main content */
+    .main-content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .topbar {
+      background: var(--cp-white);
+      border-bottom: 1px solid var(--cp-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .breadcrumbs span { color: var(--cp-muted); }
+    .breadcrumbs strong { color: var(--cp-text); font-weight: 600; }
+    .breadcrumbs .sep { color: var(--cp-border); }
+
+    .content-area { padding: 32px; }
+
+    /* ====== DASHBOARD ====== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--cp-white);
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 13px;
+      color: var(--cp-muted);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cp-text);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-card .stat-change {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .stat-card .stat-change.positive { color: var(--cp-success); }
+    .stat-card .stat-change.neutral { color: var(--cp-muted); }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--cp-text);
+    }
+
+    /* Evaluation cards */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .eval-card {
+      background: var(--cp-white);
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .eval-card:hover {
+      border-color: var(--cp-primary);
+      box-shadow: 0 2px 12px rgba(231,88,73,0.08);
+    }
+
+    .eval-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .eval-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cp-text);
+    }
+
+    .eval-card .eval-desc {
+      font-size: 13px;
+      color: var(--cp-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      gap: 4px;
+    }
+
+    .badge-active { background: var(--cp-success-light); color: var(--cp-success); }
+    .badge-draft { background: var(--cp-warning-light); color: var(--cp-warning); }
+    .badge-closed { background: #F3F4F6; color: var(--cp-muted); }
+    .badge-pending { background: var(--cp-info-light); color: var(--cp-info); }
+    .badge-in-progress { background: var(--cp-warning-light); color: var(--cp-warning); }
+    .badge-completed { background: var(--cp-success-light); color: var(--cp-success); }
+    .badge-danger { background: var(--cp-danger-light); color: var(--cp-danger); }
+    .badge-primary { background: var(--cp-primary-light); color: var(--cp-primary); }
+
+    .eval-card-stats {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--cp-muted);
+    }
+
+    .eval-card-stats .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .eval-card-stats svg { width: 14px; height: 14px; }
+
+    /* ====== TABLE ====== */
+    .table-container {
+      background: var(--cp-white);
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table-toolbar {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .table-toolbar .search-input {
+      padding: 8px 12px 8px 36px;
+      border: 1px solid var(--cp-border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      width: 280px;
+      outline: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 24 24'%3E%3Cpath d='M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z' stroke='%236B7280' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") 10px center no-repeat;
+    }
+
+    .table-toolbar .search-input:focus {
+      border-color: var(--cp-primary);
+      box-shadow: 0 0 0 3px rgba(231,88,73,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cp-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--cp-border);
+      background: var(--cp-bg);
+    }
+
+    tbody td {
+      padding: 14px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--cp-border);
+      vertical-align: middle;
+    }
+
+    tbody tr:hover { background: #FAFAFA; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .candidate-name {
+      font-weight: 500;
+      color: var(--cp-text);
+    }
+
+    .candidate-email {
+      font-size: 12px;
+      color: var(--cp-muted);
+    }
+
+    .token-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: var(--cp-bg);
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: var(--cp-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--cp-primary);
+      padding: 2px;
+      display: inline-flex;
+    }
+    .copy-btn:hover { color: var(--cp-primary-hover); }
+
+    /* ====== TABS ====== */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--cp-border);
+      margin-bottom: 24px;
+      background: var(--cp-white);
+      padding: 0 32px;
+      margin: 0 -32px 24px;
+    }
+
+    .tab {
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--cp-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .tab:hover { color: var(--cp-text); }
+    .tab.active { color: var(--cp-primary); border-bottom-color: var(--cp-primary); }
+
+    .tab .tab-badge {
+      font-size: 11px;
+      background: var(--cp-bg);
+      padding: 1px 6px;
+      border-radius: 8px;
+      margin-left: 6px;
+    }
+
+    .tab.active .tab-badge { background: var(--cp-primary-light); color: var(--cp-primary); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ====== RESULTS SCREEN ====== */
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .results-grid.full { grid-template-columns: 1fr; }
+
+    .result-panel {
+      background: var(--cp-white);
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--cp-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .panel-body { padding: 20px; }
+
+    /* Score circles */
+    .score-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 auto 8px;
+    }
+
+    .score-high { background: var(--cp-success-light); color: var(--cp-success); border: 3px solid var(--cp-success); }
+    .score-mid { background: var(--cp-warning-light); color: var(--cp-warning); border: 3px solid var(--cp-warning); }
+    .score-low { background: var(--cp-danger-light); color: var(--cp-danger); border: 3px solid var(--cp-danger); }
+
+    /* Dimension bars */
+    .dimension-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .dimension-label {
+      font-size: 13px;
+      color: var(--cp-text);
+      width: 200px;
+      flex-shrink: 0;
+      font-weight: 500;
+    }
+
+    .dimension-bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--cp-bg);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dimension-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+
+    .dimension-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* AI evaluation panel */
+    .ai-section {
+      margin-bottom: 20px;
+    }
+
+    .ai-section h4 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--cp-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 6px;
+      margin-right: 6px;
+    }
+
+    .ai-tag.strength { background: var(--cp-success-light); color: #166534; }
+    .ai-tag.weakness { background: var(--cp-warning-light); color: #92400E; }
+    .ai-tag.red-flag { background: var(--cp-danger-light); color: var(--cp-danger); }
+
+    .recommendation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .rec-recommended { background: var(--cp-success-light); color: var(--cp-success); border: 2px solid var(--cp-success); }
+    .rec-consider { background: var(--cp-warning-light); color: #B45309; border: 2px solid var(--cp-warning); }
+    .rec-not-recommended { background: var(--cp-danger-light); color: var(--cp-danger); border: 2px solid var(--cp-danger); }
+
+    /* Response display */
+    .response-item {
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .response-header {
+      padding: 14px 18px;
+      background: var(--cp-bg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .response-header .q-number {
+      width: 28px;
+      height: 28px;
+      background: var(--cp-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .response-header .q-text {
+      font-size: 14px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .response-header .q-weight {
+      font-size: 12px;
+      color: var(--cp-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .response-body {
+      padding: 18px;
+    }
+
+    .response-body .answer-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--cp-text);
+      white-space: pre-wrap;
+    }
+
+    .response-body .mc-answer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .mc-correct { background: var(--cp-success-light); color: #166534; }
+    .mc-incorrect { background: var(--cp-danger-light); color: var(--cp-danger); }
+
+    .ai-comment {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: #F5F3FF;
+      border-left: 3px solid #7C3AED;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: #5B21B6;
+      line-height: 1.6;
+    }
+
+    .ai-comment strong {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .ai-score-inline {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(124,58,237,0.1);
+    }
+
+    /* Candidate detail metadata */
+    .candidate-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .meta-card {
+      background: var(--cp-white);
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .meta-card .meta-value {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 2px;
+    }
+
+    .meta-card .meta-label {
+      font-size: 12px;
+      color: var(--cp-muted);
+      font-weight: 500;
+    }
+
+    /* Modal for token generation */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal {
+      background: var(--cp-white);
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      width: 480px;
+      max-width: 90vw;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--cp-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--cp-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .generated-link {
+      background: var(--cp-bg);
+      border: 1px solid var(--cp-border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--cp-primary);
+      word-break: break-all;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .generated-link .link-text { flex: 1; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--cp-muted);
+    }
+
+    .empty-state svg { margin-bottom: 16px; opacity: 0.4; }
+    .empty-state h3 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin-bottom: 6px; }
+    .empty-state p { font-size: 14px; }
+
+    /* Disclaimer */
+    .ai-disclaimer {
+      background: var(--cp-warning-light);
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #92400E;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .ai-disclaimer svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* ====== DEMO NAVIGATION ====== */
+    .demo-nav {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--cp-black);
+      color: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      z-index: 999;
+      font-size: 12px;
+    }
+
+    .demo-nav .demo-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--cp-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 10px;
+    }
+
+    .demo-nav .demo-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .demo-nav button {
+      background: rgba(255,255,255,0.08);
+      border: none;
+      color: rgba(255,255,255,0.7);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+
+    .demo-nav button:hover { background: rgba(255,255,255,0.15); color: white; }
+    .demo-nav button.active-btn { background: var(--cp-primary); color: white; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--cp-black);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 300;
+      opacity: 0;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .eval-grid { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr; }
+      .candidate-meta { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== LOGIN SCREEN ==================== -->
+  <div id="login-screen" class="screen active">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-icon">C&P</div>
+        <h1><span>Córdova</span> & Pasco</h1>
+      </div>
+      <p class="login-subtitle">Panel de Evaluación Legal</p>
+
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" value="fcrosato@cp-asociados.pe" readonly>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" value="••••••••••" readonly>
+      </div>
+
+      <button class="btn btn-primary" onclick="showScreen('dashboard-screen')">Iniciar Sesión</button>
+
+      <p class="login-footer">Acceso exclusivo para evaluadores autorizados</p>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD ==================== -->
+  <div id="dashboard-screen" class="screen">
+    <div class="admin-layout">
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-icon">C&P</div>
+          <div class="logo-text"><span>Córdova</span> & Pasco</div>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Principal</div>
+          <div class="nav-item active" onclick="showScreen('dashboard-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div class="sidebar-section">Gestión</div>
+          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
+            Evaluaciones
+            <span class="badge-count">2</span>
+          </div>
+          <div class="nav-item" onclick="showScreen('results-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Resultados
+          </div>
+          <div class="sidebar-section">Sistema</div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Configuración
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="avatar">FC</div>
+          <div class="user-info">
+            <div class="user-name">Fernando Crosato</div>
+            <div class="user-role">Evaluador Principal</div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            <strong>Dashboard</strong>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span style="font-size:13px;color:var(--cp-muted);">21 de mayo, 2026</span>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Evaluaciones Activas</div>
+              <div class="stat-value">1</div>
+              <div class="stat-change positive">Caso PAS OSINERGMIN</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Candidatos Totales</div>
+              <div class="stat-value">6</div>
+              <div class="stat-change neutral">de 10 posibles</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Evaluaciones Completadas</div>
+              <div class="stat-value">4</div>
+              <div class="stat-change positive">66% completado</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Puntuación Promedio IA</div>
+              <div class="stat-value" style="color:var(--cp-warning)">72</div>
+              <div class="stat-change neutral">de 100 puntos</div>
+            </div>
+          </div>
+
+          <div class="section-header">
+            <h2>Evaluaciones</h2>
+            <button class="btn btn-primary btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Nueva Evaluación
+            </button>
+          </div>
+
+          <div class="eval-grid">
+            <div class="eval-card" onclick="showScreen('eval-detail-screen')">
+              <div class="eval-card-header">
+                <h3>PAS OSINERGMIN — Caso Refinería</h3>
+                <span class="badge badge-active">● Activa</span>
+              </div>
+              <p class="eval-desc">Evaluación basada en el procedimiento administrativo sancionador iniciado por OSINERGMIN, con documentación de fiscalización, actas e informes técnicos.</p>
+              <div class="eval-card-stats">
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                  6 candidatos
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  4 horas
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  10 preguntas
+                </span>
+              </div>
+            </div>
+
+            <div class="eval-card" style="opacity: 0.6;">
+              <div class="eval-card-header">
+                <h3>Evaluación Procesal Civil</h3>
+                <span class="badge badge-draft">◌ Borrador</span>
+              </div>
+              <p class="eval-desc">Caso de responsabilidad civil extracontractual. En fase de preparación de documentos y formulación de preguntas.</p>
+              <div class="eval-card-stats">
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                  0 candidatos
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  3 horas
+                </span>
+                <span class="stat-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  0 preguntas
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== EVALUATION DETAIL ==================== -->
+  <div id="eval-detail-screen" class="screen">
+    <div class="admin-layout">
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-icon">C&P</div>
+          <div class="logo-text"><span>Córdova</span> & Pasco</div>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Principal</div>
+          <div class="nav-item" onclick="showScreen('dashboard-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div class="sidebar-section">Gestión</div>
+          <div class="nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
+            Evaluaciones
+            <span class="badge-count">2</span>
+          </div>
+          <div class="nav-item" onclick="showScreen('results-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Resultados
+          </div>
+          <div class="sidebar-section">Sistema</div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Configuración
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="avatar">FC</div>
+          <div class="user-info">
+            <div class="user-name">Fernando Crosato</div>
+            <div class="user-role">Evaluador Principal</div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
+            <span class="sep">/</span>
+            <span>Evaluaciones</span>
+            <span class="sep">/</span>
+            <strong>PAS OSINERGMIN</strong>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-outline btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Editar
+            </button>
+            <span class="badge badge-active" style="padding:8px 14px;font-size:13px;">● Activa</span>
+          </div>
+        </div>
+
+        <div class="tabs" id="eval-tabs">
+          <div class="tab active" data-tab="tab-candidates" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
+            Candidatos <span class="tab-badge">6</span>
+          </div>
+          <div class="tab" data-tab="tab-documents" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
+            Documentos <span class="tab-badge">26</span>
+          </div>
+          <div class="tab" data-tab="tab-questions" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
+            Preguntas <span class="tab-badge">10</span>
+          </div>
+          <div class="tab" data-tab="tab-config" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
+            Configuración
+          </div>
+        </div>
+
+        <div class="content-area" style="padding-top:0;">
+
+          <!-- Tab: Candidatos -->
+          <div id="tab-candidates" class="tab-content eval-tab-content active">
+            <div class="table-container">
+              <div class="table-toolbar">
+                <input class="search-input" type="text" placeholder="Buscar candidato...">
+                <button class="btn btn-primary btn-sm" onclick="showModal()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Agregar Candidato
+                </button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Candidato</th>
+                    <th>Token</th>
+                    <th>Estado</th>
+                    <th>Tiempo Usado</th>
+                    <th>Tab Switches</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">María Fernanda López Rivera</div>
+                      <div class="candidate-email">mflopez@estudio.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        a3f7...8d2e
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-completed">Completado</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 47min</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" onclick="showScreen('results-screen')" style="color:var(--cp-primary);">Ver Resultado</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">Carlos Eduardo Mendoza Paredes</div>
+                      <div class="candidate-email">cmendoza@legal.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        b9c2...4f1a
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-completed">Completado</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 12min</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">Ana Lucía Vargas Castillo</div>
+                      <div class="candidate-email">avargas@derecho.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        d5e8...2b7c
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-completed">Completado</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 55min</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">Jorge Alonso Díaz Gutiérrez</div>
+                      <div class="candidate-email">jdiaz@bufete.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        e1f3...9a4d
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-completed">Completado</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 05min</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">Valeria Rosas Martínez</div>
+                      <div class="candidate-email">vrosas@abogados.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        f7a2...6c8e
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-in-progress">● En Curso</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-warning);">1h 23min ▶</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-muted);" disabled>En curso</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="candidate-name">Roberto Sánchez Flores</div>
+                      <div class="candidate-email">rsanchez@legal.pe</div>
+                    </td>
+                    <td>
+                      <span class="token-display">
+                        c4d6...1e9f
+                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                    <td><span class="badge badge-pending">◌ Pendiente</span></td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-muted);">—</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-muted);">—</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm" onclick="showToast('Link de evaluación enviado por correo')">Reenviar Link</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab: Documentos -->
+          <div id="tab-documents" class="tab-content eval-tab-content">
+            <div class="table-container">
+              <div class="table-toolbar">
+                <div style="font-size:13px;color:var(--cp-muted);">26 documentos en 5 carpetas &middot; 48.2 MB total</div>
+                <button class="btn btn-primary btn-sm">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Subir Documentos
+                </button>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Carpeta</th>
+                    <th>Documento</th>
+                    <th>Nombre Visible (Candidato)</th>
+                    <th>Tamaño</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge badge-primary">00. Reportes</span></td>
+                    <td style="font-weight:500;">Informe Final de Emergencia.pdf</td>
+                    <td style="font-size:13px;color:var(--cp-muted);">Informe Final de Emergencia Operacional</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">2.4 MB</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">Editar</button>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-primary">01. Actas</span></td>
+                    <td style="font-weight:500;">Acta N°4005.pdf</td>
+                    <td style="font-size:13px;color:var(--cp-muted);">Acta de Fiscalización N°4005</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">1.8 MB</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">Editar</button>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-primary">02. Fiscalización</span></td>
+                    <td style="font-weight:500;">Informe Preliminar.pdf</td>
+                    <td style="font-size:13px;color:var(--cp-muted);">Informe Preliminar de Supervisión</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">3.1 MB</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">Editar</button>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-primary">03. Inicio PAS</span></td>
+                    <td style="font-weight:500;">Resolución de Inicio PAS.pdf</td>
+                    <td style="font-size:13px;color:var(--cp-muted);">Resolución de Inicio de PAS</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">956 KB</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">Editar</button>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-primary">04. Equipos</span></td>
+                    <td style="font-weight:500;">Diagrama Unifilar.pdf</td>
+                    <td style="font-size:13px;color:var(--cp-muted);">Diagrama Técnico de Instalaciones</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">4.7 MB</td>
+                    <td>
+                      <button class="btn btn-ghost btn-sm">Editar</button>
+                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="padding:12px 20px;font-size:12px;color:var(--cp-muted);border-top:1px solid var(--cp-border);">
+                Mostrando 5 de 26 documentos &middot;
+                <strong>Palabras de redacción:</strong> Petroperú, PETROPERU, Refinería Talara, OSINERGMIN (visible solo internamente)
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab: Preguntas -->
+          <div id="tab-questions" class="tab-content eval-tab-content">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <div>
+                <span style="font-size:13px;color:var(--cp-muted);">Peso total:</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cp-success);margin-left:4px;">100%</span>
+              </div>
+              <button class="btn btn-outline btn-sm">Reordenar Preguntas</button>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:40px">#</th>
+                    <th>Pregunta</th>
+                    <th>Tipo</th>
+                    <th>Dimensión</th>
+                    <th>Peso</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight:700;color:var(--cp-primary);">1</td>
+                    <td style="font-size:13px;max-width:400px;">Identifique el marco normativo aplicable al procedimiento...</td>
+                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
+                    <td style="font-size:12px;">Conocimiento Normativo</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">8%</td>
+                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--cp-primary);">2</td>
+                    <td style="font-size:13px;max-width:400px;">Respecto al plazo de prescripción de la potestad sancionadora...</td>
+                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
+                    <td style="font-size:12px;">Conocimiento Normativo</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">7%</td>
+                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--cp-primary);">3</td>
+                    <td style="font-size:13px;max-width:400px;">En relación con el principio de tipicidad y la calificación...</td>
+                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
+                    <td style="font-size:12px;">Razonamiento Jurídico</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">10%</td>
+                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--cp-primary);">4</td>
+                    <td style="font-size:13px;max-width:400px;">Analice la validez del Acta de Fiscalización N° 4005...</td>
+                    <td><span class="badge" style="background:#EFF6FF;color:#2563EB;">Respuesta Libre</span></td>
+                    <td style="font-size:12px;">Análisis Documental</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">12%</td>
+                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:700;color:var(--cp-primary);">5</td>
+                    <td style="font-size:13px;max-width:400px;">Desarrolle la estrategia de defensa técnica que adoptaría...</td>
+                    <td><span class="badge" style="background:#EFF6FF;color:#2563EB;">Respuesta Libre</span></td>
+                    <td style="font-size:12px;">Estrategia Legal</td>
+                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">15%</td>
+                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
+                  </tr>
+                  <tr><td colspan="6" style="text-align:center;color:var(--cp-muted);font-size:13px;padding:12px;">... 5 preguntas más (6-10)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tab: Configuración -->
+          <div id="tab-config" class="tab-content eval-tab-content">
+            <div style="max-width:600px;">
+              <div class="result-panel" style="margin-bottom:20px;">
+                <div class="panel-header"><h3>Datos Generales</h3></div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label>Título de la Evaluación</label>
+                    <input type="text" value="PAS OSINERGMIN — Caso Refinería" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
+                  </div>
+                  <div class="form-group">
+                    <label>Tiempo Límite (minutos)</label>
+                    <input type="number" value="240" style="width:120px;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
+                  </div>
+                  <div class="form-group">
+                    <label>Email para Resultados</label>
+                    <input type="email" value="fcrosato@cp-asociados.pe" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label>Palabras de Redacción (separadas por coma)</label>
+                    <input type="text" value="Petroperú, PETROPERU, Refinería Talara" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary">Guardar Cambios</button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== RESULTS SCREEN ==================== -->
+  <div id="results-screen" class="screen">
+    <div class="admin-layout">
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-icon">C&P</div>
+          <div class="logo-text"><span>Córdova</span> & Pasco</div>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Principal</div>
+          <div class="nav-item" onclick="showScreen('dashboard-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div class="sidebar-section">Gestión</div>
+          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
+            Evaluaciones
+            <span class="badge-count">2</span>
+          </div>
+          <div class="nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Resultados
+          </div>
+          <div class="sidebar-section">Sistema</div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Configuración
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="avatar">FC</div>
+          <div class="user-info">
+            <div class="user-name">Fernando Crosato</div>
+            <div class="user-role">Evaluador Principal</div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
+            <span class="sep">/</span>
+            <span>PAS OSINERGMIN</span>
+            <span class="sep">/</span>
+            <strong>Resultados</strong>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <!-- Comparative table -->
+          <div class="section-header">
+            <h2>Tabla Comparativa de Candidatos</h2>
+            <button class="btn btn-outline btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Exportar CSV
+            </button>
+          </div>
+
+          <div class="table-container" style="margin-bottom:32px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Posición</th>
+                  <th>Candidato</th>
+                  <th>Puntuación IA</th>
+                  <th>MC Correctas</th>
+                  <th>Tiempo</th>
+                  <th>Tab Switches</th>
+                  <th>Recomendación</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: var(--cp-success-light);">
+                  <td style="font-weight:700;font-size:18px;color:var(--cp-success);text-align:center;">1</td>
+                  <td>
+                    <div class="candidate-name">María Fernanda López Rivera</div>
+                    <div class="candidate-email">mflopez@estudio.pe</div>
+                  </td>
+                  <td>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">85</div>
+                  </td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">3/3</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 47min</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
+                  <td><span class="badge badge-completed">Recomendada</span></td>
+                  <td><button class="btn btn-primary btn-sm" onclick="showScreen('candidate-detail-screen')">Ver</button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">2</td>
+                  <td>
+                    <div class="candidate-name">Carlos Eduardo Mendoza Paredes</div>
+                    <div class="candidate-email">cmendoza@legal.pe</div>
+                  </td>
+                  <td>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">78</div>
+                  </td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">2/3</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 12min</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
+                  <td><span class="badge badge-completed">Recomendado</span></td>
+                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">3</td>
+                  <td>
+                    <div class="candidate-name">Jorge Alonso Díaz Gutiérrez</div>
+                    <div class="candidate-email">jdiaz@bufete.pe</div>
+                  </td>
+                  <td>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-warning);">65</div>
+                  </td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">2/3</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 05min</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
+                  <td><span class="badge badge-in-progress">Considerar</span></td>
+                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">4</td>
+                  <td>
+                    <div class="candidate-name">Ana Lucía Vargas Castillo</div>
+                    <div class="candidate-email">avargas@derecho.pe</div>
+                  </td>
+                  <td>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-danger);">52</div>
+                  </td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">1/3</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 55min</td>
+                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-danger);font-weight:600;">3</td>
+                  <td><span class="badge badge-danger">No Recomendada</span></td>
+                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== CANDIDATE DETAIL ==================== -->
+  <div id="candidate-detail-screen" class="screen">
+    <div class="admin-layout">
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-icon">C&P</div>
+          <div class="logo-text"><span>Córdova</span> & Pasco</div>
+        </div>
+        <div class="sidebar-nav">
+          <div class="sidebar-section">Principal</div>
+          <div class="nav-item" onclick="showScreen('dashboard-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div class="sidebar-section">Gestión</div>
+          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
+            Evaluaciones
+          </div>
+          <div class="nav-item active" onclick="showScreen('results-screen')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Resultados
+          </div>
+          <div class="sidebar-section">Sistema</div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Configuración
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <div class="avatar">FC</div>
+          <div class="user-info">
+            <div class="user-name">Fernando Crosato</div>
+            <div class="user-role">Evaluador Principal</div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="main-content">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
+            <span class="sep">/</span>
+            <span onclick="showScreen('results-screen')" style="cursor:pointer">Resultados</span>
+            <span class="sep">/</span>
+            <strong>María Fernanda López Rivera</strong>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-outline btn-sm" onclick="showToast('Reporte enviado a fcrosato@cp-asociados.pe')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Enviar por Email
+            </button>
+            <button class="btn btn-outline btn-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Exportar PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="content-area">
+          <!-- Candidate metadata -->
+          <div class="candidate-meta">
+            <div class="meta-card">
+              <div class="meta-value" style="color:var(--cp-success);">85</div>
+              <div class="meta-label">Puntuación IA</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-value">2:47</div>
+              <div class="meta-label">Tiempo Usado</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-value">3/3</div>
+              <div class="meta-label">MC Correctas</div>
+            </div>
+            <div class="meta-card">
+              <div class="meta-value" style="color:var(--cp-muted);">1</div>
+              <div class="meta-label">Tab Switches</div>
+            </div>
+          </div>
+
+          <div class="results-grid">
+            <!-- Left: AI Evaluation -->
+            <div>
+              <div class="result-panel" style="margin-bottom:20px;">
+                <div class="panel-header">
+                  <h3>Evaluación del Agente Legal IA</h3>
+                  <span class="badge badge-primary" style="font-size:11px;">claude-sonnet-4-20250514</span>
+                </div>
+                <div class="panel-body">
+                  <div class="ai-disclaimer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span>Esta evaluación fue generada por un agente de IA como herramienta de apoyo. La decisión final corresponde al evaluador humano.</span>
+                  </div>
+
+                  <!-- Recommendation -->
+                  <div style="text-align:center;margin-bottom:24px;">
+                    <div class="recommendation-badge rec-recommended">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      RECOMENDADA
+                    </div>
+                  </div>
+
+                  <!-- Score by dimension -->
+                  <div class="ai-section">
+                    <h4>Puntuación por Dimensión</h4>
+                    <div class="dimension-row">
+                      <span class="dimension-label">Conocimiento Normativo</span>
+                      <div class="dimension-bar-track">
+                        <div class="dimension-bar-fill" style="width:90%;background:var(--cp-success);"></div>
+                      </div>
+                      <span class="dimension-score" style="color:var(--cp-success);">90</span>
+                    </div>
+                    <div class="dimension-row">
+                      <span class="dimension-label">Razonamiento Jurídico</span>
+                      <div class="dimension-bar-track">
+                        <div class="dimension-bar-fill" style="width:88%;background:var(--cp-success);"></div>
+                      </div>
+                      <span class="dimension-score" style="color:var(--cp-success);">88</span>
+                    </div>
+                    <div class="dimension-row">
+                      <span class="dimension-label">Análisis Documental</span>
+                      <div class="dimension-bar-track">
+                        <div class="dimension-bar-fill" style="width:82%;background:var(--cp-success);"></div>
+                      </div>
+                      <span class="dimension-score" style="color:var(--cp-success);">82</span>
+                    </div>
+                    <div class="dimension-row">
+                      <span class="dimension-label">Estrategia Legal</span>
+                      <div class="dimension-bar-track">
+                        <div class="dimension-bar-fill" style="width:85%;background:var(--cp-success);"></div>
+                      </div>
+                      <span class="dimension-score" style="color:var(--cp-success);">85</span>
+                    </div>
+                    <div class="dimension-row">
+                      <span class="dimension-label">Comunicación Profesional</span>
+                      <div class="dimension-bar-track">
+                        <div class="dimension-bar-fill" style="width:78%;background:var(--cp-warning);"></div>
+                      </div>
+                      <span class="dimension-score" style="color:var(--cp-warning);">78</span>
+                    </div>
+                  </div>
+
+                  <!-- Strengths -->
+                  <div class="ai-section">
+                    <h4>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cp-success)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                      Fortalezas
+                    </h4>
+                    <div>
+                      <span class="ai-tag strength">Dominio sólido del marco normativo OSINERGMIN</span>
+                      <span class="ai-tag strength">Estrategia de defensa bien estructurada</span>
+                      <span class="ai-tag strength">Identificación precisa de vicios procedimentales</span>
+                      <span class="ai-tag strength">Argumentación clara y fundamentada</span>
+                    </div>
+                  </div>
+
+                  <!-- Weaknesses -->
+                  <div class="ai-section">
+                    <h4>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cp-warning)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                      Áreas de Mejora
+                    </h4>
+                    <div>
+                      <span class="ai-tag weakness">Podría profundizar en jurisprudencia del Tribunal de OSINERGMIN</span>
+                      <span class="ai-tag weakness">Redacción de escritos mejorable en estructura formal</span>
+                    </div>
+                  </div>
+
+                  <!-- Executive summary -->
+                  <div class="ai-section" style="margin-bottom:0;">
+                    <h4>Resumen Ejecutivo</h4>
+                    <div style="font-size:14px;line-height:1.7;color:var(--cp-text);background:var(--cp-bg);padding:16px;border-radius:8px;">
+                      La candidata demuestra un conocimiento normativo sólido del procedimiento administrativo sancionador y del marco regulatorio del sector energético. Su análisis del Acta de Fiscalización identifica correctamente los elementos formales y sustantivos relevantes. La estrategia de defensa propuesta es coherente y viable, abordando tanto aspectos procedimentales como de fondo. Se recomienda su consideración para la posición de Asociada.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Responses -->
+            <div>
+              <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+                <h3 style="font-size:16px;font-weight:600;">Respuestas del Candidato</h3>
+                <span style="font-size:13px;color:var(--cp-muted);">10 de 10 respondidas</span>
+              </div>
+
+              <!-- Q1 - Multiple choice correct -->
+              <div class="response-item">
+                <div class="response-header">
+                  <span class="q-number">1</span>
+                  <span class="q-text">Marco normativo aplicable al PAS</span>
+                  <span class="q-weight">8%</span>
+                </div>
+                <div class="response-body">
+                  <div class="mc-answer mc-correct">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    <strong>Correcta:</strong> Ley 27444 (LPAG) + normativa sectorial OSINERGMIN
+                  </div>
+                  <div class="ai-comment">
+                    <strong>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
+                      Evaluación IA
+                      <span class="ai-score-inline">9/10</span>
+                    </strong>
+                    Selección correcta. Identifica adecuadamente la interacción entre la norma general y la sectorial.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Q4 - Free response -->
+              <div class="response-item">
+                <div class="response-header">
+                  <span class="q-number">4</span>
+                  <span class="q-text">Análisis de validez del Acta de Fiscalización N° 4005</span>
+                  <span class="q-weight">12%</span>
+                </div>
+                <div class="response-body">
+                  <div class="answer-text">El Acta de Fiscalización N° 4005 presenta varios elementos que deben analizarse para determinar su validez como medio probatorio en el procedimiento sancionador.
+
+En primer lugar, respecto a los requisitos formales, el acta cumple con identificar al funcionario actuante, la fecha y lugar de la diligencia, y los hechos constatados. Sin embargo, se advierte que la notificación al administrado sobre la diligencia podría presentar deficiencias...
+
+La candidata desarrolla un análisis detallado de 847 palabras abordando requisitos formales, valor probatorio, y posibles vicios procedimentales.</div>
+                  <div class="ai-comment">
+                    <strong>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
+                      Evaluación IA
+                      <span class="ai-score-inline">8.5/10</span>
+                    </strong>
+                    Análisis sólido que identifica correctamente los requisitos formales del acta y los posibles vicios. Destaca la observación sobre la notificación previa. Podría profundizar más en la jurisprudencia del Tribunal de OSINERGMIN sobre la valoración de actas.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Q5 - Free response -->
+              <div class="response-item">
+                <div class="response-header">
+                  <span class="q-number">5</span>
+                  <span class="q-text">Estrategia de defensa técnica</span>
+                  <span class="q-weight">15%</span>
+                </div>
+                <div class="response-body">
+                  <div class="answer-text">La estrategia de defensa se estructura en tres niveles complementarios:
+
+1. Nivel procedimental: Cuestionar la validez formal del inicio del PAS, identificando posibles defectos en la notificación, en los plazos y en la competencia del órgano instructor.
+
+2. Nivel sustantivo: Argumentar la atipicidad de la conducta imputada y la ausencia de nexo causal entre las condiciones reportadas y el riesgo alegado por la autoridad...
+
+La candidata presenta una estrategia estructurada de 1,203 palabras con líneas argumentales concretas y fundamentación normativa.</div>
+                  <div class="ai-comment">
+                    <strong>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
+                      Evaluación IA
+                      <span class="ai-score-inline">9/10</span>
+                    </strong>
+                    Estrategia bien estructurada en tres niveles, con argumentación jurídica sólida. La diferenciación entre defensa procedimental y sustantiva demuestra madurez profesional. Excelente identificación de la línea de atipicidad como argumento principal.
+                  </div>
+                </div>
+              </div>
+
+              <div style="text-align:center;padding:16px;color:var(--cp-muted);font-size:13px;">
+                Mostrando 3 de 10 respuestas &middot; <a href="#" style="color:var(--cp-primary);text-decoration:none;" onclick="event.preventDefault();showToast('Expandir todas las respuestas')">Ver todas</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: Add Candidate ==================== -->
+  <div class="modal-overlay" id="add-candidate-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Agregar Candidato</h3>
+        <button class="btn btn-ghost" onclick="hideModal()" style="font-size:18px;">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-step-1">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Ej: Ana María Torres Vega" id="new-candidate-name">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Correo electrónico</label>
+          <input type="email" placeholder="Ej: atorres@estudio.pe" id="new-candidate-email">
+        </div>
+      </div>
+      <div class="modal-body" id="modal-step-2" style="display:none;">
+        <div style="text-align:center;margin-bottom:16px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--cp-success)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 16 7 13"/></svg>
+          <h3 style="font-size:16px;margin-top:8px;">Candidato Agregado</h3>
+          <p style="font-size:13px;color:var(--cp-muted);margin-top:4px;">Token generado exitosamente</p>
+        </div>
+        <div class="generated-link">
+          <span class="link-text">https://evaluacion.cp-asociados.pe/evaluacion/g8h2k4m6-n9p1-r3t5-v7w9-x1y3z5a7b9c1</span>
+          <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')" style="font-size:16px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
+        </div>
+        <p style="font-size:12px;color:var(--cp-muted);margin-top:12px;line-height:1.5;">Este link es de uso único. El candidato podrá acceder a la evaluación una sola vez. Al completarla, el token se invalida permanentemente.</p>
+      </div>
+      <div class="modal-footer" id="modal-footer-1">
+        <button class="btn btn-outline" onclick="hideModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="generateToken()" style="width:auto;">Generar Token</button>
+      </div>
+      <div class="modal-footer" id="modal-footer-2" style="display:none;">
+        <button class="btn btn-outline" onclick="hideModal()">Cerrar</button>
+        <button class="btn btn-success" onclick="showToast('Link enviado por email al candidato');hideModal();" style="width:auto;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Enviar Link por Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Demo Navigation -->
+  <div class="demo-nav">
+    <div class="demo-title">Demo — Navegación</div>
+    <div class="demo-btns">
+      <button class="active-btn" onclick="showScreen('login-screen')">1. Login</button>
+      <button onclick="showScreen('dashboard-screen')">2. Dashboard</button>
+      <button onclick="showScreen('eval-detail-screen')">3. Detalle Evaluación</button>
+      <button onclick="showScreen('results-screen')">4. Resultados</button>
+      <button onclick="showScreen('candidate-detail-screen')">5. Detalle Candidato</button>
+    </div>
+  </div>
+
+  <script>
+    // Screen management
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const screen = document.getElementById(screenId);
+      if (screen) {
+        screen.classList.add('active');
+        // Update admin layout display
+        if (screenId !== 'login-screen') {
+          screen.style.display = 'flex';
+        }
+      }
+      // Update demo nav buttons
+      document.querySelectorAll('.demo-nav button').forEach(b => b.classList.remove('active-btn'));
+      const screenMap = {
+        'login-screen': 0,
+        'dashboard-screen': 1,
+        'eval-detail-screen': 2,
+        'results-screen': 3,
+        'candidate-detail-screen': 4
+      };
+      const idx = screenMap[screenId];
+      if (idx !== undefined) {
+        document.querySelectorAll('.demo-nav .demo-btns button')[idx].classList.add('active-btn');
+      }
+      window.scrollTo(0, 0);
+    }
+
+    // Tab switching
+    function switchTab(tabEl, tabGroupId, contentClass) {
+      // Deactivate all tabs in group
+      document.querySelectorAll('#' + tabGroupId + ' .tab').forEach(t => t.classList.remove('active'));
+      tabEl.classList.add('active');
+      // Show corresponding content
+      const target = tabEl.getAttribute('data-tab');
+      document.querySelectorAll('.' + contentClass).forEach(c => c.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+    }
+
+    // Modal
+    function showModal() {
+      document.getElementById('add-candidate-modal').classList.add('show');
+      document.getElementById('modal-step-1').style.display = 'block';
+      document.getElementById('modal-step-2').style.display = 'none';
+      document.getElementById('modal-footer-1').style.display = 'flex';
+      document.getElementById('modal-footer-2').style.display = 'none';
+    }
+
+    function hideModal() {
+      document.getElementById('add-candidate-modal').classList.remove('show');
+    }
+
+    function generateToken() {
+      document.getElementById('modal-step-1').style.display = 'none';
+      document.getElementById('modal-step-2').style.display = 'block';
+      document.getElementById('modal-footer-1').style.display = 'none';
+      document.getElementById('modal-footer-2').style.display = 'flex';
+    }
+
+    // Toast
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ' + message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // Close modal on overlay click
+    document.getElementById('add-candidate-modal').addEventListener('click', function(e) {
+      if (e.target === this) hideModal();
+    });
+  </script>
+</body>
+</html>
