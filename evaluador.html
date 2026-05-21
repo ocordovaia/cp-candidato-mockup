@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CP Evaluación Legal — Panel Evaluador</title>
+  <title>CP Evaluacion Legal — Panel Evaluador</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -14,7 +14,6 @@
       --cp-black: #010101;
       --cp-bg: #F9FAFB;
       --cp-white: #FFFFFF;
-      --cp-surface: #FFFFFF;
       --cp-border: #E5E7EB;
       --cp-text: #111827;
       --cp-muted: #6B7280;
@@ -28,2093 +27,972 @@
       --cp-info-light: #EFF6FF;
       --sidebar-w: 260px;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--cp-text);
-      background: var(--cp-bg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ====== LOGIN SCREEN ====== */
-    .screen { display: none; min-height: 100vh; }
-    .screen.active { display: flex; }
-
-    #login-screen {
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #FAFAFA 0%, #F3F4F6 50%, #FEF2F1 100%);
-      flex-direction: column;
-    }
-
-    .login-card {
-      background: var(--cp-white);
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      padding: 48px 40px;
-      width: 420px;
-      max-width: 90vw;
-      text-align: center;
-    }
-
-    .login-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-
-    .login-logo .logo-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--cp-primary);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 18px;
-    }
-
-    .login-logo h1 {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--cp-black);
-      letter-spacing: -0.5px;
-    }
-
-    .login-logo h1 span { color: var(--cp-primary); }
-
-    .login-subtitle {
-      color: var(--cp-muted);
-      font-size: 14px;
-      margin-bottom: 32px;
-    }
-
-    .form-group {
-      text-align: left;
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--cp-text);
-      margin-bottom: 6px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid var(--cp-border);
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      transition: border-color 0.15s;
-      outline: none;
-    }
-
-    .form-group input:focus {
-      border-color: var(--cp-primary);
-      box-shadow: 0 0 0 3px rgba(231,88,73,0.1);
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.15s;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: var(--cp-primary);
-      color: white;
-      width: 100%;
-      padding: 12px;
-      font-weight: 600;
-    }
-    .btn-primary:hover { background: var(--cp-primary-hover); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--cp-text);
-      border-color: var(--cp-border);
-    }
-    .btn-outline:hover { background: var(--cp-bg); border-color: #D1D5DB; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--cp-muted);
-      border: none;
-      padding: 6px 10px;
-    }
-    .btn-ghost:hover { color: var(--cp-text); background: var(--cp-bg); }
-
-    .btn-success {
-      background: var(--cp-success);
-      color: white;
-    }
-    .btn-success:hover { background: #15803D; }
-
-    .btn-sm { padding: 6px 12px; font-size: 13px; }
-
-    .login-footer {
-      margin-top: 24px;
-      font-size: 12px;
-      color: var(--cp-muted);
-    }
-
-    /* ====== ADMIN LAYOUT ====== */
-    .admin-layout {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      width: var(--sidebar-w);
-      background: var(--cp-black);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      z-index: 50;
-    }
-
-    .sidebar-logo {
-      padding: 24px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .sidebar-logo .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: var(--cp-primary);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 15px;
-      flex-shrink: 0;
-    }
-
-    .sidebar-logo .logo-text {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-    }
-
-    .sidebar-logo .logo-text span { color: var(--cp-primary); }
-
-    .sidebar-nav { padding: 16px 12px; flex: 1; }
-
-    .sidebar-section {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      padding: 8px 12px 8px;
-      margin-top: 16px;
-    }
-
-    .sidebar-section:first-child { margin-top: 0; }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      border-radius: 6px;
-      color: rgba(255,255,255,0.6);
-      font-size: 14px;
-      font-weight: 400;
-      cursor: pointer;
-      transition: all 0.15s;
-      margin-bottom: 2px;
-    }
-
-    .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
-    .nav-item.active { background: rgba(231,88,73,0.15); color: var(--cp-primary); font-weight: 500; }
-
-    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
-    .nav-item.active svg { opacity: 1; }
-
-    .nav-item .badge-count {
-      margin-left: auto;
-      background: var(--cp-primary);
-      color: white;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 1px 7px;
-      border-radius: 10px;
-    }
-
-    .sidebar-footer {
-      padding: 16px 20px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sidebar-footer .avatar {
-      width: 32px;
-      height: 32px;
-      background: var(--cp-primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-
-    .sidebar-footer .user-info { flex: 1; min-width: 0; }
-    .sidebar-footer .user-name { font-size: 13px; font-weight: 500; }
-    .sidebar-footer .user-role { font-size: 11px; color: rgba(255,255,255,0.4); }
-
-    /* Main content */
-    .main-content {
-      margin-left: var(--sidebar-w);
-      flex: 1;
-      min-width: 0;
-    }
-
-    .topbar {
-      background: var(--cp-white);
-      border-bottom: 1px solid var(--cp-border);
-      padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 40;
-    }
-
-    .breadcrumbs {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-    }
-
-    .breadcrumbs span { color: var(--cp-muted); }
-    .breadcrumbs strong { color: var(--cp-text); font-weight: 600; }
-    .breadcrumbs .sep { color: var(--cp-border); }
-
-    .content-area { padding: 32px; }
-
-    /* ====== DASHBOARD ====== */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .stat-card {
-      background: var(--cp-white);
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      padding: 20px;
-    }
-
-    .stat-card .stat-label {
-      font-size: 13px;
-      color: var(--cp-muted);
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .stat-card .stat-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--cp-text);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .stat-card .stat-change {
-      font-size: 12px;
-      margin-top: 4px;
-    }
-
-    .stat-card .stat-change.positive { color: var(--cp-success); }
-    .stat-card .stat-change.neutral { color: var(--cp-muted); }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .section-header h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--cp-text);
-    }
-
-    /* Evaluation cards */
-    .eval-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .eval-card {
-      background: var(--cp-white);
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      padding: 24px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .eval-card:hover {
-      border-color: var(--cp-primary);
-      box-shadow: 0 2px 12px rgba(231,88,73,0.08);
-    }
-
-    .eval-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .eval-card h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--cp-text);
-    }
-
-    .eval-card .eval-desc {
-      font-size: 13px;
-      color: var(--cp-muted);
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-      gap: 4px;
-    }
-
-    .badge-active { background: var(--cp-success-light); color: var(--cp-success); }
-    .badge-draft { background: var(--cp-warning-light); color: var(--cp-warning); }
-    .badge-closed { background: #F3F4F6; color: var(--cp-muted); }
-    .badge-pending { background: var(--cp-info-light); color: var(--cp-info); }
-    .badge-in-progress { background: var(--cp-warning-light); color: var(--cp-warning); }
-    .badge-completed { background: var(--cp-success-light); color: var(--cp-success); }
-    .badge-danger { background: var(--cp-danger-light); color: var(--cp-danger); }
-    .badge-primary { background: var(--cp-primary-light); color: var(--cp-primary); }
-
-    .eval-card-stats {
-      display: flex;
-      gap: 20px;
-      font-size: 13px;
-      color: var(--cp-muted);
-    }
-
-    .eval-card-stats .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .eval-card-stats svg { width: 14px; height: 14px; }
-
-    /* ====== TABLE ====== */
-    .table-container {
-      background: var(--cp-white);
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .table-toolbar {
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--cp-border);
-    }
-
-    .table-toolbar .search-input {
-      padding: 8px 12px 8px 36px;
-      border: 1px solid var(--cp-border);
-      border-radius: 6px;
-      font-size: 13px;
-      font-family: inherit;
-      width: 280px;
-      outline: none;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 24 24'%3E%3Cpath d='M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z' stroke='%236B7280' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") 10px center no-repeat;
-    }
-
-    .table-toolbar .search-input:focus {
-      border-color: var(--cp-primary);
-      box-shadow: 0 0 0 3px rgba(231,88,73,0.1);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead th {
-      text-align: left;
-      padding: 12px 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--cp-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--cp-border);
-      background: var(--cp-bg);
-    }
-
-    tbody td {
-      padding: 14px 20px;
-      font-size: 14px;
-      border-bottom: 1px solid var(--cp-border);
-      vertical-align: middle;
-    }
-
-    tbody tr:hover { background: #FAFAFA; }
-    tbody tr:last-child td { border-bottom: none; }
-
-    .candidate-name {
-      font-weight: 500;
-      color: var(--cp-text);
-    }
-
-    .candidate-email {
-      font-size: 12px;
-      color: var(--cp-muted);
-    }
-
-    .token-display {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      background: var(--cp-bg);
-      padding: 4px 8px;
-      border-radius: 4px;
-      color: var(--cp-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .copy-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--cp-primary);
-      padding: 2px;
-      display: inline-flex;
-    }
-    .copy-btn:hover { color: var(--cp-primary-hover); }
-
-    /* ====== TABS ====== */
-    .tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid var(--cp-border);
-      margin-bottom: 24px;
-      background: var(--cp-white);
-      padding: 0 32px;
-      margin: 0 -32px 24px;
-    }
-
-    .tab {
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--cp-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.15s;
-      position: relative;
-    }
-
-    .tab:hover { color: var(--cp-text); }
-    .tab.active { color: var(--cp-primary); border-bottom-color: var(--cp-primary); }
-
-    .tab .tab-badge {
-      font-size: 11px;
-      background: var(--cp-bg);
-      padding: 1px 6px;
-      border-radius: 8px;
-      margin-left: 6px;
-    }
-
-    .tab.active .tab-badge { background: var(--cp-primary-light); color: var(--cp-primary); }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    /* ====== RESULTS SCREEN ====== */
-    .results-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .results-grid.full { grid-template-columns: 1fr; }
-
-    .result-panel {
-      background: var(--cp-white);
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .panel-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--cp-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .panel-header h3 {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .panel-body { padding: 20px; }
-
-    /* Score circles */
-    .score-circle {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0 auto 8px;
-    }
-
-    .score-high { background: var(--cp-success-light); color: var(--cp-success); border: 3px solid var(--cp-success); }
-    .score-mid { background: var(--cp-warning-light); color: var(--cp-warning); border: 3px solid var(--cp-warning); }
-    .score-low { background: var(--cp-danger-light); color: var(--cp-danger); border: 3px solid var(--cp-danger); }
-
-    /* Dimension bars */
-    .dimension-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .dimension-label {
-      font-size: 13px;
-      color: var(--cp-text);
-      width: 200px;
-      flex-shrink: 0;
-      font-weight: 500;
-    }
-
-    .dimension-bar-track {
-      flex: 1;
-      height: 8px;
-      background: var(--cp-bg);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .dimension-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      transition: width 0.6s ease;
-    }
-
-    .dimension-score {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      font-weight: 600;
-      width: 40px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* AI evaluation panel */
-    .ai-section {
-      margin-bottom: 20px;
-    }
-
-    .ai-section h4 {
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--cp-muted);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .ai-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      margin-bottom: 6px;
-      margin-right: 6px;
-    }
-
-    .ai-tag.strength { background: var(--cp-success-light); color: #166534; }
-    .ai-tag.weakness { background: var(--cp-warning-light); color: #92400E; }
-    .ai-tag.red-flag { background: var(--cp-danger-light); color: var(--cp-danger); }
-
-    .recommendation-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .rec-recommended { background: var(--cp-success-light); color: var(--cp-success); border: 2px solid var(--cp-success); }
-    .rec-consider { background: var(--cp-warning-light); color: #B45309; border: 2px solid var(--cp-warning); }
-    .rec-not-recommended { background: var(--cp-danger-light); color: var(--cp-danger); border: 2px solid var(--cp-danger); }
-
-    /* Response display */
-    .response-item {
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      margin-bottom: 16px;
-      overflow: hidden;
-    }
-
-    .response-header {
-      padding: 14px 18px;
-      background: var(--cp-bg);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--cp-border);
-    }
-
-    .response-header .q-number {
-      width: 28px;
-      height: 28px;
-      background: var(--cp-primary);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
-    .response-header .q-text {
-      font-size: 14px;
-      font-weight: 500;
-      flex: 1;
-    }
-
-    .response-header .q-weight {
-      font-size: 12px;
-      color: var(--cp-muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .response-body {
-      padding: 18px;
-    }
-
-    .response-body .answer-text {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--cp-text);
-      white-space: pre-wrap;
-    }
-
-    .response-body .mc-answer {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .mc-correct { background: var(--cp-success-light); color: #166534; }
-    .mc-incorrect { background: var(--cp-danger-light); color: var(--cp-danger); }
-
-    .ai-comment {
-      margin-top: 14px;
-      padding: 12px 16px;
-      background: #F5F3FF;
-      border-left: 3px solid #7C3AED;
-      border-radius: 0 6px 6px 0;
-      font-size: 13px;
-      color: #5B21B6;
-      line-height: 1.6;
-    }
-
-    .ai-comment strong {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 4px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .ai-score-inline {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: rgba(124,58,237,0.1);
-    }
-
-    /* Candidate detail metadata */
-    .candidate-meta {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .meta-card {
-      background: var(--cp-white);
-      border: 1px solid var(--cp-border);
-      border-radius: 8px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    .meta-card .meta-value {
-      font-size: 22px;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      margin-bottom: 2px;
-    }
-
-    .meta-card .meta-label {
-      font-size: 12px;
-      color: var(--cp-muted);
-      font-weight: 500;
-    }
-
-    /* Modal for token generation */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.show { display: flex; }
-
-    .modal {
-      background: var(--cp-white);
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-      width: 480px;
-      max-width: 90vw;
-      overflow: hidden;
-    }
-
-    .modal-header {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--cp-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-header h3 {
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    .modal-body { padding: 24px; }
-    .modal-footer {
-      padding: 16px 24px;
-      border-top: 1px solid var(--cp-border);
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
-
-    .generated-link {
-      background: var(--cp-bg);
-      border: 1px solid var(--cp-border);
-      border-radius: 6px;
-      padding: 12px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--cp-primary);
-      word-break: break-all;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .generated-link .link-text { flex: 1; }
-
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--cp-muted);
-    }
-
-    .empty-state svg { margin-bottom: 16px; opacity: 0.4; }
-    .empty-state h3 { font-size: 16px; font-weight: 600; color: var(--cp-text); margin-bottom: 6px; }
-    .empty-state p { font-size: 14px; }
-
-    /* Disclaimer */
-    .ai-disclaimer {
-      background: var(--cp-warning-light);
-      border: 1px solid #FDE68A;
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #92400E;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      line-height: 1.5;
-    }
-
-    .ai-disclaimer svg { flex-shrink: 0; margin-top: 2px; }
-
-    /* ====== DEMO NAVIGATION ====== */
-    .demo-nav {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--cp-black);
-      color: white;
-      border-radius: 12px;
-      padding: 12px 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-      z-index: 999;
-      font-size: 12px;
-    }
-
-    .demo-nav .demo-title {
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--cp-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-size: 10px;
-    }
-
-    .demo-nav .demo-btns {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .demo-nav button {
-      background: rgba(255,255,255,0.08);
-      border: none;
-      color: rgba(255,255,255,0.7);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-family: inherit;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.15s;
-    }
-
-    .demo-nav button:hover { background: rgba(255,255,255,0.15); color: white; }
-    .demo-nav button.active-btn { background: var(--cp-primary); color: white; }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--cp-black);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      z-index: 300;
-      opacity: 0;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .eval-grid { grid-template-columns: 1fr; }
-      .results-grid { grid-template-columns: 1fr; }
-      .candidate-meta { grid-template-columns: repeat(2, 1fr); }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif; color:var(--cp-text); background:var(--cp-bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
+
+    /* ===== SCREENS ===== */
+    .screen { display:none; }
+    .screen.active-login { display:flex; min-height:100vh; align-items:center; justify-content:center; background:linear-gradient(135deg,#FAFAFA 0%,#F3F4F6 50%,#FEF2F1 100%); flex-direction:column; }
+    .screen.active-admin { display:block; }
+
+    /* ===== LOGIN ===== */
+    .login-card { background:var(--cp-white); border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.08); padding:48px 40px; width:420px; max-width:90vw; text-align:center; }
+    .login-logo { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:8px; }
+    .logo-icon { width:44px; height:44px; background:var(--cp-primary); border-radius:10px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:16px; flex-shrink:0; }
+    .login-logo h1 { font-size:22px; font-weight:700; color:var(--cp-black); letter-spacing:-.5px; }
+    .login-logo h1 span { color:var(--cp-primary); }
+    .login-subtitle { color:var(--cp-muted); font-size:14px; margin-bottom:32px; }
+    .form-group { text-align:left; margin-bottom:20px; }
+    .form-group label { display:block; font-size:13px; font-weight:500; color:var(--cp-text); margin-bottom:6px; }
+    .form-input { width:100%; padding:10px 14px; border:1px solid var(--cp-border); border-radius:6px; font-size:14px; font-family:inherit; outline:none; transition:border-color .15s; }
+    .form-input:focus { border-color:var(--cp-primary); box-shadow:0 0 0 3px rgba(231,88,73,.1); }
+    .login-footer { margin-top:24px; font-size:12px; color:var(--cp-muted); }
+
+    /* ===== BUTTONS ===== */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 20px; border-radius:6px; font-size:14px; font-weight:500; font-family:inherit; cursor:pointer; border:1px solid transparent; transition:all .15s; text-decoration:none; white-space:nowrap; }
+    .btn-primary { background:var(--cp-primary); color:#fff; }
+    .btn-primary:hover { background:var(--cp-primary-hover); transform:translateY(-1px); box-shadow:0 2px 8px rgba(231,88,73,.25); }
+    .btn-primary-full { background:var(--cp-primary); color:#fff; width:100%; padding:12px; font-weight:600; }
+    .btn-primary-full:hover { background:var(--cp-primary-hover); }
+    .btn-outline { background:transparent; color:var(--cp-text); border-color:var(--cp-border); }
+    .btn-outline:hover { background:var(--cp-bg); border-color:#D1D5DB; }
+    .btn-ghost { background:transparent; color:var(--cp-muted); border:none; padding:6px 10px; }
+    .btn-ghost:hover { color:var(--cp-text); background:var(--cp-bg); }
+    .btn-success { background:var(--cp-success); color:#fff; }
+    .btn-success:hover { background:#15803D; }
+    .btn-sm { padding:6px 12px; font-size:13px; }
+    .btn-link { background:none; border:none; color:var(--cp-primary); cursor:pointer; font-family:inherit; font-size:13px; font-weight:500; padding:0; text-decoration:none; }
+    .btn-link:hover { color:var(--cp-primary-hover); text-decoration:underline; }
+
+    /* ===== ADMIN LAYOUT ===== */
+    .admin-layout { display:flex; min-height:100vh; }
+    .sidebar { width:var(--sidebar-w); background:var(--cp-black); color:#fff; display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:50; }
+    .sidebar-logo { padding:24px 20px; display:flex; align-items:center; gap:12px; border-bottom:1px solid rgba(255,255,255,.08); }
+    .sidebar-logo .s-icon { width:36px; height:36px; background:var(--cp-primary); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; flex-shrink:0; }
+    .sidebar-logo .s-text { font-size:15px; font-weight:600; letter-spacing:-.3px; }
+    .sidebar-logo .s-text span { color:var(--cp-primary); }
+    .sidebar-nav { padding:16px 12px; flex:1; overflow-y:auto; }
+    .sidebar-section { font-size:11px; font-weight:600; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.8px; padding:8px 12px; margin-top:16px; }
+    .sidebar-section:first-child { margin-top:0; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:6px; color:rgba(255,255,255,.6); font-size:14px; cursor:pointer; transition:all .15s; margin-bottom:2px; }
+    .nav-item:hover { background:rgba(255,255,255,.06); color:#fff; }
+    .nav-item.active { background:rgba(231,88,73,.15); color:var(--cp-primary); font-weight:500; }
+    .nav-item svg { width:18px; height:18px; flex-shrink:0; opacity:.7; }
+    .nav-item.active svg { opacity:1; }
+    .badge-count { margin-left:auto; background:var(--cp-primary); color:#fff; font-size:11px; font-weight:600; padding:1px 7px; border-radius:10px; }
+    .sidebar-footer { padding:16px 20px; border-top:1px solid rgba(255,255,255,.08); display:flex; align-items:center; gap:10px; }
+    .avatar { width:32px; height:32px; background:var(--cp-primary); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:13px; flex-shrink:0; color:#fff; }
+    .sidebar-footer .user-name { font-size:13px; font-weight:500; }
+    .sidebar-footer .user-role { font-size:11px; color:rgba(255,255,255,.4); }
+
+    .main-content { margin-left:var(--sidebar-w); flex:1; min-width:0; }
+    .topbar { background:var(--cp-white); border-bottom:1px solid var(--cp-border); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:40; }
+    .breadcrumbs { display:flex; align-items:center; gap:8px; font-size:14px; }
+    .breadcrumbs .bc-link { color:var(--cp-muted); cursor:pointer; transition:color .15s; }
+    .breadcrumbs .bc-link:hover { color:var(--cp-primary); }
+    .breadcrumbs strong { color:var(--cp-text); font-weight:600; }
+    .breadcrumbs .sep { color:var(--cp-border); }
+    .content-area { padding:32px; }
+
+    /* ===== STATS ===== */
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+    .stat-card { background:var(--cp-white); border:1px solid var(--cp-border); border-radius:8px; padding:20px; transition:box-shadow .15s; }
+    .stat-card:hover { box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .stat-label { font-size:13px; color:var(--cp-muted); font-weight:500; margin-bottom:4px; }
+    .stat-value { font-size:28px; font-weight:700; color:var(--cp-text); font-family:'JetBrains Mono',monospace; }
+    .stat-change { font-size:12px; margin-top:4px; }
+    .stat-change.positive { color:var(--cp-success); }
+    .stat-change.neutral { color:var(--cp-muted); }
+
+    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+    .section-header h2 { font-size:18px; font-weight:600; }
+
+    /* ===== EVAL CARDS ===== */
+    .eval-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .eval-card { background:var(--cp-white); border:1px solid var(--cp-border); border-radius:8px; padding:24px; cursor:pointer; transition:all .15s; }
+    .eval-card:hover { border-color:var(--cp-primary); box-shadow:0 2px 12px rgba(231,88,73,.08); transform:translateY(-2px); }
+    .eval-card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px; }
+    .eval-card h3 { font-size:16px; font-weight:600; }
+    .eval-card .eval-desc { font-size:13px; color:var(--cp-muted); margin-bottom:16px; line-height:1.5; }
+    .eval-card-stats { display:flex; gap:20px; font-size:13px; color:var(--cp-muted); }
+    .eval-card-stats .si { display:flex; align-items:center; gap:5px; }
+    .eval-card-stats svg { width:14px; height:14px; }
+
+    /* ===== BADGES ===== */
+    .badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:500; gap:4px; }
+    .badge-active { background:var(--cp-success-light); color:var(--cp-success); }
+    .badge-draft { background:var(--cp-warning-light); color:var(--cp-warning); }
+    .badge-closed { background:#F3F4F6; color:var(--cp-muted); }
+    .badge-pending { background:var(--cp-info-light); color:var(--cp-info); }
+    .badge-in-progress { background:var(--cp-warning-light); color:var(--cp-warning); }
+    .badge-completed { background:var(--cp-success-light); color:var(--cp-success); }
+    .badge-danger { background:var(--cp-danger-light); color:var(--cp-danger); }
+    .badge-primary { background:var(--cp-primary-light); color:var(--cp-primary); }
+
+    /* ===== TABLES ===== */
+    .table-container { background:var(--cp-white); border:1px solid var(--cp-border); border-radius:8px; overflow:hidden; }
+    .table-toolbar { padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--cp-border); }
+    .search-input { padding:8px 12px 8px 36px; border:1px solid var(--cp-border); border-radius:6px; font-size:13px; font-family:inherit; width:280px; outline:none; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8' stroke='%236B7280' stroke-width='2'/%3E%3Cpath d='M21 21l-4.35-4.35' stroke='%236B7280' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 10px center no-repeat; }
+    .search-input:focus { border-color:var(--cp-primary); box-shadow:0 0 0 3px rgba(231,88,73,.1); }
+    table { width:100%; border-collapse:collapse; }
+    thead th { text-align:left; padding:12px 20px; font-size:12px; font-weight:600; color:var(--cp-muted); text-transform:uppercase; letter-spacing:.5px; border-bottom:1px solid var(--cp-border); background:var(--cp-bg); }
+    tbody td { padding:14px 20px; font-size:14px; border-bottom:1px solid var(--cp-border); vertical-align:middle; }
+    tbody tr { transition:background .1s; }
+    tbody tr:hover { background:#FAFAFA; }
+    tbody tr:last-child td { border-bottom:none; }
+    tbody tr.clickable-row { cursor:pointer; }
+    tbody tr.clickable-row:hover { background:var(--cp-primary-light); }
+    .cname { font-weight:500; color:var(--cp-text); }
+    .cemail { font-size:12px; color:var(--cp-muted); }
+    .mono { font-family:'JetBrains Mono',monospace; font-size:13px; }
+    .token-display { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--cp-bg); padding:4px 8px; border-radius:4px; color:var(--cp-muted); display:inline-flex; align-items:center; gap:6px; }
+    .copy-btn { background:none; border:none; cursor:pointer; color:var(--cp-primary); padding:2px; display:inline-flex; transition:transform .15s; }
+    .copy-btn:hover { color:var(--cp-primary-hover); transform:scale(1.15); }
+
+    /* ===== TABS ===== */
+    .tabs { display:flex; gap:0; border-bottom:1px solid var(--cp-border); background:var(--cp-white); padding:0 32px; }
+    .tab { padding:14px 20px; font-size:14px; font-weight:500; color:var(--cp-muted); cursor:pointer; border-bottom:2px solid transparent; transition:all .15s; user-select:none; }
+    .tab:hover { color:var(--cp-text); background:var(--cp-bg); }
+    .tab.active { color:var(--cp-primary); border-bottom-color:var(--cp-primary); background:transparent; }
+    .tab .tb { font-size:11px; background:var(--cp-bg); padding:1px 6px; border-radius:8px; margin-left:6px; }
+    .tab.active .tb { background:var(--cp-primary-light); color:var(--cp-primary); }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; animation:fadeIn .2s ease; }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ===== CANDIDATE META CARDS ===== */
+    .candidate-meta { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+    .meta-card { background:var(--cp-white); border:1px solid var(--cp-border); border-radius:8px; padding:16px; text-align:center; }
+    .meta-value { font-size:22px; font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:2px; }
+    .meta-label { font-size:12px; color:var(--cp-muted); font-weight:500; }
+
+    /* ===== RESULTS LAYOUT ===== */
+    .results-two-col { display:grid; grid-template-columns:380px 1fr; gap:24px; align-items:start; }
+
+    /* ===== AI PANEL ===== */
+    .panel { background:var(--cp-white); border:1px solid var(--cp-border); border-radius:8px; overflow:hidden; }
+    .panel-header { padding:16px 20px; border-bottom:1px solid var(--cp-border); display:flex; align-items:center; justify-content:space-between; }
+    .panel-header h3 { font-size:15px; font-weight:600; }
+    .panel-body { padding:20px; }
+
+    .ai-disclaimer { background:var(--cp-warning-light); border:1px solid #FDE68A; border-radius:8px; padding:12px 16px; font-size:13px; color:#92400E; margin-bottom:20px; display:flex; align-items:flex-start; gap:10px; line-height:1.5; }
+    .ai-disclaimer svg { flex-shrink:0; margin-top:2px; }
+
+    .recommendation-badge { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:8px; font-size:15px; font-weight:600; }
+    .rec-yes { background:var(--cp-success-light); color:var(--cp-success); border:2px solid var(--cp-success); }
+    .rec-maybe { background:var(--cp-warning-light); color:#B45309; border:2px solid var(--cp-warning); }
+    .rec-no { background:var(--cp-danger-light); color:var(--cp-danger); border:2px solid var(--cp-danger); }
+
+    .ai-section { margin-bottom:20px; }
+    .ai-section h4 { font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--cp-muted); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+
+    .dim-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+    .dim-label { font-size:12px; color:var(--cp-text); width:155px; flex-shrink:0; font-weight:500; }
+    .dim-track { flex:1; height:8px; background:var(--cp-bg); border-radius:4px; overflow:hidden; }
+    .dim-fill { height:100%; border-radius:4px; transition:width .8s ease; }
+    .dim-score { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; width:32px; text-align:right; flex-shrink:0; }
+
+    .ai-tag { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px; font-size:12px; margin:0 6px 6px 0; line-height:1.3; }
+    .ai-tag.str { background:var(--cp-success-light); color:#166534; }
+    .ai-tag.wk { background:var(--cp-warning-light); color:#92400E; }
+    .ai-tag.rf { background:var(--cp-danger-light); color:var(--cp-danger); }
+
+    /* ===== RESPONSE CARDS ===== */
+    .response-item { border:1px solid var(--cp-border); border-radius:8px; margin-bottom:16px; overflow:hidden; transition:box-shadow .15s; }
+    .response-item:hover { box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .response-header { padding:14px 18px; background:var(--cp-bg); display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--cp-border); cursor:pointer; user-select:none; }
+    .response-header:hover { background:#F3F4F6; }
+    .q-number { width:28px; height:28px; background:var(--cp-primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0; }
+    .q-text { font-size:14px; font-weight:500; flex:1; }
+    .q-meta { display:flex; align-items:center; gap:8px; }
+    .q-weight { font-size:12px; color:var(--cp-muted); font-family:'JetBrains Mono',monospace; }
+    .expand-icon { transition:transform .2s; color:var(--cp-muted); }
+    .expand-icon.open { transform:rotate(180deg); }
+    .response-body { padding:18px; display:none; animation:fadeIn .2s ease; }
+    .response-body.open { display:block; }
+    .answer-text { font-size:14px; line-height:1.7; color:var(--cp-text); white-space:pre-wrap; background:var(--cp-bg); padding:16px; border-radius:8px; border:1px solid var(--cp-border); }
+    .mc-answer { display:flex; align-items:center; gap:8px; padding:10px 14px; border-radius:6px; font-size:14px; }
+    .mc-correct { background:var(--cp-success-light); color:#166534; }
+    .mc-incorrect { background:var(--cp-danger-light); color:var(--cp-danger); }
+    .ai-comment { margin-top:14px; padding:12px 16px; background:#F5F3FF; border-left:3px solid #7C3AED; border-radius:0 6px 6px 0; font-size:13px; color:#5B21B6; line-height:1.6; }
+    .ai-comment strong { display:flex; align-items:center; gap:5px; margin-bottom:4px; font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+    .ai-score-inline { font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px; padding:2px 8px; border-radius:4px; background:rgba(124,58,237,.1); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; align-items:center; justify-content:center; animation:fadeIn .15s ease; }
+    .modal-overlay.show { display:flex; }
+    .modal { background:var(--cp-white); border-radius:12px; box-shadow:0 20px 60px rgba(0,0,0,.2); width:500px; max-width:90vw; overflow:hidden; }
+    .modal-header { padding:20px 24px; border-bottom:1px solid var(--cp-border); display:flex; align-items:center; justify-content:space-between; }
+    .modal-header h3 { font-size:16px; font-weight:600; }
+    .modal-body { padding:24px; }
+    .modal-footer { padding:16px 24px; border-top:1px solid var(--cp-border); display:flex; justify-content:flex-end; gap:10px; }
+    .generated-link { background:var(--cp-bg); border:1px solid var(--cp-border); border-radius:6px; padding:12px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--cp-primary); word-break:break-all; display:flex; align-items:center; gap:10px; margin-top:16px; }
+    .generated-link .lt { flex:1; }
+
+    /* ===== TOAST ===== */
+    .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--cp-black); color:#fff; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:500; box-shadow:0 4px 20px rgba(0,0,0,.2); z-index:300; opacity:0; transition:all .3s; display:flex; align-items:center; gap:8px; pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* ===== DEMO NAV ===== */
+    .demo-nav { position:fixed; bottom:20px; right:20px; background:var(--cp-black); color:#fff; border-radius:12px; padding:12px 16px; box-shadow:0 8px 30px rgba(0,0,0,.3); z-index:999; font-size:12px; }
+    .demo-nav .dt { font-weight:600; margin-bottom:8px; color:var(--cp-primary); text-transform:uppercase; letter-spacing:.5px; font-size:10px; }
+    .demo-nav .db { display:flex; flex-direction:column; gap:4px; }
+    .demo-nav button { background:rgba(255,255,255,.08); border:none; color:rgba(255,255,255,.7); padding:6px 12px; border-radius:6px; font-size:12px; font-family:inherit; cursor:pointer; text-align:left; transition:all .15s; }
+    .demo-nav button:hover { background:rgba(255,255,255,.15); color:#fff; }
+    .demo-nav button.on { background:var(--cp-primary); color:#fff; }
+
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:#D1D5DB; border-radius:3px; }
+
+    /* Highlight row */
+    .highlight-row { background:var(--cp-success-light) !important; }
+
+    @media(max-width:1100px){
+      .results-two-col { grid-template-columns:1fr; }
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .eval-grid { grid-template-columns:1fr; }
+      .candidate-meta { grid-template-columns:repeat(2,1fr); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ==================== LOGIN SCREEN ==================== -->
-  <div id="login-screen" class="screen active">
-    <div class="login-card">
-      <div class="login-logo">
-        <div class="logo-icon">C&P</div>
-        <h1><span>Córdova</span> & Pasco</h1>
-      </div>
-      <p class="login-subtitle">Panel de Evaluación Legal</p>
-
-      <div class="form-group">
-        <label>Correo electrónico</label>
-        <input type="email" value="fcrosato@cp-asociados.pe" readonly>
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" value="••••••••••" readonly>
-      </div>
-
-      <button class="btn btn-primary" onclick="showScreen('dashboard-screen')">Iniciar Sesión</button>
-
-      <p class="login-footer">Acceso exclusivo para evaluadores autorizados</p>
+<!-- ===================== 1. LOGIN ===================== -->
+<div id="scr-login" class="screen active-login">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-icon">C&P</div>
+      <h1><span>Cordova</span> & Pasco</h1>
     </div>
-  </div>
-
-  <!-- ==================== DASHBOARD ==================== -->
-  <div id="dashboard-screen" class="screen">
-    <div class="admin-layout">
-      <nav class="sidebar">
-        <div class="sidebar-logo">
-          <div class="logo-icon">C&P</div>
-          <div class="logo-text"><span>Córdova</span> & Pasco</div>
-        </div>
-        <div class="sidebar-nav">
-          <div class="sidebar-section">Principal</div>
-          <div class="nav-item active" onclick="showScreen('dashboard-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            Dashboard
-          </div>
-          <div class="sidebar-section">Gestión</div>
-          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
-            Evaluaciones
-            <span class="badge-count">2</span>
-          </div>
-          <div class="nav-item" onclick="showScreen('results-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Resultados
-          </div>
-          <div class="sidebar-section">Sistema</div>
-          <div class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-            Configuración
-          </div>
-        </div>
-        <div class="sidebar-footer">
-          <div class="avatar">FC</div>
-          <div class="user-info">
-            <div class="user-name">Fernando Crosato</div>
-            <div class="user-role">Evaluador Principal</div>
-          </div>
-        </div>
-      </nav>
-
-      <main class="main-content">
-        <div class="topbar">
-          <div class="breadcrumbs">
-            <strong>Dashboard</strong>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center;">
-            <span style="font-size:13px;color:var(--cp-muted);">21 de mayo, 2026</span>
-          </div>
-        </div>
-
-        <div class="content-area">
-          <div class="stats-row">
-            <div class="stat-card">
-              <div class="stat-label">Evaluaciones Activas</div>
-              <div class="stat-value">1</div>
-              <div class="stat-change positive">Caso PAS OSINERGMIN</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Candidatos Totales</div>
-              <div class="stat-value">6</div>
-              <div class="stat-change neutral">de 10 posibles</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Evaluaciones Completadas</div>
-              <div class="stat-value">4</div>
-              <div class="stat-change positive">66% completado</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-label">Puntuación Promedio IA</div>
-              <div class="stat-value" style="color:var(--cp-warning)">72</div>
-              <div class="stat-change neutral">de 100 puntos</div>
-            </div>
-          </div>
-
-          <div class="section-header">
-            <h2>Evaluaciones</h2>
-            <button class="btn btn-primary btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Nueva Evaluación
-            </button>
-          </div>
-
-          <div class="eval-grid">
-            <div class="eval-card" onclick="showScreen('eval-detail-screen')">
-              <div class="eval-card-header">
-                <h3>PAS OSINERGMIN — Caso Refinería</h3>
-                <span class="badge badge-active">● Activa</span>
-              </div>
-              <p class="eval-desc">Evaluación basada en el procedimiento administrativo sancionador iniciado por OSINERGMIN, con documentación de fiscalización, actas e informes técnicos.</p>
-              <div class="eval-card-stats">
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                  6 candidatos
-                </span>
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  4 horas
-                </span>
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                  10 preguntas
-                </span>
-              </div>
-            </div>
-
-            <div class="eval-card" style="opacity: 0.6;">
-              <div class="eval-card-header">
-                <h3>Evaluación Procesal Civil</h3>
-                <span class="badge badge-draft">◌ Borrador</span>
-              </div>
-              <p class="eval-desc">Caso de responsabilidad civil extracontractual. En fase de preparación de documentos y formulación de preguntas.</p>
-              <div class="eval-card-stats">
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-                  0 candidatos
-                </span>
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  3 horas
-                </span>
-                <span class="stat-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                  0 preguntas
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+    <p class="login-subtitle">Panel de Evaluacion Legal</p>
+    <div class="form-group">
+      <label>Correo electronico</label>
+      <input class="form-input" type="email" value="fcrosato@cp-asociados.pe">
     </div>
-  </div>
-
-  <!-- ==================== EVALUATION DETAIL ==================== -->
-  <div id="eval-detail-screen" class="screen">
-    <div class="admin-layout">
-      <nav class="sidebar">
-        <div class="sidebar-logo">
-          <div class="logo-icon">C&P</div>
-          <div class="logo-text"><span>Córdova</span> & Pasco</div>
-        </div>
-        <div class="sidebar-nav">
-          <div class="sidebar-section">Principal</div>
-          <div class="nav-item" onclick="showScreen('dashboard-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            Dashboard
-          </div>
-          <div class="sidebar-section">Gestión</div>
-          <div class="nav-item active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
-            Evaluaciones
-            <span class="badge-count">2</span>
-          </div>
-          <div class="nav-item" onclick="showScreen('results-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Resultados
-          </div>
-          <div class="sidebar-section">Sistema</div>
-          <div class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-            Configuración
-          </div>
-        </div>
-        <div class="sidebar-footer">
-          <div class="avatar">FC</div>
-          <div class="user-info">
-            <div class="user-name">Fernando Crosato</div>
-            <div class="user-role">Evaluador Principal</div>
-          </div>
-        </div>
-      </nav>
-
-      <main class="main-content">
-        <div class="topbar">
-          <div class="breadcrumbs">
-            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
-            <span class="sep">/</span>
-            <span>Evaluaciones</span>
-            <span class="sep">/</span>
-            <strong>PAS OSINERGMIN</strong>
-          </div>
-          <div style="display:flex;gap:10px;">
-            <button class="btn btn-outline btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              Editar
-            </button>
-            <span class="badge badge-active" style="padding:8px 14px;font-size:13px;">● Activa</span>
-          </div>
-        </div>
-
-        <div class="tabs" id="eval-tabs">
-          <div class="tab active" data-tab="tab-candidates" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
-            Candidatos <span class="tab-badge">6</span>
-          </div>
-          <div class="tab" data-tab="tab-documents" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
-            Documentos <span class="tab-badge">26</span>
-          </div>
-          <div class="tab" data-tab="tab-questions" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
-            Preguntas <span class="tab-badge">10</span>
-          </div>
-          <div class="tab" data-tab="tab-config" onclick="switchTab(this, 'eval-tabs', 'eval-tab-content')">
-            Configuración
-          </div>
-        </div>
-
-        <div class="content-area" style="padding-top:0;">
-
-          <!-- Tab: Candidatos -->
-          <div id="tab-candidates" class="tab-content eval-tab-content active">
-            <div class="table-container">
-              <div class="table-toolbar">
-                <input class="search-input" type="text" placeholder="Buscar candidato...">
-                <button class="btn btn-primary btn-sm" onclick="showModal()">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  Agregar Candidato
-                </button>
-              </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Candidato</th>
-                    <th>Token</th>
-                    <th>Estado</th>
-                    <th>Tiempo Usado</th>
-                    <th>Tab Switches</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">María Fernanda López Rivera</div>
-                      <div class="candidate-email">mflopez@estudio.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        a3f7...8d2e
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-completed">Completado</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 47min</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" onclick="showScreen('results-screen')" style="color:var(--cp-primary);">Ver Resultado</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">Carlos Eduardo Mendoza Paredes</div>
-                      <div class="candidate-email">cmendoza@legal.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        b9c2...4f1a
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-completed">Completado</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 12min</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">Ana Lucía Vargas Castillo</div>
-                      <div class="candidate-email">avargas@derecho.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        d5e8...2b7c
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-completed">Completado</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 55min</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">Jorge Alonso Díaz Gutiérrez</div>
-                      <div class="candidate-email">jdiaz@bufete.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        e1f3...9a4d
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-completed">Completado</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 05min</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-primary);">Ver Resultado</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">Valeria Rosas Martínez</div>
-                      <div class="candidate-email">vrosas@abogados.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        f7a2...6c8e
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-in-progress">● En Curso</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-warning);">1h 23min ▶</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-muted);" disabled>En curso</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="candidate-name">Roberto Sánchez Flores</div>
-                      <div class="candidate-email">rsanchez@legal.pe</div>
-                    </td>
-                    <td>
-                      <span class="token-display">
-                        c4d6...1e9f
-                        <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                        </button>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-pending">◌ Pendiente</span></td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-muted);">—</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-muted);">—</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm" onclick="showToast('Link de evaluación enviado por correo')">Reenviar Link</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Tab: Documentos -->
-          <div id="tab-documents" class="tab-content eval-tab-content">
-            <div class="table-container">
-              <div class="table-toolbar">
-                <div style="font-size:13px;color:var(--cp-muted);">26 documentos en 5 carpetas &middot; 48.2 MB total</div>
-                <button class="btn btn-primary btn-sm">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                  Subir Documentos
-                </button>
-              </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Carpeta</th>
-                    <th>Documento</th>
-                    <th>Nombre Visible (Candidato)</th>
-                    <th>Tamaño</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><span class="badge badge-primary">00. Reportes</span></td>
-                    <td style="font-weight:500;">Informe Final de Emergencia.pdf</td>
-                    <td style="font-size:13px;color:var(--cp-muted);">Informe Final de Emergencia Operacional</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">2.4 MB</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm">Editar</button>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-primary">01. Actas</span></td>
-                    <td style="font-weight:500;">Acta N°4005.pdf</td>
-                    <td style="font-size:13px;color:var(--cp-muted);">Acta de Fiscalización N°4005</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">1.8 MB</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm">Editar</button>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-primary">02. Fiscalización</span></td>
-                    <td style="font-weight:500;">Informe Preliminar.pdf</td>
-                    <td style="font-size:13px;color:var(--cp-muted);">Informe Preliminar de Supervisión</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">3.1 MB</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm">Editar</button>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-primary">03. Inicio PAS</span></td>
-                    <td style="font-weight:500;">Resolución de Inicio PAS.pdf</td>
-                    <td style="font-size:13px;color:var(--cp-muted);">Resolución de Inicio de PAS</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">956 KB</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm">Editar</button>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><span class="badge badge-primary">04. Equipos</span></td>
-                    <td style="font-weight:500;">Diagrama Unifilar.pdf</td>
-                    <td style="font-size:13px;color:var(--cp-muted);">Diagrama Técnico de Instalaciones</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-size:12px;">4.7 MB</td>
-                    <td>
-                      <button class="btn btn-ghost btn-sm">Editar</button>
-                      <button class="btn btn-ghost btn-sm" style="color:var(--cp-danger);">Eliminar</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div style="padding:12px 20px;font-size:12px;color:var(--cp-muted);border-top:1px solid var(--cp-border);">
-                Mostrando 5 de 26 documentos &middot;
-                <strong>Palabras de redacción:</strong> Petroperú, PETROPERU, Refinería Talara, OSINERGMIN (visible solo internamente)
-              </div>
-            </div>
-          </div>
-
-          <!-- Tab: Preguntas -->
-          <div id="tab-questions" class="tab-content eval-tab-content">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-              <div>
-                <span style="font-size:13px;color:var(--cp-muted);">Peso total:</span>
-                <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--cp-success);margin-left:4px;">100%</span>
-              </div>
-              <button class="btn btn-outline btn-sm">Reordenar Preguntas</button>
-            </div>
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th style="width:40px">#</th>
-                    <th>Pregunta</th>
-                    <th>Tipo</th>
-                    <th>Dimensión</th>
-                    <th>Peso</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="font-weight:700;color:var(--cp-primary);">1</td>
-                    <td style="font-size:13px;max-width:400px;">Identifique el marco normativo aplicable al procedimiento...</td>
-                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
-                    <td style="font-size:12px;">Conocimiento Normativo</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">8%</td>
-                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight:700;color:var(--cp-primary);">2</td>
-                    <td style="font-size:13px;max-width:400px;">Respecto al plazo de prescripción de la potestad sancionadora...</td>
-                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
-                    <td style="font-size:12px;">Conocimiento Normativo</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">7%</td>
-                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight:700;color:var(--cp-primary);">3</td>
-                    <td style="font-size:13px;max-width:400px;">En relación con el principio de tipicidad y la calificación...</td>
-                    <td><span class="badge badge-primary">Opción Múltiple</span></td>
-                    <td style="font-size:12px;">Razonamiento Jurídico</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">10%</td>
-                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight:700;color:var(--cp-primary);">4</td>
-                    <td style="font-size:13px;max-width:400px;">Analice la validez del Acta de Fiscalización N° 4005...</td>
-                    <td><span class="badge" style="background:#EFF6FF;color:#2563EB;">Respuesta Libre</span></td>
-                    <td style="font-size:12px;">Análisis Documental</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">12%</td>
-                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
-                  </tr>
-                  <tr>
-                    <td style="font-weight:700;color:var(--cp-primary);">5</td>
-                    <td style="font-size:13px;max-width:400px;">Desarrolle la estrategia de defensa técnica que adoptaría...</td>
-                    <td><span class="badge" style="background:#EFF6FF;color:#2563EB;">Respuesta Libre</span></td>
-                    <td style="font-size:12px;">Estrategia Legal</td>
-                    <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">15%</td>
-                    <td><button class="btn btn-ghost btn-sm">Editar</button></td>
-                  </tr>
-                  <tr><td colspan="6" style="text-align:center;color:var(--cp-muted);font-size:13px;padding:12px;">... 5 preguntas más (6-10)</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Tab: Configuración -->
-          <div id="tab-config" class="tab-content eval-tab-content">
-            <div style="max-width:600px;">
-              <div class="result-panel" style="margin-bottom:20px;">
-                <div class="panel-header"><h3>Datos Generales</h3></div>
-                <div class="panel-body">
-                  <div class="form-group">
-                    <label>Título de la Evaluación</label>
-                    <input type="text" value="PAS OSINERGMIN — Caso Refinería" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
-                  </div>
-                  <div class="form-group">
-                    <label>Tiempo Límite (minutos)</label>
-                    <input type="number" value="240" style="width:120px;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
-                  </div>
-                  <div class="form-group">
-                    <label>Email para Resultados</label>
-                    <input type="email" value="fcrosato@cp-asociados.pe" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
-                  </div>
-                  <div class="form-group" style="margin-bottom:0;">
-                    <label>Palabras de Redacción (separadas por coma)</label>
-                    <input type="text" value="Petroperú, PETROPERU, Refinería Talara" style="width:100%;padding:10px 14px;border:1px solid var(--cp-border);border-radius:6px;font-size:14px;font-family:inherit;">
-                  </div>
-                </div>
-              </div>
-              <button class="btn btn-primary">Guardar Cambios</button>
-            </div>
-          </div>
-
-        </div>
-      </main>
+    <div class="form-group">
+      <label>Contrasena</label>
+      <input class="form-input" type="password" value="password1234">
     </div>
+    <button class="btn btn-primary-full" onclick="go('scr-dashboard')">Iniciar Sesion</button>
+    <p class="login-footer">Acceso exclusivo para evaluadores autorizados</p>
   </div>
+</div>
 
-  <!-- ==================== RESULTS SCREEN ==================== -->
-  <div id="results-screen" class="screen">
-    <div class="admin-layout">
-      <nav class="sidebar">
-        <div class="sidebar-logo">
-          <div class="logo-icon">C&P</div>
-          <div class="logo-text"><span>Córdova</span> & Pasco</div>
-        </div>
-        <div class="sidebar-nav">
-          <div class="sidebar-section">Principal</div>
-          <div class="nav-item" onclick="showScreen('dashboard-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            Dashboard
+<!-- ===================== 2. DASHBOARD ===================== -->
+<div id="scr-dashboard" class="screen">
+  <div class="admin-layout">
+    <!-- Sidebar template inserted by JS -->
+    <nav class="sidebar" id="sb-dashboard"></nav>
+    <main class="main-content">
+      <div class="topbar">
+        <div class="breadcrumbs"><strong>Dashboard</strong></div>
+        <span style="font-size:13px;color:var(--cp-muted);">21 de mayo, 2026</span>
+      </div>
+      <div class="content-area">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Evaluaciones Activas</div>
+            <div class="stat-value">1</div>
+            <div class="stat-change positive">Caso PAS OSINERGMIN</div>
           </div>
-          <div class="sidebar-section">Gestión</div>
-          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
-            Evaluaciones
-            <span class="badge-count">2</span>
+          <div class="stat-card">
+            <div class="stat-label">Candidatos Totales</div>
+            <div class="stat-value">6</div>
+            <div class="stat-change neutral">de 10 posibles</div>
           </div>
-          <div class="nav-item active">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Resultados
+          <div class="stat-card">
+            <div class="stat-label">Evaluaciones Completadas</div>
+            <div class="stat-value">4</div>
+            <div class="stat-change positive">66% completado</div>
           </div>
-          <div class="sidebar-section">Sistema</div>
-          <div class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-            Configuración
-          </div>
-        </div>
-        <div class="sidebar-footer">
-          <div class="avatar">FC</div>
-          <div class="user-info">
-            <div class="user-name">Fernando Crosato</div>
-            <div class="user-role">Evaluador Principal</div>
+          <div class="stat-card">
+            <div class="stat-label">Puntuacion Promedio IA</div>
+            <div class="stat-value" style="color:var(--cp-warning)">72</div>
+            <div class="stat-change neutral">de 100 puntos</div>
           </div>
         </div>
-      </nav>
-
-      <main class="main-content">
-        <div class="topbar">
-          <div class="breadcrumbs">
-            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
-            <span class="sep">/</span>
-            <span>PAS OSINERGMIN</span>
-            <span class="sep">/</span>
-            <strong>Resultados</strong>
+        <div class="section-header">
+          <h2>Evaluaciones</h2>
+          <button class="btn btn-primary btn-sm" onclick="toast('Funcion disponible en la version final')">+ Nueva Evaluacion</button>
+        </div>
+        <div class="eval-grid">
+          <div class="eval-card" onclick="go('scr-eval')">
+            <div class="eval-card-header">
+              <h3>PAS OSINERGMIN — Caso Refineria</h3>
+              <span class="badge badge-active">● Activa</span>
+            </div>
+            <p class="eval-desc">Evaluacion basada en el procedimiento administrativo sancionador iniciado por OSINERGMIN, con documentacion de fiscalizacion, actas e informes tecnicos.</p>
+            <div class="eval-card-stats">
+              <span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>6 candidatos</span>
+              <span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4 horas</span>
+              <span class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>10 preguntas</span>
+            </div>
+          </div>
+          <div class="eval-card" style="opacity:.5;pointer-events:none;">
+            <div class="eval-card-header">
+              <h3>Evaluacion Procesal Civil</h3>
+              <span class="badge badge-draft">Borrador</span>
+            </div>
+            <p class="eval-desc">Caso de responsabilidad civil extracontractual. En fase de preparacion de documentos y formulacion de preguntas.</p>
+            <div class="eval-card-stats">
+              <span class="si">0 candidatos</span>
+              <span class="si">3 horas</span>
+              <span class="si">0 preguntas</span>
+            </div>
           </div>
         </div>
+      </div>
+    </main>
+  </div>
+</div>
 
-        <div class="content-area">
-          <!-- Comparative table -->
-          <div class="section-header">
-            <h2>Tabla Comparativa de Candidatos</h2>
-            <button class="btn btn-outline btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Exportar CSV
-            </button>
-          </div>
+<!-- ===================== 3. EVALUATION DETAIL ===================== -->
+<div id="scr-eval" class="screen">
+  <div class="admin-layout">
+    <nav class="sidebar" id="sb-eval"></nav>
+    <main class="main-content">
+      <div class="topbar">
+        <div class="breadcrumbs">
+          <span class="bc-link" onclick="go('scr-dashboard')">Dashboard</span>
+          <span class="sep">/</span>
+          <strong>PAS OSINERGMIN</strong>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <span class="badge badge-active" style="padding:8px 14px;font-size:13px;">● Activa</span>
+        </div>
+      </div>
+      <div class="tabs" id="eval-tabs">
+        <div class="tab active" onclick="switchTab('eval',0)">Candidatos <span class="tb">6</span></div>
+        <div class="tab" onclick="switchTab('eval',1)">Documentos <span class="tb">26</span></div>
+        <div class="tab" onclick="switchTab('eval',2)">Preguntas <span class="tb">10</span></div>
+        <div class="tab" onclick="switchTab('eval',3)">Configuracion</div>
+      </div>
+      <div class="content-area" style="padding-top:24px;">
 
-          <div class="table-container" style="margin-bottom:32px;">
+        <!-- TAB 0: Candidatos -->
+        <div class="eval-tc active" data-idx="0">
+          <div class="table-container">
+            <div class="table-toolbar">
+              <input class="search-input" type="text" placeholder="Buscar candidato...">
+              <button class="btn btn-primary btn-sm" onclick="showModal()">+ Agregar Candidato</button>
+            </div>
             <table>
-              <thead>
-                <tr>
-                  <th>Posición</th>
-                  <th>Candidato</th>
-                  <th>Puntuación IA</th>
-                  <th>MC Correctas</th>
-                  <th>Tiempo</th>
-                  <th>Tab Switches</th>
-                  <th>Recomendación</th>
-                  <th>Detalle</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Candidato</th><th>Token</th><th>Estado</th><th>Tiempo</th><th>Tab Sw.</th><th>Acciones</th></tr></thead>
               <tbody>
-                <tr style="background: var(--cp-success-light);">
-                  <td style="font-weight:700;font-size:18px;color:var(--cp-success);text-align:center;">1</td>
-                  <td>
-                    <div class="candidate-name">María Fernanda López Rivera</div>
-                    <div class="candidate-email">mflopez@estudio.pe</div>
-                  </td>
-                  <td>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">85</div>
-                  </td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">3/3</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 47min</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">1</td>
-                  <td><span class="badge badge-completed">Recomendada</span></td>
-                  <td><button class="btn btn-primary btn-sm" onclick="showScreen('candidate-detail-screen')">Ver</button></td>
+                <tr class="clickable-row" onclick="go('scr-candidate')">
+                  <td><div class="cname">Maria Fernanda Lopez Rivera</div><div class="cemail">mflopez@estudio.pe</div></td>
+                  <td><span class="token-display">a3f7...8d2e <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-completed">Completado</span></td>
+                  <td class="mono">2h 47min</td>
+                  <td class="mono">1</td>
+                  <td><button class="btn btn-link" onclick="event.stopPropagation();go('scr-candidate')">Ver Resultado →</button></td>
+                </tr>
+                <tr class="clickable-row" onclick="go('scr-results')">
+                  <td><div class="cname">Carlos Eduardo Mendoza Paredes</div><div class="cemail">cmendoza@legal.pe</div></td>
+                  <td><span class="token-display">b9c2...4f1a <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-completed">Completado</span></td>
+                  <td class="mono">3h 12min</td>
+                  <td class="mono">0</td>
+                  <td><button class="btn btn-link" onclick="event.stopPropagation();go('scr-results')">Ver Resultado →</button></td>
+                </tr>
+                <tr class="clickable-row" onclick="go('scr-results')">
+                  <td><div class="cname">Ana Lucia Vargas Castillo</div><div class="cemail">avargas@derecho.pe</div></td>
+                  <td><span class="token-display">d5e8...2b7c <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-completed">Completado</span></td>
+                  <td class="mono">3h 55min</td>
+                  <td class="mono" style="color:var(--cp-danger);font-weight:600;">3</td>
+                  <td><button class="btn btn-link" onclick="event.stopPropagation();go('scr-results')">Ver Resultado →</button></td>
+                </tr>
+                <tr class="clickable-row" onclick="go('scr-results')">
+                  <td><div class="cname">Jorge Alonso Diaz Gutierrez</div><div class="cemail">jdiaz@bufete.pe</div></td>
+                  <td><span class="token-display">e1f3...9a4d <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-completed">Completado</span></td>
+                  <td class="mono">2h 05min</td>
+                  <td class="mono">0</td>
+                  <td><button class="btn btn-link" onclick="event.stopPropagation();go('scr-results')">Ver Resultado →</button></td>
                 </tr>
                 <tr>
-                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">2</td>
-                  <td>
-                    <div class="candidate-name">Carlos Eduardo Mendoza Paredes</div>
-                    <div class="candidate-email">cmendoza@legal.pe</div>
-                  </td>
-                  <td>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">78</div>
-                  </td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">2/3</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 12min</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
-                  <td><span class="badge badge-completed">Recomendado</span></td>
-                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
+                  <td><div class="cname">Valeria Rosas Martinez</div><div class="cemail">vrosas@abogados.pe</div></td>
+                  <td><span class="token-display">f7a2...6c8e <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-in-progress">● En Curso</span></td>
+                  <td class="mono" style="color:var(--cp-warning);">1h 23min</td>
+                  <td class="mono">1</td>
+                  <td><span style="font-size:13px;color:var(--cp-muted);">En curso...</span></td>
                 </tr>
                 <tr>
-                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">3</td>
-                  <td>
-                    <div class="candidate-name">Jorge Alonso Díaz Gutiérrez</div>
-                    <div class="candidate-email">jdiaz@bufete.pe</div>
-                  </td>
-                  <td>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-warning);">65</div>
-                  </td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">2/3</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">2h 05min</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">0</td>
-                  <td><span class="badge badge-in-progress">Considerar</span></td>
-                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
-                </tr>
-                <tr>
-                  <td style="font-weight:700;font-size:18px;color:var(--cp-text);text-align:center;">4</td>
-                  <td>
-                    <div class="candidate-name">Ana Lucía Vargas Castillo</div>
-                    <div class="candidate-email">avargas@derecho.pe</div>
-                  </td>
-                  <td>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-danger);">52</div>
-                  </td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-weight:600;">1/3</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;">3h 55min</td>
-                  <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--cp-danger);font-weight:600;">3</td>
-                  <td><span class="badge badge-danger">No Recomendada</span></td>
-                  <td><button class="btn btn-outline btn-sm">Ver</button></td>
+                  <td><div class="cname">Roberto Sanchez Flores</div><div class="cemail">rsanchez@legal.pe</div></td>
+                  <td><span class="token-display">c4d6...1e9f <button class="copy-btn" onclick="event.stopPropagation();toast('Link copiado')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></span></td>
+                  <td><span class="badge badge-pending">Pendiente</span></td>
+                  <td class="mono" style="color:var(--cp-muted);">—</td>
+                  <td class="mono" style="color:var(--cp-muted);">—</td>
+                  <td><button class="btn btn-link" onclick="toast('Link reenviado por email')">Reenviar Link</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </main>
-    </div>
+
+        <!-- TAB 1: Documentos -->
+        <div class="eval-tc" data-idx="1">
+          <div class="table-container">
+            <div class="table-toolbar">
+              <span style="font-size:13px;color:var(--cp-muted);">26 documentos en 5 carpetas · 48.2 MB total</span>
+              <button class="btn btn-primary btn-sm" onclick="toast('Funcion de upload disponible en version final')">Subir Documentos</button>
+            </div>
+            <table>
+              <thead><tr><th>Carpeta</th><th>Documento</th><th>Nombre Visible (Candidato)</th><th>Tamano</th></tr></thead>
+              <tbody>
+                <tr><td><span class="badge badge-primary">00. Reportes</span></td><td style="font-weight:500;">Informe Final de Emergencia.pdf</td><td style="font-size:13px;color:var(--cp-muted);">Informe Final de Emergencia Operacional</td><td class="mono">2.4 MB</td></tr>
+                <tr><td><span class="badge badge-primary">01. Actas</span></td><td style="font-weight:500;">Acta N 4005.pdf</td><td style="font-size:13px;color:var(--cp-muted);">Acta de Fiscalizacion N 4005</td><td class="mono">1.8 MB</td></tr>
+                <tr><td><span class="badge badge-primary">02. Fiscalizacion</span></td><td style="font-weight:500;">Informe Preliminar.pdf</td><td style="font-size:13px;color:var(--cp-muted);">Informe Preliminar de Supervision</td><td class="mono">3.1 MB</td></tr>
+                <tr><td><span class="badge badge-primary">03. Inicio PAS</span></td><td style="font-weight:500;">Resolucion de Inicio PAS.pdf</td><td style="font-size:13px;color:var(--cp-muted);">Resolucion de Inicio de PAS</td><td class="mono">956 KB</td></tr>
+                <tr><td><span class="badge badge-primary">04. Equipos</span></td><td style="font-weight:500;">Diagrama Unifilar.pdf</td><td style="font-size:13px;color:var(--cp-muted);">Diagrama Tecnico de Instalaciones</td><td class="mono">4.7 MB</td></tr>
+              </tbody>
+            </table>
+            <div style="padding:12px 20px;font-size:12px;color:var(--cp-muted);border-top:1px solid var(--cp-border);">Mostrando 5 de 26 · <strong>Palabras de redaccion:</strong> Petroperu, PETROPERU, Refineria Talara</div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Preguntas -->
+        <div class="eval-tc" data-idx="2">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <span style="font-size:13px;color:var(--cp-muted);">Peso total: <strong style="color:var(--cp-success);font-family:'JetBrains Mono',monospace;">100%</strong></span>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead><tr><th style="width:40px">#</th><th>Pregunta</th><th>Tipo</th><th>Dimension</th><th>Peso</th></tr></thead>
+              <tbody>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">1</td><td style="font-size:13px;">Identifique el marco normativo aplicable al procedimiento...</td><td><span class="badge badge-primary">Opcion Multiple</span></td><td style="font-size:12px;">Conocimiento Normativo</td><td class="mono" style="font-weight:600;">8%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">2</td><td style="font-size:13px;">Respecto al plazo de prescripcion de la potestad sancionadora...</td><td><span class="badge badge-primary">Opcion Multiple</span></td><td style="font-size:12px;">Conocimiento Normativo</td><td class="mono" style="font-weight:600;">7%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">3</td><td style="font-size:13px;">En relacion con el principio de tipicidad y la calificacion...</td><td><span class="badge badge-primary">Opcion Multiple</span></td><td style="font-size:12px;">Razonamiento Juridico</td><td class="mono" style="font-weight:600;">10%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">4</td><td style="font-size:13px;">Analice la validez del Acta de Fiscalizacion N 4005...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Analisis Documental</td><td class="mono" style="font-weight:600;">12%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">5</td><td style="font-size:13px;">Desarrolle la estrategia de defensa tecnica que adoptaria...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Estrategia Legal</td><td class="mono" style="font-weight:600;">15%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">6</td><td style="font-size:13px;">Evalue los medios probatorios aportados por la autoridad...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Analisis Documental</td><td class="mono" style="font-weight:600;">12%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">7</td><td style="font-size:13px;">Redacte los fundamentos de hecho del escrito de descargos...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Comunicacion Profesional</td><td class="mono" style="font-weight:600;">10%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">8</td><td style="font-size:13px;">Identifique los posibles riesgos para el administrado...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Estrategia Legal</td><td class="mono" style="font-weight:600;">10%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">9</td><td style="font-size:13px;">Proponga una ruta de accion post-resolucion...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Estrategia Legal</td><td class="mono" style="font-weight:600;">8%</td></tr>
+                <tr><td style="font-weight:700;color:var(--cp-primary);">10</td><td style="font-size:13px;">Reflexion critica sobre las lecciones aprendidas...</td><td><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);">Respuesta Libre</span></td><td style="font-size:12px;">Razonamiento Juridico</td><td class="mono" style="font-weight:600;">8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: Config -->
+        <div class="eval-tc" data-idx="3">
+          <div style="max-width:600px;">
+            <div class="panel" style="margin-bottom:20px;">
+              <div class="panel-header"><h3>Datos Generales</h3></div>
+              <div class="panel-body">
+                <div class="form-group"><label>Titulo de la Evaluacion</label><input class="form-input" value="PAS OSINERGMIN — Caso Refineria"></div>
+                <div class="form-group"><label>Tiempo Limite (minutos)</label><input class="form-input" type="number" value="240" style="width:120px;"></div>
+                <div class="form-group"><label>Email para Resultados</label><input class="form-input" type="email" value="fcrosato@cp-asociados.pe"></div>
+                <div class="form-group" style="margin-bottom:0;"><label>Palabras de Redaccion</label><input class="form-input" value="Petroperu, PETROPERU, Refineria Talara"></div>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="toast('Cambios guardados exitosamente')">Guardar Cambios</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
   </div>
+</div>
 
-  <!-- ==================== CANDIDATE DETAIL ==================== -->
-  <div id="candidate-detail-screen" class="screen">
-    <div class="admin-layout">
-      <nav class="sidebar">
-        <div class="sidebar-logo">
-          <div class="logo-icon">C&P</div>
-          <div class="logo-text"><span>Córdova</span> & Pasco</div>
+<!-- ===================== 4. RESULTS COMPARISON ===================== -->
+<div id="scr-results" class="screen">
+  <div class="admin-layout">
+    <nav class="sidebar" id="sb-results"></nav>
+    <main class="main-content">
+      <div class="topbar">
+        <div class="breadcrumbs">
+          <span class="bc-link" onclick="go('scr-dashboard')">Dashboard</span><span class="sep">/</span>
+          <span class="bc-link" onclick="go('scr-eval')">PAS OSINERGMIN</span><span class="sep">/</span>
+          <strong>Resultados</strong>
         </div>
-        <div class="sidebar-nav">
-          <div class="sidebar-section">Principal</div>
-          <div class="nav-item" onclick="showScreen('dashboard-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            Dashboard
-          </div>
-          <div class="sidebar-section">Gestión</div>
-          <div class="nav-item" onclick="showScreen('eval-detail-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>
-            Evaluaciones
-          </div>
-          <div class="nav-item active" onclick="showScreen('results-screen')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Resultados
-          </div>
-          <div class="sidebar-section">Sistema</div>
-          <div class="nav-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-            Configuración
-          </div>
+        <button class="btn btn-outline btn-sm" onclick="toast('Exportando CSV...')">Exportar CSV</button>
+      </div>
+      <div class="content-area">
+        <div class="section-header"><h2>Tabla Comparativa de Candidatos</h2></div>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>#</th><th>Candidato</th><th>Punt. IA</th><th>MC</th><th>Tiempo</th><th>Tab Sw.</th><th>Recomendacion</th><th></th></tr></thead>
+            <tbody>
+              <tr class="clickable-row highlight-row" onclick="go('scr-candidate')">
+                <td style="font-weight:700;font-size:18px;color:var(--cp-success);text-align:center;">1</td>
+                <td><div class="cname">Maria Fernanda Lopez Rivera</div><div class="cemail">mflopez@estudio.pe</div></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">85</td>
+                <td class="mono" style="font-weight:600;">3/3</td>
+                <td class="mono">2h 47min</td>
+                <td class="mono">1</td>
+                <td><span class="badge badge-completed">Recomendada</span></td>
+                <td><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();go('scr-candidate')">Ver →</button></td>
+              </tr>
+              <tr class="clickable-row" onclick="toast('Detalle de Carlos Mendoza (demo limitado)')">
+                <td style="font-weight:700;font-size:18px;text-align:center;">2</td>
+                <td><div class="cname">Carlos Eduardo Mendoza Paredes</div><div class="cemail">cmendoza@legal.pe</div></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-success);">78</td>
+                <td class="mono" style="font-weight:600;">2/3</td>
+                <td class="mono">3h 12min</td>
+                <td class="mono">0</td>
+                <td><span class="badge badge-completed">Recomendado</span></td>
+                <td><button class="btn btn-outline btn-sm">Ver</button></td>
+              </tr>
+              <tr class="clickable-row" onclick="toast('Detalle de Jorge Diaz (demo limitado)')">
+                <td style="font-weight:700;font-size:18px;text-align:center;">3</td>
+                <td><div class="cname">Jorge Alonso Diaz Gutierrez</div><div class="cemail">jdiaz@bufete.pe</div></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-warning);">65</td>
+                <td class="mono" style="font-weight:600;">2/3</td>
+                <td class="mono">2h 05min</td>
+                <td class="mono">0</td>
+                <td><span class="badge badge-in-progress">Considerar</span></td>
+                <td><button class="btn btn-outline btn-sm">Ver</button></td>
+              </tr>
+              <tr class="clickable-row" onclick="toast('Detalle de Ana Vargas (demo limitado)')">
+                <td style="font-weight:700;font-size:18px;text-align:center;">4</td>
+                <td><div class="cname">Ana Lucia Vargas Castillo</div><div class="cemail">avargas@derecho.pe</div></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:var(--cp-danger);">52</td>
+                <td class="mono" style="font-weight:600;">1/3</td>
+                <td class="mono">3h 55min</td>
+                <td class="mono" style="color:var(--cp-danger);font-weight:600;">3</td>
+                <td><span class="badge badge-danger">No Recomendada</span></td>
+                <td><button class="btn btn-outline btn-sm">Ver</button></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="sidebar-footer">
-          <div class="avatar">FC</div>
-          <div class="user-info">
-            <div class="user-name">Fernando Crosato</div>
-            <div class="user-role">Evaluador Principal</div>
-          </div>
-        </div>
-      </nav>
+      </div>
+    </main>
+  </div>
+</div>
 
-      <main class="main-content">
-        <div class="topbar">
-          <div class="breadcrumbs">
-            <span onclick="showScreen('dashboard-screen')" style="cursor:pointer">Dashboard</span>
-            <span class="sep">/</span>
-            <span onclick="showScreen('results-screen')" style="cursor:pointer">Resultados</span>
-            <span class="sep">/</span>
-            <strong>María Fernanda López Rivera</strong>
-          </div>
-          <div style="display:flex;gap:10px;">
-            <button class="btn btn-outline btn-sm" onclick="showToast('Reporte enviado a fcrosato@cp-asociados.pe')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              Enviar por Email
-            </button>
-            <button class="btn btn-outline btn-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              Exportar PDF
-            </button>
-          </div>
+<!-- ===================== 5. CANDIDATE DETAIL ===================== -->
+<div id="scr-candidate" class="screen">
+  <div class="admin-layout">
+    <nav class="sidebar" id="sb-candidate"></nav>
+    <main class="main-content">
+      <div class="topbar">
+        <div class="breadcrumbs">
+          <span class="bc-link" onclick="go('scr-dashboard')">Dashboard</span><span class="sep">/</span>
+          <span class="bc-link" onclick="go('scr-results')">Resultados</span><span class="sep">/</span>
+          <strong>Maria Fernanda Lopez Rivera</strong>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline btn-sm" onclick="toast('Reporte enviado a fcrosato@cp-asociados.pe')">Enviar por Email</button>
+          <button class="btn btn-outline btn-sm" onclick="toast('Exportando PDF...')">Exportar PDF</button>
+        </div>
+      </div>
+      <div class="content-area">
+        <!-- Metadata -->
+        <div class="candidate-meta">
+          <div class="meta-card"><div class="meta-value" style="color:var(--cp-success);">85</div><div class="meta-label">Puntuacion IA</div></div>
+          <div class="meta-card"><div class="meta-value">2:47</div><div class="meta-label">Tiempo Usado</div></div>
+          <div class="meta-card"><div class="meta-value">3/3</div><div class="meta-label">MC Correctas</div></div>
+          <div class="meta-card"><div class="meta-value" style="color:var(--cp-muted);">1</div><div class="meta-label">Tab Switches</div></div>
         </div>
 
-        <div class="content-area">
-          <!-- Candidate metadata -->
-          <div class="candidate-meta">
-            <div class="meta-card">
-              <div class="meta-value" style="color:var(--cp-success);">85</div>
-              <div class="meta-label">Puntuación IA</div>
-            </div>
-            <div class="meta-card">
-              <div class="meta-value">2:47</div>
-              <div class="meta-label">Tiempo Usado</div>
-            </div>
-            <div class="meta-card">
-              <div class="meta-value">3/3</div>
-              <div class="meta-label">MC Correctas</div>
-            </div>
-            <div class="meta-card">
-              <div class="meta-value" style="color:var(--cp-muted);">1</div>
-              <div class="meta-label">Tab Switches</div>
-            </div>
-          </div>
-
-          <div class="results-grid">
-            <!-- Left: AI Evaluation -->
-            <div>
-              <div class="result-panel" style="margin-bottom:20px;">
-                <div class="panel-header">
-                  <h3>Evaluación del Agente Legal IA</h3>
-                  <span class="badge badge-primary" style="font-size:11px;">claude-sonnet-4-20250514</span>
+        <div class="results-two-col">
+          <!-- LEFT: AI Panel -->
+          <div>
+            <div class="panel" style="position:sticky;top:80px;">
+              <div class="panel-header">
+                <h3>Evaluacion IA</h3>
+                <span class="badge badge-primary" style="font-size:11px;">claude-sonnet-4-20250514</span>
+              </div>
+              <div class="panel-body">
+                <div class="ai-disclaimer">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <span>Evaluacion generada por IA como herramienta de apoyo. La decision final corresponde al evaluador humano.</span>
                 </div>
-                <div class="panel-body">
-                  <div class="ai-disclaimer">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <span>Esta evaluación fue generada por un agente de IA como herramienta de apoyo. La decisión final corresponde al evaluador humano.</span>
-                  </div>
-
-                  <!-- Recommendation -->
-                  <div style="text-align:center;margin-bottom:24px;">
-                    <div class="recommendation-badge rec-recommended">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                      RECOMENDADA
-                    </div>
-                  </div>
-
-                  <!-- Score by dimension -->
-                  <div class="ai-section">
-                    <h4>Puntuación por Dimensión</h4>
-                    <div class="dimension-row">
-                      <span class="dimension-label">Conocimiento Normativo</span>
-                      <div class="dimension-bar-track">
-                        <div class="dimension-bar-fill" style="width:90%;background:var(--cp-success);"></div>
-                      </div>
-                      <span class="dimension-score" style="color:var(--cp-success);">90</span>
-                    </div>
-                    <div class="dimension-row">
-                      <span class="dimension-label">Razonamiento Jurídico</span>
-                      <div class="dimension-bar-track">
-                        <div class="dimension-bar-fill" style="width:88%;background:var(--cp-success);"></div>
-                      </div>
-                      <span class="dimension-score" style="color:var(--cp-success);">88</span>
-                    </div>
-                    <div class="dimension-row">
-                      <span class="dimension-label">Análisis Documental</span>
-                      <div class="dimension-bar-track">
-                        <div class="dimension-bar-fill" style="width:82%;background:var(--cp-success);"></div>
-                      </div>
-                      <span class="dimension-score" style="color:var(--cp-success);">82</span>
-                    </div>
-                    <div class="dimension-row">
-                      <span class="dimension-label">Estrategia Legal</span>
-                      <div class="dimension-bar-track">
-                        <div class="dimension-bar-fill" style="width:85%;background:var(--cp-success);"></div>
-                      </div>
-                      <span class="dimension-score" style="color:var(--cp-success);">85</span>
-                    </div>
-                    <div class="dimension-row">
-                      <span class="dimension-label">Comunicación Profesional</span>
-                      <div class="dimension-bar-track">
-                        <div class="dimension-bar-fill" style="width:78%;background:var(--cp-warning);"></div>
-                      </div>
-                      <span class="dimension-score" style="color:var(--cp-warning);">78</span>
-                    </div>
-                  </div>
-
-                  <!-- Strengths -->
-                  <div class="ai-section">
-                    <h4>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cp-success)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                      Fortalezas
-                    </h4>
-                    <div>
-                      <span class="ai-tag strength">Dominio sólido del marco normativo OSINERGMIN</span>
-                      <span class="ai-tag strength">Estrategia de defensa bien estructurada</span>
-                      <span class="ai-tag strength">Identificación precisa de vicios procedimentales</span>
-                      <span class="ai-tag strength">Argumentación clara y fundamentada</span>
-                    </div>
-                  </div>
-
-                  <!-- Weaknesses -->
-                  <div class="ai-section">
-                    <h4>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cp-warning)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                      Áreas de Mejora
-                    </h4>
-                    <div>
-                      <span class="ai-tag weakness">Podría profundizar en jurisprudencia del Tribunal de OSINERGMIN</span>
-                      <span class="ai-tag weakness">Redacción de escritos mejorable en estructura formal</span>
-                    </div>
-                  </div>
-
-                  <!-- Executive summary -->
-                  <div class="ai-section" style="margin-bottom:0;">
-                    <h4>Resumen Ejecutivo</h4>
-                    <div style="font-size:14px;line-height:1.7;color:var(--cp-text);background:var(--cp-bg);padding:16px;border-radius:8px;">
-                      La candidata demuestra un conocimiento normativo sólido del procedimiento administrativo sancionador y del marco regulatorio del sector energético. Su análisis del Acta de Fiscalización identifica correctamente los elementos formales y sustantivos relevantes. La estrategia de defensa propuesta es coherente y viable, abordando tanto aspectos procedimentales como de fondo. Se recomienda su consideración para la posición de Asociada.
-                    </div>
-                  </div>
+                <div style="text-align:center;margin-bottom:20px;">
+                  <div class="recommendation-badge rec-yes">RECOMENDADA</div>
+                </div>
+                <div class="ai-section">
+                  <h4>Puntuacion por Dimension</h4>
+                  <div class="dim-row"><span class="dim-label">Conocimiento Normativo</span><div class="dim-track"><div class="dim-fill" style="width:90%;background:var(--cp-success);"></div></div><span class="dim-score" style="color:var(--cp-success);">90</span></div>
+                  <div class="dim-row"><span class="dim-label">Razonamiento Juridico</span><div class="dim-track"><div class="dim-fill" style="width:88%;background:var(--cp-success);"></div></div><span class="dim-score" style="color:var(--cp-success);">88</span></div>
+                  <div class="dim-row"><span class="dim-label">Analisis Documental</span><div class="dim-track"><div class="dim-fill" style="width:82%;background:var(--cp-success);"></div></div><span class="dim-score" style="color:var(--cp-success);">82</span></div>
+                  <div class="dim-row"><span class="dim-label">Estrategia Legal</span><div class="dim-track"><div class="dim-fill" style="width:85%;background:var(--cp-success);"></div></div><span class="dim-score" style="color:var(--cp-success);">85</span></div>
+                  <div class="dim-row"><span class="dim-label">Comunicacion Prof.</span><div class="dim-track"><div class="dim-fill" style="width:78%;background:var(--cp-warning);"></div></div><span class="dim-score" style="color:var(--cp-warning);">78</span></div>
+                </div>
+                <div class="ai-section">
+                  <h4>Fortalezas</h4>
+                  <span class="ai-tag str">Dominio del marco normativo OSINERGMIN</span>
+                  <span class="ai-tag str">Estrategia de defensa bien estructurada</span>
+                  <span class="ai-tag str">Identificacion precisa de vicios procedimentales</span>
+                  <span class="ai-tag str">Argumentacion clara y fundamentada</span>
+                </div>
+                <div class="ai-section">
+                  <h4>Areas de Mejora</h4>
+                  <span class="ai-tag wk">Profundizar en jurisprudencia del Tribunal OSINERGMIN</span>
+                  <span class="ai-tag wk">Estructura formal de escritos mejorable</span>
+                </div>
+                <div class="ai-section" style="margin-bottom:0;">
+                  <h4>Resumen Ejecutivo</h4>
+                  <div style="font-size:13px;line-height:1.7;color:var(--cp-text);background:var(--cp-bg);padding:14px;border-radius:8px;">La candidata demuestra un conocimiento normativo solido del procedimiento administrativo sancionador y del marco regulatorio del sector energetico. Su analisis identifica correctamente los elementos formales y sustantivos. La estrategia de defensa propuesta es coherente y viable. Se recomienda su consideracion para la posicion de Asociada.</div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Right: Responses -->
-            <div>
-              <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
-                <h3 style="font-size:16px;font-weight:600;">Respuestas del Candidato</h3>
-                <span style="font-size:13px;color:var(--cp-muted);">10 de 10 respondidas</span>
-              </div>
+          <!-- RIGHT: Responses -->
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <h3 style="font-size:16px;font-weight:600;">Respuestas del Candidato</h3>
+              <button class="btn btn-outline btn-sm" onclick="toggleAllResponses()">Expandir Todas</button>
+            </div>
 
-              <!-- Q1 - Multiple choice correct -->
-              <div class="response-item">
-                <div class="response-header">
-                  <span class="q-number">1</span>
-                  <span class="q-text">Marco normativo aplicable al PAS</span>
+            <!-- Q1 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">1</span>
+                <span class="q-text">Marco normativo aplicable al PAS</span>
+                <div class="q-meta">
+                  <span class="badge badge-primary" style="font-size:11px;">Opcion Multiple</span>
                   <span class="q-weight">8%</span>
-                </div>
-                <div class="response-body">
-                  <div class="mc-answer mc-correct">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                    <strong>Correcta:</strong> Ley 27444 (LPAG) + normativa sectorial OSINERGMIN
-                  </div>
-                  <div class="ai-comment">
-                    <strong>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
-                      Evaluación IA
-                      <span class="ai-score-inline">9/10</span>
-                    </strong>
-                    Selección correcta. Identifica adecuadamente la interacción entre la norma general y la sectorial.
-                  </div>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
               </div>
-
-              <!-- Q4 - Free response -->
-              <div class="response-item">
-                <div class="response-header">
-                  <span class="q-number">4</span>
-                  <span class="q-text">Análisis de validez del Acta de Fiscalización N° 4005</span>
-                  <span class="q-weight">12%</span>
+              <div class="response-body">
+                <div class="mc-answer mc-correct">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <strong>Correcta:</strong>&nbsp;Ley 27444 (LPAG) + normativa sectorial OSINERGMIN
                 </div>
-                <div class="response-body">
-                  <div class="answer-text">El Acta de Fiscalización N° 4005 presenta varios elementos que deben analizarse para determinar su validez como medio probatorio en el procedimiento sancionador.
-
-En primer lugar, respecto a los requisitos formales, el acta cumple con identificar al funcionario actuante, la fecha y lugar de la diligencia, y los hechos constatados. Sin embargo, se advierte que la notificación al administrado sobre la diligencia podría presentar deficiencias...
-
-La candidata desarrolla un análisis detallado de 847 palabras abordando requisitos formales, valor probatorio, y posibles vicios procedimentales.</div>
-                  <div class="ai-comment">
-                    <strong>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
-                      Evaluación IA
-                      <span class="ai-score-inline">8.5/10</span>
-                    </strong>
-                    Análisis sólido que identifica correctamente los requisitos formales del acta y los posibles vicios. Destaca la observación sobre la notificación previa. Podría profundizar más en la jurisprudencia del Tribunal de OSINERGMIN sobre la valoración de actas.
-                  </div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">9/10</span></strong>
+                  Seleccion correcta. Identifica adecuadamente la interaccion entre la norma general y la sectorial.
                 </div>
-              </div>
-
-              <!-- Q5 - Free response -->
-              <div class="response-item">
-                <div class="response-header">
-                  <span class="q-number">5</span>
-                  <span class="q-text">Estrategia de defensa técnica</span>
-                  <span class="q-weight">15%</span>
-                </div>
-                <div class="response-body">
-                  <div class="answer-text">La estrategia de defensa se estructura en tres niveles complementarios:
-
-1. Nivel procedimental: Cuestionar la validez formal del inicio del PAS, identificando posibles defectos en la notificación, en los plazos y en la competencia del órgano instructor.
-
-2. Nivel sustantivo: Argumentar la atipicidad de la conducta imputada y la ausencia de nexo causal entre las condiciones reportadas y el riesgo alegado por la autoridad...
-
-La candidata presenta una estrategia estructurada de 1,203 palabras con líneas argumentales concretas y fundamentación normativa.</div>
-                  <div class="ai-comment">
-                    <strong>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 110 20 10 10 0 010-20z"/><path d="M12 6v6l4 2"/></svg>
-                      Evaluación IA
-                      <span class="ai-score-inline">9/10</span>
-                    </strong>
-                    Estrategia bien estructurada en tres niveles, con argumentación jurídica sólida. La diferenciación entre defensa procedimental y sustantiva demuestra madurez profesional. Excelente identificación de la línea de atipicidad como argumento principal.
-                  </div>
-                </div>
-              </div>
-
-              <div style="text-align:center;padding:16px;color:var(--cp-muted);font-size:13px;">
-                Mostrando 3 de 10 respuestas &middot; <a href="#" style="color:var(--cp-primary);text-decoration:none;" onclick="event.preventDefault();showToast('Expandir todas las respuestas')">Ver todas</a>
               </div>
             </div>
+
+            <!-- Q2 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">2</span>
+                <span class="q-text">Plazo de prescripcion de la potestad sancionadora</span>
+                <div class="q-meta">
+                  <span class="badge badge-primary" style="font-size:11px;">Opcion Multiple</span>
+                  <span class="q-weight">7%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="mc-answer mc-correct">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <strong>Correcta:</strong>&nbsp;El plazo general de 4 anos aplica, pero debe verificarse la norma especial
+                </div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8/10</span></strong>
+                  Correcta. La candidata demuestra entender la tension entre el plazo general de la LPAG y las disposiciones especiales del sector energia.
+                </div>
+              </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">3</span>
+                <span class="q-text">Principio de tipicidad y calificacion de la infraccion</span>
+                <div class="q-meta">
+                  <span class="badge badge-primary" style="font-size:11px;">Opcion Multiple</span>
+                  <span class="q-weight">10%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="mc-answer mc-correct">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  <strong>Correcta:</strong>&nbsp;La tipificacion requiere que la conducta este expresamente descrita en la norma
+                </div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">10/10</span></strong>
+                  Excelente. Identifica la trampa de la opcion que sugiere tipicidad por analogia. Demuestra comprension profunda del principio de legalidad en materia sancionadora.
+                </div>
+              </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">4</span>
+                <span class="q-text">Validez del Acta de Fiscalizacion N 4005</span>
+                <div class="q-meta">
+                  <span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span>
+                  <span class="q-weight">12%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">El Acta de Fiscalizacion N 4005 presenta varios elementos que deben analizarse para determinar su validez como medio probatorio en el procedimiento sancionador.
+
+En primer lugar, respecto a los requisitos formales, el acta cumple con identificar al funcionario actuante, la fecha y lugar de la diligencia, y los hechos constatados. Sin embargo, se advierte que la notificacion al administrado sobre la diligencia podria presentar deficiencias en cuanto al plazo razonable de anticipacion.
+
+En segundo lugar, en cuanto al valor probatorio, el acta constituye un medio de prueba privilegiado conforme al articulo 166 de la LPAG, dado que fue levantada por funcionario competente en ejercicio de sus funciones. No obstante, este valor probatorio admite prueba en contrario, lo cual abre la puerta a una linea de defensa basada en la contradiccion de los hechos constatados.
+
+Finalmente, se identifican posibles vicios procedimentales: (i) la falta de firma del representante del administrado en el acta, (ii) la ausencia de observaciones del fiscalizado en el mismo acto, y (iii) posibles inconsistencias entre el informe preliminar y los hechos consignados en el acta. Estos elementos podrian ser invocados como argumentos de defensa para cuestionar la fiabilidad del medio probatorio.</div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8.5/10</span></strong>
+                  Analisis solido que identifica correctamente los requisitos formales del acta y los posibles vicios. Destaca la observacion sobre la notificacion previa y el valor probatorio del acta administrativa. Podria profundizar mas en la jurisprudencia del Tribunal de OSINERGMIN sobre la valoracion de actas de fiscalizacion.
+                </div>
+              </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">5</span>
+                <span class="q-text">Estrategia de defensa tecnica</span>
+                <div class="q-meta">
+                  <span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span>
+                  <span class="q-weight">15%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">La estrategia de defensa se estructura en tres niveles complementarios:
+
+1. NIVEL PROCEDIMENTAL: Cuestionar la validez formal del inicio del PAS. Se identifican posibles defectos en: (a) la notificacion de la resolucion de inicio, verificando el cumplimiento de los plazos y formalidades del articulo 21 de la LPAG; (b) la competencia del organo instructor, confirmando que la delegacion de facultades se encuentra vigente; y (c) la motivacion del acto, exigiendo que la resolucion de inicio contenga una imputacion precisa y circunstanciada.
+
+2. NIVEL SUSTANTIVO: Argumentar la atipicidad de la conducta imputada y la ausencia de nexo causal. La defensa debe demostrar que: (a) la conducta del administrado no encuadra en el tipo infractor invocado por la autoridad; (b) las condiciones reportadas en el acta obedecen a causas no imputables al administrado (fuerza mayor, caso fortuito, hecho de tercero); y (c) se adoptaron las medidas de diligencia debida conforme a la normativa tecnica aplicable.
+
+3. NIVEL PROBATORIO: Construir un expediente de defensa robusto. Esto incluye: (a) informes tecnicos independientes que contradigan los hallazgos de la fiscalizacion; (b) registros de mantenimiento y cumplimiento normativo; (c) declaraciones testimoniales del personal tecnico; y (d) solicitar la actuacion de pruebas de oficio que favorezcan la posicion del administrado.
+
+La prioridad seria invocar primero los argumentos procedimentales (nulidad del acto de inicio), reservando los argumentos de fondo como linea subsidiaria. Esta aproximacion permite maximizar las oportunidades procesales y mantener todas las lineas de defensa abiertas.</div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">9/10</span></strong>
+                  Estrategia excepcionalmente bien estructurada en tres niveles, con argumentacion juridica solida y referencias normativas pertinentes. La diferenciacion entre defensa procedimental, sustantiva y probatoria demuestra madurez profesional. Excelente la priorizacion de la linea procedimental como estrategia principal. Destaca la mencion de la diligencia debida como eximente de responsabilidad.
+                </div>
+              </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">6</span>
+                <span class="q-text">Evaluacion de medios probatorios de la autoridad</span>
+                <div class="q-meta">
+                  <span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span>
+                  <span class="q-weight">12%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">Los medios probatorios aportados por la autoridad deben evaluarse tanto en su pertinencia como en su suficiencia para acreditar la infraccion imputada.
+
+El informe de fiscalizacion constituye el principal sustento factico, pero su valor depende de la rigurosidad metodologica empleada. Se debe verificar: la cadena de custodia de las evidencias, la cualificacion tecnica del personal fiscalizador, y la consistencia interna del informe con las conclusiones alcanzadas.
+
+Respecto al acta de fiscalizacion, como se analizo en la pregunta anterior, presenta debilidades formales que pueden afectar su eficacia probatoria. Los registros fotograficos y documentales anexos deben contrastarse con la evidencia del administrado para identificar inconsistencias o interpretaciones alternativas de los hallazgos.</div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8/10</span></strong>
+                  Analisis competente de los medios probatorios. Buena referencia cruzada con la pregunta anterior. Identifica correctamente la cadena de custodia como punto critico. Podria profundizar en la carga de la prueba en procedimientos sancionadores y el principio de presuncion de licitud.
+                </div>
+              </div>
+            </div>
+
+            <!-- Q7-10 collapsed -->
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">7</span>
+                <span class="q-text">Fundamentos de hecho del escrito de descargos</span>
+                <div class="q-meta">
+                  <span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span>
+                  <span class="q-weight">10%</span>
+                  <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">Los fundamentos de hecho del escrito de descargos se organizan cronologicamente, iniciando con una descripcion de las actividades del administrado en el sector energetico y su historial de cumplimiento regulatorio. Se detalla la secuencia de eventos que condujeron a la fiscalizacion, las acciones correctivas adoptadas antes, durante y despues de la inspeccion, y se presentan las circunstancias atenuantes que deben considerarse en la graduacion de la sancion.
+
+El escrito destaca la cooperacion del administrado con la autoridad durante todo el procedimiento, la inexistencia de dano efectivo, y las inversiones realizadas en programas de mantenimiento preventivo y cumplimiento normativo.</div>
+                <div class="ai-comment">
+                  <strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">7.5/10</span></strong>
+                  Redaccion correcta pero la estructura del escrito podria ser mas rigurosa en cuanto a formato de escritos legales. Los fundamentos estan bien identificados pero falta mayor precision en las citas normativas dentro del texto.
+                </div>
+              </div>
+            </div>
+
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">8</span>
+                <span class="q-text">Riesgos para el administrado y escenarios</span>
+                <div class="q-meta"><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span><span class="q-weight">10%</span><svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">Se identifican tres escenarios de riesgo: (1) sancion pecuniaria maxima con inhabilitacion temporal, (2) sancion reducida con compromiso de adecuacion, y (3) archivo del procedimiento por vicios formales. El analisis de probabilidad y recomendaciones se detalla para cada escenario con acciones preventivas concretas.</div>
+                <div class="ai-comment"><strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8.5/10</span></strong>Muy buen mapeo de escenarios con analisis de probabilidad. La identificacion de la ruta de archivo por vicios formales es acertada y demuestra vision practica.</div>
+              </div>
+            </div>
+
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">9</span>
+                <span class="q-text">Ruta de accion post-resolucion</span>
+                <div class="q-meta"><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span><span class="q-weight">8%</span><svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">La ruta post-resolucion contempla: recurso de reconsideracion ante el mismo organo, recurso de apelacion ante el Tribunal de OSINERGMIN, y en ultima instancia, accion contencioso-administrativa ante el Poder Judicial. Se recomienda evaluar la via de conciliacion administrativa si la sancion es moderada.</div>
+                <div class="ai-comment"><strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8/10</span></strong>Correcta identificacion de las vias impugnatorias. Buena la mencion de la conciliacion como via pragmatica.</div>
+              </div>
+            </div>
+
+            <div class="response-item">
+              <div class="response-header" onclick="toggleResponse(this)">
+                <span class="q-number">10</span>
+                <span class="q-text">Reflexion critica y lecciones aprendidas</span>
+                <div class="q-meta"><span class="badge" style="background:var(--cp-info-light);color:var(--cp-info);font-size:11px;">Respuesta Libre</span><span class="q-weight">8%</span><svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+              </div>
+              <div class="response-body">
+                <div class="answer-text">El caso evidencia la importancia de un programa de compliance regulatorio robusto en el sector energetico. Las lecciones principales son: (1) la documentacion de diligencia debida es la mejor defensa preventiva, (2) la cooperacion temprana con la autoridad puede generar atenuantes significativas, y (3) el monitoreo continuo de cambios normativos es esencial para anticipar riesgos regulatorios. Desde una perspectiva critica, el sistema sancionador de OSINERGMIN presenta desafios en cuanto a la proporcionalidad de las sanciones frente a infracciones de caracter formal.</div>
+                <div class="ai-comment"><strong><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Evaluacion IA <span class="ai-score-inline">8.5/10</span></strong>Reflexion madura y con vision practica. Destaca el enfoque en compliance preventivo y la critica constructiva al sistema sancionador. Demuestra pensamiento estrategico mas alla del caso concreto.</div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
+</div>
 
-  <!-- ==================== MODAL: Add Candidate ==================== -->
-  <div class="modal-overlay" id="add-candidate-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3>Agregar Candidato</h3>
-        <button class="btn btn-ghost" onclick="hideModal()" style="font-size:18px;">&times;</button>
-      </div>
-      <div class="modal-body" id="modal-step-1">
-        <div class="form-group">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Ej: Ana María Torres Vega" id="new-candidate-name">
-        </div>
-        <div class="form-group" style="margin-bottom:0;">
-          <label>Correo electrónico</label>
-          <input type="email" placeholder="Ej: atorres@estudio.pe" id="new-candidate-email">
-        </div>
-      </div>
-      <div class="modal-body" id="modal-step-2" style="display:none;">
-        <div style="text-align:center;margin-bottom:16px;">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--cp-success)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 16 7 13"/></svg>
-          <h3 style="font-size:16px;margin-top:8px;">Candidato Agregado</h3>
-          <p style="font-size:13px;color:var(--cp-muted);margin-top:4px;">Token generado exitosamente</p>
-        </div>
-        <div class="generated-link">
-          <span class="link-text">https://evaluacion.cp-asociados.pe/evaluacion/g8h2k4m6-n9p1-r3t5-v7w9-x1y3z5a7b9c1</span>
-          <button class="copy-btn" onclick="showToast('Link copiado al portapapeles')" style="font-size:16px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          </button>
-        </div>
-        <p style="font-size:12px;color:var(--cp-muted);margin-top:12px;line-height:1.5;">Este link es de uso único. El candidato podrá acceder a la evaluación una sola vez. Al completarla, el token se invalida permanentemente.</p>
-      </div>
-      <div class="modal-footer" id="modal-footer-1">
-        <button class="btn btn-outline" onclick="hideModal()">Cancelar</button>
-        <button class="btn btn-primary" onclick="generateToken()" style="width:auto;">Generar Token</button>
-      </div>
-      <div class="modal-footer" id="modal-footer-2" style="display:none;">
-        <button class="btn btn-outline" onclick="hideModal()">Cerrar</button>
-        <button class="btn btn-success" onclick="showToast('Link enviado por email al candidato');hideModal();" style="width:auto;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Enviar Link por Email
-        </button>
-      </div>
+<!-- ==================== MODAL ==================== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header"><h3 id="modal-title">Agregar Candidato</h3><button class="btn btn-ghost" onclick="hideModal()" style="font-size:18px;">&times;</button></div>
+    <div class="modal-body" id="modal-form">
+      <div class="form-group"><label>Nombre completo</label><input class="form-input" placeholder="Ej: Ana Maria Torres Vega"></div>
+      <div class="form-group" style="margin-bottom:0;"><label>Correo electronico</label><input class="form-input" type="email" placeholder="Ej: atorres@estudio.pe"></div>
     </div>
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <!-- Demo Navigation -->
-  <div class="demo-nav">
-    <div class="demo-title">Demo — Navegación</div>
-    <div class="demo-btns">
-      <button class="active-btn" onclick="showScreen('login-screen')">1. Login</button>
-      <button onclick="showScreen('dashboard-screen')">2. Dashboard</button>
-      <button onclick="showScreen('eval-detail-screen')">3. Detalle Evaluación</button>
-      <button onclick="showScreen('results-screen')">4. Resultados</button>
-      <button onclick="showScreen('candidate-detail-screen')">5. Detalle Candidato</button>
+    <div class="modal-body" id="modal-success" style="display:none;">
+      <div style="text-align:center;margin-bottom:16px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--cp-success)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10 16 7 13"/></svg>
+        <h3 style="font-size:16px;margin-top:8px;">Candidato Agregado</h3>
+        <p style="font-size:13px;color:var(--cp-muted);margin-top:4px;">Token generado exitosamente</p>
+      </div>
+      <div class="generated-link">
+        <span class="lt">https://evaluacion.cp-asociados.pe/evaluacion/g8h2k4m6-n9p1-r3t5-v7w9-x1y3z5a7b9c1</span>
+        <button class="copy-btn" onclick="toast('Link copiado al portapapeles')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+      </div>
+      <p style="font-size:12px;color:var(--cp-muted);margin-top:12px;line-height:1.5;">Este link es de uso unico. El candidato accede una sola vez. Al completar, el token se invalida permanentemente.</p>
     </div>
+    <div class="modal-footer" id="modal-f1"><button class="btn btn-outline" onclick="hideModal()">Cancelar</button><button class="btn btn-primary" style="width:auto;" onclick="genToken()">Generar Token</button></div>
+    <div class="modal-footer" id="modal-f2" style="display:none;"><button class="btn btn-outline" onclick="hideModal()">Cerrar</button><button class="btn btn-success" style="width:auto;" onclick="toast('Link enviado por email');hideModal();">Enviar Link por Email</button></div>
   </div>
+</div>
 
-  <script>
-    // Screen management
-    function showScreen(screenId) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      const screen = document.getElementById(screenId);
-      if (screen) {
-        screen.classList.add('active');
-        // Update admin layout display
-        if (screenId !== 'login-screen') {
-          screen.style.display = 'flex';
-        }
-      }
-      // Update demo nav buttons
-      document.querySelectorAll('.demo-nav button').forEach(b => b.classList.remove('active-btn'));
-      const screenMap = {
-        'login-screen': 0,
-        'dashboard-screen': 1,
-        'eval-detail-screen': 2,
-        'results-screen': 3,
-        'candidate-detail-screen': 4
-      };
-      const idx = screenMap[screenId];
-      if (idx !== undefined) {
-        document.querySelectorAll('.demo-nav .demo-btns button')[idx].classList.add('active-btn');
-      }
-      window.scrollTo(0, 0);
-    }
+<!-- Toast -->
+<div class="toast" id="toast-el"></div>
 
-    // Tab switching
-    function switchTab(tabEl, tabGroupId, contentClass) {
-      // Deactivate all tabs in group
-      document.querySelectorAll('#' + tabGroupId + ' .tab').forEach(t => t.classList.remove('active'));
-      tabEl.classList.add('active');
-      // Show corresponding content
-      const target = tabEl.getAttribute('data-tab');
-      document.querySelectorAll('.' + contentClass).forEach(c => c.classList.remove('active'));
-      document.getElementById(target).classList.add('active');
-    }
+<!-- Demo Nav -->
+<div class="demo-nav">
+  <div class="dt">Demo — Navegacion</div>
+  <div class="db" id="demo-btns">
+    <button class="on" onclick="go('scr-login')">1. Login</button>
+    <button onclick="go('scr-dashboard')">2. Dashboard</button>
+    <button onclick="go('scr-eval')">3. Detalle Evaluacion</button>
+    <button onclick="go('scr-results')">4. Resultados</button>
+    <button onclick="go('scr-candidate')">5. Detalle + Respuestas</button>
+  </div>
+</div>
 
-    // Modal
-    function showModal() {
-      document.getElementById('add-candidate-modal').classList.add('show');
-      document.getElementById('modal-step-1').style.display = 'block';
-      document.getElementById('modal-step-2').style.display = 'none';
-      document.getElementById('modal-footer-1').style.display = 'flex';
-      document.getElementById('modal-footer-2').style.display = 'none';
-    }
+<script>
+// === Sidebar HTML (reused) ===
+const sidebarHTML = (active) => `
+  <div class="sidebar-logo"><div class="s-icon">C&P</div><div class="s-text"><span>Cordova</span> & Pasco</div></div>
+  <div class="sidebar-nav">
+    <div class="sidebar-section">Principal</div>
+    <div class="nav-item ${active==='dash'?'active':''}" onclick="go('scr-dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard</div>
+    <div class="sidebar-section">Gestion</div>
+    <div class="nav-item ${active==='eval'?'active':''}" onclick="go('scr-eval')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/><path d="M9 14l2 2 4-4"/></svg>Evaluaciones<span class="badge-count">2</span></div>
+    <div class="nav-item ${active==='results'||active==='candidate'?'active':''}" onclick="go('scr-results')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h16a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Resultados</div>
+    <div class="sidebar-section">Sistema</div>
+    <div class="nav-item" onclick="toast('Configuracion disponible en version final')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Configuracion</div>
+  </div>
+  <div class="sidebar-footer"><div class="avatar">FC</div><div><div class="user-name">Fernando Crosato</div><div class="user-role">Evaluador Principal</div></div></div>`;
 
-    function hideModal() {
-      document.getElementById('add-candidate-modal').classList.remove('show');
-    }
+// Map screens to sidebar active state
+const sbMap = { 'scr-dashboard':'dash', 'scr-eval':'eval', 'scr-results':'results', 'scr-candidate':'candidate' };
+const screenIds = ['scr-login','scr-dashboard','scr-eval','scr-results','scr-candidate'];
 
-    function generateToken() {
-      document.getElementById('modal-step-1').style.display = 'none';
-      document.getElementById('modal-step-2').style.display = 'block';
-      document.getElementById('modal-footer-1').style.display = 'none';
-      document.getElementById('modal-footer-2').style.display = 'flex';
-    }
+// Populate sidebars on load
+document.querySelectorAll('.sidebar[id]').forEach(sb => {
+  const scrId = sb.id.replace('sb-','scr-');
+  sb.innerHTML = sidebarHTML(sbMap[scrId]||'');
+});
 
-    // Toast
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ' + message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
+// Screen navigation
+function go(id) {
+  screenIds.forEach(s => {
+    const el = document.getElementById(s);
+    el.classList.remove('active-login','active-admin');
+  });
+  const target = document.getElementById(id);
+  if (id === 'scr-login') {
+    target.classList.add('active-login');
+  } else {
+    target.classList.add('active-admin');
+    // Update sidebar active states
+    const sb = target.querySelector('.sidebar[id]');
+    if (sb) sb.innerHTML = sidebarHTML(sbMap[id]||'');
+  }
+  // Update demo nav
+  document.querySelectorAll('#demo-btns button').forEach((b,i) => {
+    b.classList.toggle('on', screenIds[i] === id);
+  });
+  window.scrollTo(0,0);
+}
 
-    // Close modal on overlay click
-    document.getElementById('add-candidate-modal').addEventListener('click', function(e) {
-      if (e.target === this) hideModal();
-    });
-  </script>
+// Tabs
+function switchTab(group, idx) {
+  const tabsEl = document.getElementById(group+'-tabs');
+  tabsEl.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.'+group+'-tc').forEach((c,i) => c.classList.toggle('active', i===idx));
+}
+
+// Responses expand/collapse
+function toggleResponse(headerEl) {
+  const body = headerEl.nextElementSibling;
+  const icon = headerEl.querySelector('.expand-icon');
+  body.classList.toggle('open');
+  icon.classList.toggle('open');
+}
+
+function toggleAllResponses() {
+  const bodies = document.querySelectorAll('#scr-candidate .response-body');
+  const anyOpen = Array.from(bodies).some(b => b.classList.contains('open'));
+  bodies.forEach(b => { anyOpen ? b.classList.remove('open') : b.classList.add('open'); });
+  document.querySelectorAll('#scr-candidate .expand-icon').forEach(i => { anyOpen ? i.classList.remove('open') : i.classList.add('open'); });
+}
+
+// Modal
+function showModal() {
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('modal-form').style.display = 'block';
+  document.getElementById('modal-success').style.display = 'none';
+  document.getElementById('modal-f1').style.display = 'flex';
+  document.getElementById('modal-f2').style.display = 'none';
+}
+function hideModal() { document.getElementById('modal').classList.remove('show'); }
+function genToken() {
+  document.getElementById('modal-form').style.display = 'none';
+  document.getElementById('modal-success').style.display = 'block';
+  document.getElementById('modal-f1').style.display = 'none';
+  document.getElementById('modal-f2').style.display = 'flex';
+}
+document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) hideModal(); });
+
+// Toast
+function toast(msg) {
+  const t = document.getElementById('toast-el');
+  t.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ' + msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
 </body>
 </html>
