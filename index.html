@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluacion — Cordova & Pasco Asociados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cp-primary: #E75849;
+      --cp-primary-hover: #D04A3C;
+      --cp-primary-light: #FEF2F1;
+      --cp-primary-lighter: #FFF8F7;
+      --cp-black: #010101;
+      --cp-bg: #FFFFFF;
+      --cp-surface: #F9FAFB;
+      --cp-border: #E5E7EB;
+      --cp-text: #111827;
+      --cp-muted: #6B7280;
+      --cp-success: #16A34A;
+      --cp-success-light: #F0FDF4;
+      --cp-warning: #F59E0B;
+      --cp-warning-light: #FFFBEB;
+      --cp-danger: #DC2626;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cp-text);
+      background: var(--cp-surface);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ===== HEADER ===== */
+    .candidate-header {
+      background: var(--cp-bg);
+      border-bottom: 1px solid var(--cp-border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--cp-black);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span { color: var(--cp-primary); }
+
+    .header-separator {
+      width: 1px;
+      height: 24px;
+      background: var(--cp-border);
+    }
+
+    .header-label {
+      font-size: 13px;
+      color: var(--cp-muted);
+      font-weight: 500;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cp-surface);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--cp-border);
+    }
+
+    .timer-container.warning {
+      background: var(--cp-warning-light);
+      border-color: var(--cp-warning);
+    }
+
+    .timer-container.danger {
+      background: var(--cp-primary-light);
+      border-color: var(--cp-primary);
+      animation: pulse-border 1.5s infinite;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { border-color: var(--cp-primary); }
+      50% { border-color: transparent; }
+    }
+
+    .timer-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--cp-muted);
+    }
+
+    .timer-container.warning .timer-icon { color: var(--cp-warning); }
+    .timer-container.danger .timer-icon { color: var(--cp-primary); }
+
+    .timer-display {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--cp-text);
+      letter-spacing: 1px;
+    }
+
+    .timer-container.warning .timer-display { color: var(--cp-warning); }
+    .timer-container.danger .timer-display { color: var(--cp-primary); }
+
+    .autosave-indicator {
+      font-size: 12px;
+      color: var(--cp-success);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .autosave-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cp-success);
+      border-radius: 50%;
+    }
+
+    .progress-info {
+      font-size: 13px;
+      color: var(--cp-muted);
+      font-weight: 500;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen { display: none; min-height: calc(100vh - 64px); }
+    .screen.active { display: block; }
+
+    /* ===== WELCOME SCREEN ===== */
+    .welcome-screen {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 64px);
+      padding: 48px 32px;
+      background: var(--cp-bg);
+    }
+    .welcome-screen.active { display: flex; }
+
+    .welcome-card {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .welcome-logo {
+      width: 200px;
+      margin: 0 auto 40px;
+    }
+
+    .welcome-greeting {
+      font-size: 14px;
+      color: var(--cp-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .welcome-name {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--cp-black);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .welcome-position {
+      font-size: 16px;
+      color: var(--cp-primary);
+      font-weight: 500;
+      margin-bottom: 40px;
+    }
+
+    .welcome-divider {
+      width: 60px;
+      height: 3px;
+      background: var(--cp-primary);
+      margin: 0 auto 40px;
+      border-radius: 2px;
+    }
+
+    .instructions-box {
+      background: var(--cp-surface);
+      border: 1px solid var(--cp-border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .instructions-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cp-text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instruction-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--cp-text);
+      line-height: 1.5;
+    }
+
+    .instruction-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--cp-primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--cp-primary);
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .warning-box {
+      background: var(--cp-warning-light);
+      border: 1px solid #FDE68A;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #92400E;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .warning-box svg { flex-shrink: 0; margin-top: 1px; }
+
+    .btn-primary {
+      background: var(--cp-primary);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      letter-spacing: -0.2px;
+    }
+
+    .btn-primary:hover { background: var(--cp-primary-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(231,88,73,0.3); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      border: 1px solid var(--cp-border);
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover { border-color: var(--cp-primary); color: var(--cp-primary); }
+
+    /* ===== DOCUMENTS SCREEN ===== */
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    .docs-sidebar {
+      background: var(--cp-bg);
+      border-right: 1px solid var(--cp-border);
+      padding: 24px 0;
+      overflow-y: auto;
+      max-height: calc(100vh - 64px);
+      position: sticky;
+      top: 64px;
+    }
+
+    .docs-sidebar-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cp-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0 20px;
+      margin-bottom: 16px;
+    }
+
+    .doc-folder {
+      margin-bottom: 8px;
+    }
+
+    .doc-folder-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--cp-text);
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .doc-folder-name:hover { background: var(--cp-surface); }
+
+    .doc-item {
+      padding: 8px 20px 8px 44px;
+      font-size: 13px;
+      color: var(--cp-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.1s;
+      border-left: 3px solid transparent;
+    }
+
+    .doc-item:hover { background: var(--cp-primary-lighter); color: var(--cp-text); }
+    .doc-item.active { background: var(--cp-primary-light); color: var(--cp-primary); border-left-color: var(--cp-primary); font-weight: 500; }
+
+    .doc-item .doc-size {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--cp-border);
+    }
+
+    .doc-item.active .doc-size { color: var(--cp-primary); opacity: 0.5; }
+
+    .docs-main {
+      padding: 32px;
+      background: var(--cp-surface);
+    }
+
+    .pdf-viewer {
+      background: var(--cp-bg);
+      border-radius: 12px;
+      border: 1px solid var(--cp-border);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .pdf-toolbar {
+      background: var(--cp-surface);
+      border-bottom: 1px solid var(--cp-border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--cp-muted);
+    }
+
+    .pdf-toolbar-left { display: flex; align-items: center; gap: 12px; }
+    .pdf-toolbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .pdf-nav-btn {
+      background: var(--cp-bg);
+      border: 1px solid var(--cp-border);
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--cp-muted);
+      transition: all 0.1s;
+    }
+
+    .pdf-nav-btn:hover { border-color: var(--cp-primary); color: var(--cp-primary); }
+
+    .pdf-content {
+      padding: 40px;
+      min-height: 500px;
+      position: relative;
+    }
+
+    .pdf-placeholder {
+      color: var(--cp-text);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .pdf-placeholder h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--cp-black);
+    }
+
+    .redacted {
+      background: var(--cp-black);
+      color: var(--cp-black);
+      padding: 1px 4px;
+      border-radius: 2px;
+      user-select: none;
+      cursor: not-allowed;
+      font-size: inherit;
+    }
+
+    .docs-footer-bar {
+      padding: 20px 32px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-go-exam {
+      background: var(--cp-primary);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-go-exam:hover { background: var(--cp-primary-hover); }
+
+    /* ===== EXAM SCREEN ===== */
+    .exam-layout {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 32px 120px;
+    }
+
+    .exam-intro {
+      background: var(--cp-bg);
+      border: 1px solid var(--cp-border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+
+    .exam-intro-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--cp-black);
+      margin-bottom: 8px;
+    }
+
+    .exam-intro-desc {
+      font-size: 14px;
+      color: var(--cp-muted);
+      line-height: 1.6;
+    }
+
+    .btn-back-docs {
+      background: none;
+      border: 1px solid var(--cp-border);
+      color: var(--cp-muted);
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 12px;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-back-docs:hover { border-color: var(--cp-primary); color: var(--cp-primary); }
+
+    .question-card {
+      background: var(--cp-bg);
+      border: 1px solid var(--cp-border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 20px;
+      transition: border-color 0.15s;
+    }
+
+    .question-card:focus-within {
+      border-color: var(--cp-primary);
+      box-shadow: 0 0 0 3px rgba(231,88,73,0.08);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .question-number {
+      background: var(--cp-primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .question-meta {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .question-type-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-libre { background: #EFF6FF; color: #1D4ED8; }
+    .badge-multiple { background: #F0FDF4; color: #15803D; }
+
+    .question-weight {
+      font-size: 12px;
+      color: var(--cp-muted);
+      font-weight: 500;
+    }
+
+    .question-text {
+      font-size: 15px;
+      color: var(--cp-text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .question-dimension {
+      font-size: 12px;
+      color: var(--cp-muted);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    /* Multiple choice */
+    .mc-options { list-style: none; }
+
+    .mc-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .mc-option:hover { border-color: var(--cp-primary); background: var(--cp-primary-lighter); }
+    .mc-option.selected { border-color: var(--cp-primary); background: var(--cp-primary-light); }
+
+    .mc-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--cp-border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .mc-option:hover .mc-radio { border-color: var(--cp-primary); }
+    .mc-option.selected .mc-radio { border-color: var(--cp-primary); background: var(--cp-primary); }
+
+    .mc-radio-inner {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .mc-option.selected .mc-radio-inner { opacity: 1; }
+
+    .mc-label { font-weight: 500; color: var(--cp-muted); margin-right: 4px; }
+    .mc-option.selected .mc-label { color: var(--cp-primary); }
+
+    /* Free response */
+    .free-response-area {
+      width: 100%;
+      min-height: 160px;
+      padding: 16px;
+      border: 1px solid var(--cp-border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--cp-text);
+      resize: vertical;
+      transition: border-color 0.15s;
+      background: var(--cp-bg);
+    }
+
+    .free-response-area:focus {
+      outline: none;
+      border-color: var(--cp-primary);
+      box-shadow: 0 0 0 3px rgba(231,88,73,0.08);
+    }
+
+    .free-response-area::placeholder { color: #D1D5DB; }
+
+    .textarea-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--cp-muted);
+    }
+
+    /* Submit bar */
+    .submit-bar {
+      background: var(--cp-bg);
+      border-top: 1px solid var(--cp-border);
+      padding: 16px 32px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 100;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+    }
+
+    .submit-bar .progress-text {
+      font-size: 13px;
+      color: var(--cp-muted);
+    }
+
+    .btn-submit {
+      background: var(--cp-primary);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-submit:hover { background: var(--cp-primary-hover); }
+
+    /* ===== THANK YOU SCREEN ===== */
+    .thankyou-screen {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 64px);
+      padding: 48px 32px;
+      background: var(--cp-bg);
+    }
+    .thankyou-screen.active { display: flex; }
+
+    .thankyou-card {
+      max-width: 560px;
+      text-align: center;
+    }
+
+    .thankyou-check {
+      width: 72px;
+      height: 72px;
+      background: var(--cp-success-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .thankyou-check svg { color: var(--cp-success); }
+
+    .thankyou-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cp-black);
+      margin-bottom: 12px;
+    }
+
+    .thankyou-message {
+      font-size: 15px;
+      color: var(--cp-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .thankyou-details {
+      background: var(--cp-surface);
+      border: 1px solid var(--cp-border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      text-align: left;
+    }
+
+    .thankyou-detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 14px;
+      border-bottom: 1px solid var(--cp-border);
+    }
+
+    .thankyou-detail-row:last-child { border-bottom: none; }
+
+    .detail-label { color: var(--cp-muted); }
+    .detail-value { font-weight: 600; color: var(--cp-text); }
+
+    .thankyou-footer-text {
+      font-size: 13px;
+      color: var(--cp-muted);
+      line-height: 1.6;
+    }
+
+    .thankyou-brand {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--cp-border);
+    }
+
+    .thankyou-brand .logo-text {
+      font-size: 14px;
+      color: var(--cp-muted);
+    }
+
+    .thankyou-brand .logo-text span { color: var(--cp-primary); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--cp-bg);
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--cp-primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .modal p { font-size: 14px; color: var(--cp-muted); margin-bottom: 24px; line-height: 1.6; }
+
+    .modal-buttons { display: flex; gap: 12px; justify-content: center; }
+
+    .btn-cancel {
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      border: 1px solid var(--cp-border);
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-confirm {
+      background: var(--cp-primary);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+
+    .btn-confirm:hover { background: var(--cp-primary-hover); }
+
+    /* ===== TAB WARNING OVERLAY ===== */
+    .tab-warning {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .tab-warning.active { display: flex; }
+
+    .tab-warning-content {
+      background: var(--cp-bg);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 480px;
+      text-align: center;
+      border: 2px solid var(--cp-primary);
+    }
+
+    .tab-warning-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--cp-primary);
+      margin-bottom: 12px;
+    }
+
+    .tab-warning-content p {
+      font-size: 14px;
+      color: var(--cp-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .tab-switch-count {
+      font-size: 13px;
+      color: var(--cp-danger);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    /* ===== NAV TABS ===== */
+    .screen-nav {
+      position: fixed;
+      bottom: 80px;
+      right: 24px;
+      display: flex;
+      gap: 6px;
+      z-index: 50;
+      background: var(--cp-black);
+      padding: 6px;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+
+    .screen-nav button {
+      background: transparent;
+      color: #9CA3AF;
+      border: none;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .screen-nav button:hover { color: white; }
+    .screen-nav button.active { background: var(--cp-primary); color: white; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .docs-layout { grid-template-columns: 1fr; }
+      .docs-sidebar { display: none; }
+      .candidate-header { padding: 0 16px; }
+      .exam-layout { padding: 16px 16px 120px; }
+      .question-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="candidate-header">
+    <div class="header-left">
+      <div class="logo-text"><span>C&P</span> Asociados</div>
+      <div class="header-separator"></div>
+      <div class="header-label" id="headerLabel">Evaluacion para Asociado</div>
+    </div>
+    <div class="header-right" id="headerRight">
+      <div class="autosave-indicator" id="autosave" style="display:none">
+        <div class="autosave-dot"></div>
+        Guardado
+      </div>
+      <div class="progress-info" id="progressInfo" style="display:none">3/10 respondidas</div>
+      <div class="timer-container" id="timerBox" style="display:none">
+        <svg class="timer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="timer-display" id="timerDisplay">03:42:18</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 1: WELCOME -->
+  <div class="welcome-screen screen active" id="screenWelcome">
+    <div class="welcome-card">
+      <svg class="welcome-logo" viewBox="0 0 542 528" xmlns="http://www.w3.org/2000/svg">
+        <polygon fill="#010101" points="236 422 337 422 337 346 201 346 94 346 76 330 76 142 94 127 200 127 272 127 272 51 54 51 0 106 0 365 60 422 200 422 236 422"/>
+        <polygon fill="#E75849" points="481 51 272 51 272 127 347 127 417 127 446 127 467 141 468 330 445 346 417 346 347 346 272 346 272 527 347 422 467 422 542 366 542 102 481 51"/>
+      </svg>
+      <div class="welcome-greeting">Bienvenido/a</div>
+      <div class="welcome-name">Maria Fernanda Lopez Rivera</div>
+      <div class="welcome-position">Candidata a Asociada</div>
+      <div class="welcome-divider"></div>
+
+      <div class="instructions-box">
+        <div class="instructions-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E75849" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Instrucciones de la evaluacion
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-icon">1</div>
+          <div>Dispondra de <strong>4 horas</strong> para completar la evaluacion. El cronometro iniciara al hacer clic en "Iniciar".</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-icon">2</div>
+          <div>Primero revisara la <strong>documentacion del caso</strong>. Puede volver a consultarla en cualquier momento durante el examen.</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-icon">3</div>
+          <div>La evaluacion consta de <strong>10 preguntas</strong>: 3 de opcion multiple y 7 de respuesta libre.</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-icon">4</div>
+          <div>Sus respuestas se <strong>guardan automaticamente</strong> cada 60 segundos. No perdera su progreso.</div>
+        </div>
+        <div class="instruction-item">
+          <div class="instruction-icon">5</div>
+          <div>Los datos del caso han sido <strong>anonimizados</strong>. No intente identificar a las partes involucradas.</div>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#92400E" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div>Los cambios de pestana o ventana seran <strong>detectados y registrados</strong>. Permanezca en esta pagina durante toda la evaluacion.</div>
+      </div>
+
+      <button class="btn-primary" onclick="goToScreen('docs')">Iniciar Evaluacion</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: DOCUMENTS -->
+  <div class="screen" id="screenDocs">
+    <div class="docs-layout">
+      <div class="docs-sidebar">
+        <div class="docs-sidebar-title">Documentos del caso</div>
+
+        <div class="doc-folder">
+          <div class="doc-folder-name">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+            Reportes Regulador
+          </div>
+          <div class="doc-item active" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Informe Final Emergencia
+            <span class="doc-size">500 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Informe Preliminar
+            <span class="doc-size">170 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Cargo Informe Final
+            <span class="doc-size">40 KB</span>
+          </div>
+        </div>
+
+        <div class="doc-folder">
+          <div class="doc-folder-name">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+            Acta de Fiscalizacion
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Acta N. 4005
+            <span class="doc-size">770 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Carta 1 — Expediente
+            <span class="doc-size">180 KB</span>
+          </div>
+        </div>
+
+        <div class="doc-folder">
+          <div class="doc-folder-name">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+            Informe de Fiscalizacion
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Informe de Fiscalizacion
+            <span class="doc-size">400 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Oficio de Fiscalizacion
+            <span class="doc-size">280 KB</span>
+          </div>
+        </div>
+
+        <div class="doc-folder">
+          <div class="doc-folder-name">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+            Inicio del PAS
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Resolucion de Inicio PAS
+            <span class="doc-size">220 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Correo de Presentacion
+            <span class="doc-size">440 KB</span>
+          </div>
+        </div>
+
+        <div class="doc-folder">
+          <div class="doc-folder-name">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+            Documentos Tecnicos
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Diagrama Unifilar Sistema
+            <span class="doc-size">790 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Programa de Intervenciones
+            <span class="doc-size">160 KB</span>
+          </div>
+          <div class="doc-item" onclick="selectDoc(this)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Mantenimientos Ejecutados
+            <span class="doc-size">60 KB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="docs-main">
+        <div class="pdf-viewer">
+          <div class="pdf-toolbar">
+            <div class="pdf-toolbar-left">
+              <strong style="color:var(--cp-text)">Informe Final Emergencia</strong>
+              <span>Pagina 1 de 12</span>
+            </div>
+            <div class="pdf-toolbar-right">
+              <button class="pdf-nav-btn">&#8592;</button>
+              <button class="pdf-nav-btn">&#8594;</button>
+              <button class="pdf-nav-btn">100%</button>
+            </div>
+          </div>
+          <div class="pdf-content">
+            <div class="pdf-placeholder">
+              <h3>INFORME FINAL DE EMERGENCIA OPERATIVA</h3>
+              <p style="font-size:13px;color:var(--cp-muted);margin-bottom:20px">Formato N. 6 — Informe Final de Emergencia Operativa</p>
+              <p><strong>Empresa operadora:</strong> <span class="redacted">XXXXXXXXXX</span></p>
+              <p><strong>Instalacion:</strong> <span class="redacted">Refineria XXXXXXX</span></p>
+              <p><strong>Ubicacion:</strong> <span class="redacted">XXXXX</span>, Departamento de <span class="redacted">XXXXX</span></p>
+              <p><strong>Fecha del evento:</strong> 16 de marzo de 2024</p>
+              <p><strong>Hora de inicio:</strong> 05:42 hrs</p>
+              <p><strong>Hora de control:</strong> 11:15 hrs</p>
+              <p><strong>Tipo de emergencia:</strong> Falla en sistema electrico — Loss of power</p>
+              <br>
+              <p><strong>1. DESCRIPCION DE LOS HECHOS</strong></p>
+              <p>El dia 16 de marzo de 2024, a las 05:42 horas, se produjo una falla en el sistema de sincronizacion del generador de emergencia de la subestacion electrica principal de la <span class="redacted">Refineria XXXXXXX</span>, lo cual genero una perdida total de suministro electrico en las unidades de proceso de la Planta de <span class="redacted">XXXXXXX</span>.</p>
+              <p>La falla se origino en el equipo de sincronizacion automatica del generador <span class="redacted">XX-XX-XXX</span>, el cual no respondio a la senal de transferencia automatica tras la caida del suministro externo proveniente de la linea de transmision de <span class="redacted">XXXXXXX</span> kV.</p>
+              <br>
+              <p><strong>2. EQUIPOS AFECTADOS</strong></p>
+              <p>Los equipos directamente afectados por la emergencia operacional fueron:</p>
+              <ul style="margin-left:20px;margin-top:8px">
+                <li>Generador de emergencia <span class="redacted">XX-XX-XXX</span></li>
+                <li>Sistema de sincronizacion automatica</li>
+                <li>Subestacion electrica principal (<span class="redacted">XXX</span> kV)</li>
+                <li>Tableros de distribucion de las unidades de proceso</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="docs-footer-bar">
+          <button class="btn-go-exam" onclick="goToScreen('exam')">
+            Ir al Examen
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: EXAM -->
+  <div class="screen" id="screenExam">
+    <div class="exam-layout">
+      <div class="exam-intro">
+        <div class="exam-intro-title">Evaluacion — Caso PAS Regulatorio</div>
+        <div class="exam-intro-desc">Responda las siguientes preguntas basandose en la documentacion del caso. Puede volver a consultar los documentos en cualquier momento.</div>
+        <button class="btn-back-docs" onclick="goToScreen('docs')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Volver a Documentos
+        </button>
+      </div>
+
+      <!-- Q1: Multiple Choice -->
+      <div class="question-card">
+        <div class="question-header">
+          <span class="question-number">Pregunta 1</span>
+          <div class="question-meta">
+            <span class="question-type-badge badge-multiple">Opcion Multiple</span>
+            <span class="question-weight">5%</span>
+          </div>
+        </div>
+        <div class="question-dimension">Dimension: Conocimiento Normativo</div>
+        <div class="question-text">Respecto al procedimiento administrativo sancionador (PAS) iniciado por el regulador en relacion con la emergencia operacional del 16 de marzo de 2024, cual es el marco normativo principal que rige el inicio y la tramitacion de este procedimiento?</div>
+        <ul class="mc-options">
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">A)</span> Ley N. 27444, TUO de la Ley del Procedimiento Administrativo General, y el Reglamento del PAS del regulador aprobado por Resolucion de Consejo Directivo</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">B)</span> Ley N. 28611, Ley General del Ambiente, y el Reglamento de Fiscalizacion Ambiental del OEFA</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">C)</span> Decreto Supremo N. 043-2007-EM, Reglamento de Seguridad para Actividades de Hidrocarburos, exclusivamente</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">D)</span> Ley N. 26734, Ley del Organismo Supervisor de Inversion en Energia, sin aplicacion supletoria de la LPAG</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Q2: Multiple Choice -->
+      <div class="question-card">
+        <div class="question-header">
+          <span class="question-number">Pregunta 2</span>
+          <div class="question-meta">
+            <span class="question-type-badge badge-multiple">Opcion Multiple</span>
+            <span class="question-weight">5%</span>
+          </div>
+        </div>
+        <div class="question-dimension">Dimension: Conocimiento Normativo</div>
+        <div class="question-text">De acuerdo con el marco normativo del PAS del regulador, cual es el plazo que tiene el administrado para presentar sus descargos una vez notificada la resolucion de inicio del PAS?</div>
+        <ul class="mc-options">
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">A)</span> 5 dias habiles desde la notificacion</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">B)</span> 15 dias habiles desde la notificacion</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">C)</span> 20 dias habiles desde la notificacion</div>
+          </li>
+          <li class="mc-option" onclick="selectOption(this)">
+            <div class="mc-radio"><div class="mc-radio-inner"></div></div>
+            <div><span class="mc-label">D)</span> 30 dias calendario desde la notificacion</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Q4: Free Response -->
+      <div class="question-card">
+        <div class="question-header">
+          <span class="question-number">Pregunta 4</span>
+          <div class="question-meta">
+            <span class="question-type-badge badge-libre">Respuesta Libre</span>
+            <span class="question-weight">10%</span>
+          </div>
+        </div>
+        <div class="question-dimension">Dimension: Analisis Factico</div>
+        <div class="question-text">A partir de los documentos proporcionados, elabore un resumen estructurado de los hechos que dieron lugar a la emergencia operacional del 16 de marzo de 2024. Identifique la cronologia de eventos, los equipos involucrados y las consecuencias operativas.</div>
+        <textarea class="free-response-area" placeholder="Escriba su respuesta aqui..." oninput="updateWordCount(this)"></textarea>
+        <div class="textarea-footer">
+          <span>Dimension: Analisis Factico</span>
+          <span class="word-count">0 palabras</span>
+        </div>
+      </div>
+
+      <!-- Q7: Free Response -->
+      <div class="question-card">
+        <div class="question-header">
+          <span class="question-number">Pregunta 7</span>
+          <div class="question-meta">
+            <span class="question-type-badge badge-libre">Respuesta Libre</span>
+            <span class="question-weight">15%</span>
+          </div>
+        </div>
+        <div class="question-dimension">Dimension: Estrategia Procesal</div>
+        <div class="question-text">Disene una estrategia de defensa para el administrado. Desarrolle los principales argumentos de descargo, indicando la base legal y los medios probatorios que los sustentan.</div>
+        <textarea class="free-response-area" placeholder="Escriba su respuesta aqui..." style="min-height:200px" oninput="updateWordCount(this)"></textarea>
+        <div class="textarea-footer">
+          <span>Dimension: Estrategia Procesal</span>
+          <span class="word-count">0 palabras</span>
+        </div>
+      </div>
+
+      <div style="height: 80px"></div>
+    </div>
+
+    <div class="submit-bar">
+      <span class="progress-text">4 de 10 preguntas mostradas en este mockup</span>
+      <button class="btn-submit" onclick="showSubmitModal()">Enviar Evaluacion</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: THANK YOU -->
+  <div class="thankyou-screen screen" id="screenThanks">
+    <div class="thankyou-card">
+      <div class="thankyou-check">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="welcome-greeting" style="margin-bottom:12px">Evaluacion completada</div>
+      <div class="thankyou-title">Gracias, Maria Fernanda</div>
+      <div class="thankyou-message">Sus respuestas han sido recibidas exitosamente. El equipo de Cordova & Pasco Asociados revisara su evaluacion y se pondra en contacto con usted a la brevedad.</div>
+
+      <div class="thankyou-details">
+        <div class="thankyou-detail-row">
+          <span class="detail-label">Evaluacion</span>
+          <span class="detail-value">Caso PAS Regulatorio</span>
+        </div>
+        <div class="thankyou-detail-row">
+          <span class="detail-label">Tiempo utilizado</span>
+          <span class="detail-value">3h 42m 18s</span>
+        </div>
+        <div class="thankyou-detail-row">
+          <span class="detail-label">Preguntas respondidas</span>
+          <span class="detail-value">10 de 10</span>
+        </div>
+        <div class="thankyou-detail-row">
+          <span class="detail-label">Fecha de envio</span>
+          <span class="detail-value">21 de mayo de 2026, 18:42</span>
+        </div>
+      </div>
+
+      <div class="thankyou-footer-text">
+        Se ha enviado una copia de sus respuestas al equipo evaluador. No es necesario realizar ninguna accion adicional.
+      </div>
+
+      <div class="thankyou-brand">
+        <div class="logo-text"><span>Cordova & Pasco</span> Asociados</div>
+        <div style="font-size:12px;color:var(--cp-muted);margin-top:4px">Legal Partners</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMIT CONFIRMATION MODAL -->
+  <div class="modal-overlay" id="submitModal">
+    <div class="modal">
+      <div class="modal-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E75849" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h3>Enviar evaluacion?</h3>
+      <p>Una vez enviada, no podra modificar sus respuestas. Asegurese de haber revisado todas sus respuestas antes de continuar.</p>
+      <div class="modal-buttons">
+        <button class="btn-cancel" onclick="hideSubmitModal()">Revisar respuestas</button>
+        <button class="btn-confirm" onclick="goToScreen('thanks')">Confirmar envio</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB WARNING -->
+  <div class="tab-warning" id="tabWarning">
+    <div class="tab-warning-content">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#E75849" stroke-width="2" style="margin-bottom:16px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <h3>Ha salido de la evaluacion</h3>
+      <p>Se ha detectado que cambio de pestana o ventana. Esta accion ha sido registrada y sera visible para el evaluador.</p>
+      <div class="tab-switch-count">Cambios de pestana registrados: <span id="tabCount">1</span></div>
+      <button class="btn-confirm" onclick="hideTabWarning()">Entendido, continuar</button>
+    </div>
+  </div>
+
+  <!-- NAVIGATION (DEMO ONLY) -->
+  <div class="screen-nav">
+    <button class="active" onclick="goToScreen('welcome')" id="navWelcome">Bienvenida</button>
+    <button onclick="goToScreen('docs')" id="navDocs">Documentos</button>
+    <button onclick="goToScreen('exam')" id="navExam">Examen</button>
+    <button onclick="goToScreen('thanks')" id="navThanks">Gracias</button>
+    <button onclick="showTabWarning()" id="navTab" style="color:#E75849">Tab Alert</button>
+  </div>
+
+  <script>
+    // Screen navigation
+    function goToScreen(screen) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.screen-nav button').forEach(b => b.classList.remove('active'));
+
+      const timerBox = document.getElementById('timerBox');
+      const autosave = document.getElementById('autosave');
+      const progressInfo = document.getElementById('progressInfo');
+      const headerLabel = document.getElementById('headerLabel');
+      const submitModal = document.getElementById('submitModal');
+      submitModal.classList.remove('active');
+
+      switch(screen) {
+        case 'welcome':
+          document.getElementById('screenWelcome').classList.add('active');
+          document.getElementById('navWelcome').classList.add('active');
+          timerBox.style.display = 'none';
+          autosave.style.display = 'none';
+          progressInfo.style.display = 'none';
+          headerLabel.textContent = 'Evaluacion para Asociado';
+          break;
+        case 'docs':
+          document.getElementById('screenDocs').classList.add('active');
+          document.getElementById('navDocs').classList.add('active');
+          timerBox.style.display = 'flex';
+          autosave.style.display = 'none';
+          progressInfo.style.display = 'none';
+          headerLabel.textContent = 'Documentos del Caso';
+          break;
+        case 'exam':
+          document.getElementById('screenExam').classList.add('active');
+          document.getElementById('navExam').classList.add('active');
+          timerBox.style.display = 'flex';
+          autosave.style.display = 'flex';
+          progressInfo.style.display = 'block';
+          headerLabel.textContent = 'Evaluacion en curso';
+          break;
+        case 'thanks':
+          document.getElementById('screenThanks').classList.add('active');
+          document.getElementById('navThanks').classList.add('active');
+          timerBox.style.display = 'none';
+          autosave.style.display = 'none';
+          progressInfo.style.display = 'none';
+          headerLabel.textContent = 'Evaluacion completada';
+          break;
+      }
+    }
+
+    // Document selection
+    function selectDoc(el) {
+      document.querySelectorAll('.doc-item').forEach(d => d.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Multiple choice
+    function selectOption(el) {
+      const parent = el.closest('.mc-options');
+      parent.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    // Word count
+    function updateWordCount(textarea) {
+      const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0).length;
+      textarea.parentElement.querySelector('.word-count').textContent = words + ' palabras';
+    }
+
+    // Submit modal
+    function showSubmitModal() {
+      document.getElementById('submitModal').classList.add('active');
+    }
+    function hideSubmitModal() {
+      document.getElementById('submitModal').classList.remove('active');
+    }
+
+    // Tab warning
+    let tabSwitches = 0;
+    function showTabWarning() {
+      tabSwitches++;
+      document.getElementById('tabCount').textContent = tabSwitches;
+      document.getElementById('tabWarning').classList.add('active');
+    }
+    function hideTabWarning() {
+      document.getElementById('tabWarning').classList.remove('active');
+    }
+
+    // Timer countdown (demo)
+    let timeLeft = 13338; // 3:42:18
+    function updateTimer() {
+      const h = Math.floor(timeLeft / 3600);
+      const m = Math.floor((timeLeft % 3600) / 60);
+      const s = timeLeft % 60;
+      const display = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = display;
+
+      const box = document.getElementById('timerBox');
+      box.classList.remove('warning', 'danger');
+      if (timeLeft <= 300) box.classList.add('danger');
+      else if (timeLeft <= 900) box.classList.add('warning');
+
+      if (timeLeft > 0) timeLeft--;
+    }
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
