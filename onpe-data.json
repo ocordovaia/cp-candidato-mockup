@@ -1,0 +1,64 @@
+{
+  "fuente": "ONPE - Resultados Oficiales Segunda Vuelta (resultadosegundavuelta.onpe.gob.pe)",
+  "eleccion": "Segunda Vuelta Presidencial - Elecciones Generales Perú 2026",
+  "candidatos": {
+    "fujimori": { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular" },
+    "sanchez": { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú" }
+  },
+  "ultima_actualizacion": "2026-06-13T11:50:00-05:00",
+  "ultimo_cambio": "2026-06-13T11:50:00-05:00",
+  "nacional": {
+    "actas_procesadas_pct": 98.410,
+    "actas_observadas_jee": 1475,
+    "votos_emitidos": 19346781,
+    "votos_validos": 18098134,
+    "fujimori_votos": 9053819,
+    "fujimori_pct": 50.026,
+    "sanchez_votos": 9044315,
+    "sanchez_pct": 49.974,
+    "diferencia_votos": 9504,
+    "blancos_pct": 0.60,
+    "nulos_pct": 5.93
+  },
+  "regiones": [
+    { "region": "Amazonas",        "actas": 99.70, "fujimori": 35.543, "sanchez": 64.457 },
+    { "region": "Áncash",          "actas": 98.70, "fujimori": 43.400, "sanchez": 56.600 },
+    { "region": "Apurímac",        "actas": 99.20, "fujimori": 18.838, "sanchez": 81.162 },
+    { "region": "Arequipa",        "actas": 99.40, "fujimori": 36.406, "sanchez": 63.594 },
+    { "region": "Ayacucho",        "actas": 99.20, "fujimori": 20.683, "sanchez": 79.317 },
+    { "region": "Cajamarca",       "actas": 99.46, "fujimori": 33.230, "sanchez": 66.770 },
+    { "region": "Callao",          "actas": 98.28, "fujimori": 65.580, "sanchez": 34.420 },
+    { "region": "Cusco",           "actas": 97.70, "fujimori": 21.846, "sanchez": 78.154 },
+    { "region": "Huancavelica",    "actas": 99.10, "fujimori": 18.598, "sanchez": 81.402 },
+    { "region": "Huánuco",         "actas": 99.15, "fujimori": 35.860, "sanchez": 64.140 },
+    { "region": "Ica",             "actas": 99.10, "fujimori": 51.911, "sanchez": 48.089 },
+    { "region": "Junín",           "actas": 99.10, "fujimori": 45.069, "sanchez": 54.931 },
+    { "region": "La Libertad",     "actas": 99.49, "fujimori": 57.540, "sanchez": 42.460 },
+    { "region": "Lambayeque",      "actas": 99.00, "fujimori": 58.100, "sanchez": 41.900 },
+    { "region": "Lima",            "actas": 96.90, "fujimori": 63.500, "sanchez": 36.500 },
+    { "region": "Lima Provincias", "actas": 98.30, "fujimori": 56.170, "sanchez": 43.830 },
+    { "region": "Loreto",          "actas": 99.00, "fujimori": 53.788, "sanchez": 46.212 },
+    { "region": "Madre de Dios",   "actas": 99.20, "fujimori": 30.794, "sanchez": 69.206 },
+    { "region": "Moquegua",        "actas": 99.30, "fujimori": 33.190, "sanchez": 66.810 },
+    { "region": "Pasco",           "actas": 99.00, "fujimori": 37.300, "sanchez": 62.700 },
+    { "region": "Piura",           "actas": 99.10, "fujimori": 56.975, "sanchez": 43.025 },
+    { "region": "Puno",            "actas": 98.90, "fujimori": 13.578, "sanchez": 86.422 },
+    { "region": "San Martín",      "actas": 99.00, "fujimori": 45.960, "sanchez": 54.040 },
+    { "region": "Tacna",           "actas": 99.20, "fujimori": 28.635, "sanchez": 71.365 },
+    { "region": "Tumbes",          "actas": 99.30, "fujimori": 64.339, "sanchez": 35.661 },
+    { "region": "Ucayali",         "actas": 97.19, "fujimori": 52.550, "sanchez": 47.460 }
+  ],
+  "extranjero": {
+    "actas_pct": 97.50,
+    "fujimori_votos": 184621,
+    "fujimori_pct": 63.396,
+    "sanchez_votos": 106697,
+    "sanchez_pct": 36.604,
+    "continentes": [
+      { "continente": "América", "fujimori_votos": 115584, "sanchez_votos": 57744 },
+      { "continente": "Europa",  "fujimori_votos": 59726,  "sanchez_votos": 47226 },
+      { "continente": "Asia",    "fujimori_votos": 7974,   "sanchez_votos": 976 },
+      { "continente": "Otros",   "fujimori_votos": 1337,   "sanchez_votos": 751 }
+    ]
+  }
+}
