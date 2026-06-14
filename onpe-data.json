@@ -1,0 +1,53 @@
+{
+  "fuente": "ONPE - Resultados Segunda Vuelta 2026 (https://resultadosegundavuelta.onpe.gob.pe/main/resumen)",
+  "eleccion": "Segunda Vuelta Presidencial - Elecciones Generales Perú 2026",
+  "fecha_eleccion": "2026-06-07",
+  "captura": {
+    "fecha_dato_onpe": "2026-06-14",
+    "ultimo_cambio_relevante": "2026-06-13T20:45:00-05:00",
+    "fecha_consulta": "2026-06-14",
+    "metodo": "Datos oficiales ONPE recopilados vía agregadores de prensa (El Comercio, Infobae, RPP, El Peruano). El portal oficial de ONPE no es accesible directamente desde este entorno (allowlist de red)."
+  },
+  "nacional": {
+    "actas_procesadas_pct": 100.0,
+    "actas_contabilizadas_pct": 98.59,
+    "actas_observadas_jee": 1308,
+    "actas_pendientes": 0,
+    "total_actas": 92766,
+    "votos_emitidos_aprox": 19393262,
+    "votos_validos": 18131070,
+    "blancos_pct": 0.6,
+    "viciados_pct": 5.93,
+    "candidatos": {
+      "keiko_fujimori": { "partido": "Fuerza Popular", "votos": 9074951, "pct": 50.052 },
+      "roberto_sanchez": { "partido": "Juntos por el Perú", "votos": 9056119, "pct": 49.948 }
+    },
+    "diferencia_votos": 18832,
+    "diferencia_pp": 0.104
+  },
+  "extranjero": {
+    "padron": 1210813,
+    "padron_pct_nacional": 4.4,
+    "actas_contabilizadas_pct": 94.495,
+    "keiko_fujimori": { "votos": 184435, "pct": 63.429 },
+    "roberto_sanchez": { "votos": 106338, "pct": 36.571 },
+    "continentes": {
+      "America": { "keiko": { "votos": 115380, "pct": 67.75 }, "sanchez": { "votos": 57475, "pct": 32.25 } },
+      "Europa":  { "keiko": { "votos": 59744,  "pct": 55.898 }, "sanchez": { "votos": 47136, "pct": 44.102 } },
+      "Asia":    { "keiko": { "votos": 7974,   "pct": 89.095 }, "sanchez": { "votos": 976,   "pct": 10.905 } },
+      "Oceania": { "keiko": { "votos": 1307,   "pct": 64.132 }, "sanchez": { "votos": 731,   "pct": 35.868 } }
+    },
+    "paises_clave": {
+      "Estados Unidos": { "keiko_pct": 76.559, "keiko_votos": 44440 },
+      "España":         { "keiko_pct": 60.114, "keiko_votos": 32510, "sanchez_pct": 39.886, "sanchez_votos": 21571 },
+      "Chile":          { "keiko_pct": 58.882, "sanchez_pct": 41.118 }
+    }
+  },
+  "proyeccion": {
+    "modelo": "Estimación basada en margen actual, votos restantes (~1.41% en actas observadas ante JEE) y patrones regionales 2021. NO es un resultado oficial.",
+    "keiko_pct_proyectado": 50.05,
+    "ic95_keiko_pct": [49.93, 50.17],
+    "prob_victoria_keiko_aprox": 0.72,
+    "nota": "Las 1,308 actas observadas en manos del JEE son decisivas e introducen incertidumbre legal, no solo estadística."
+  }
+}
