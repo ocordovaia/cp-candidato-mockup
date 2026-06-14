@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "source": "ONPE - Oficina Nacional de Procesos Electorales",
+    "process": "Segunda Elección Presidencial 2026 (Segunda Vuelta)",
+    "election_date": "2026-06-07",
+    "last_onpe_update": "2026-06-13T16:46:00-05:00",
+    "dashboard_generated": "2026-06-14T00:00:00-05:00",
+    "last_change_detected": "2026-06-13T16:46:00-05:00",
+    "actas_procesadas_pct": 100.0,
+    "actas_contabilizadas_pct": 98.470,
+    "note": "100% de actas procesadas; ~1.53% permanece en actas observadas/impugnadas en revisión por los JEE/JNE. Proclamación oficial a cargo del JNE, prevista para julio 2026."
+  },
+  "national": {
+    "keiko_votos": 9061735,
+    "keiko_pct": 50.037,
+    "sanchez_votos": 9048284,
+    "sanchez_pct": 49.963,
+    "votos_validos": 18110019,
+    "votos_emitidos": 19346781,
+    "blancos_pct": 0.60,
+    "viciados_pct": 5.93,
+    "margen_votos": 13451,
+    "regiones_sanchez": 17,
+    "regiones_keiko": 8
+  },
+  "overseas": {
+    "keiko_votos": 184639,
+    "keiko_pct": 63.396,
+    "sanchez_votos": 106607,
+    "sanchez_pct": 36.604,
+    "as_of": "2026-06-11",
+    "continentes": [
+      { "nombre": "América", "keiko_votos": 115380, "keiko_pct": 67.750, "sanchez_votos": 57475, "sanchez_pct": 32.250 },
+      { "nombre": "Europa", "keiko_votos": 59744, "keiko_pct": 55.898, "sanchez_votos": 47136, "sanchez_pct": 44.102 },
+      { "nombre": "Asia", "keiko_votos": 7974, "keiko_pct": 89.095, "sanchez_votos": 976, "sanchez_pct": 10.905 }
+    ]
+  },
+  "regions": [
+    { "region": "Puno",          "macrozona": "Sur",        "sanchez_pct": 86.422, "keiko_pct": 13.578, "fuente": "oficial" },
+    { "region": "Apurímac",      "macrozona": "Sur",        "sanchez_pct": 81.162, "keiko_pct": 18.838, "fuente": "oficial" },
+    { "region": "Ayacucho",      "macrozona": "Sur",        "sanchez_pct": 79.317, "keiko_pct": 20.683, "fuente": "oficial" },
+    { "region": "Cusco",         "macrozona": "Sur",        "sanchez_pct": 78.131, "keiko_pct": 21.869, "fuente": "oficial" },
+    { "region": "Cajamarca",     "macrozona": "Norte",      "sanchez_pct": 66.770, "keiko_pct": 33.230, "fuente": "oficial" },
+    { "region": "Piura",         "macrozona": "Norte",      "sanchez_pct": 43.025, "keiko_pct": 56.975, "fuente": "oficial" },
+    { "region": "Lambayeque",    "macrozona": "Norte",      "sanchez_pct": 41.152, "keiko_pct": 58.848, "fuente": "oficial" },
+    { "region": "La Libertad",   "macrozona": "Norte",      "sanchez_pct": 42.460, "keiko_pct": 57.540, "fuente": "oficial" },
+    { "region": "Huancavelica",  "macrozona": "Sur",        "sanchez_pct": 80.0,   "keiko_pct": 20.0,   "fuente": "estimado" },
+    { "region": "Moquegua",      "macrozona": "Sur",        "sanchez_pct": 60.0,   "keiko_pct": 40.0,   "fuente": "estimado" },
+    { "region": "Tacna",         "macrozona": "Sur",        "sanchez_pct": 58.0,   "keiko_pct": 42.0,   "fuente": "estimado" },
+    { "region": "Arequipa",      "macrozona": "Sur",        "sanchez_pct": 55.0,   "keiko_pct": 45.0,   "fuente": "estimado" },
+    { "region": "Junín",         "macrozona": "Centro",     "sanchez_pct": 55.0,   "keiko_pct": 45.0,   "fuente": "estimado" },
+    { "region": "Huánuco",       "macrozona": "Centro",     "sanchez_pct": 57.0,   "keiko_pct": 43.0,   "fuente": "estimado" },
+    { "region": "Pasco",         "macrozona": "Centro",     "sanchez_pct": 55.0,   "keiko_pct": 45.0,   "fuente": "estimado" },
+    { "region": "Amazonas",      "macrozona": "Nororiente", "sanchez_pct": 52.0,   "keiko_pct": 48.0,   "fuente": "estimado" },
+    { "region": "San Martín",    "macrozona": "Nororiente", "sanchez_pct": 51.0,   "keiko_pct": 49.0,   "fuente": "estimado" },
+    { "region": "Loreto",        "macrozona": "Nororiente", "sanchez_pct": 52.0,   "keiko_pct": 48.0,   "fuente": "estimado" },
+    { "region": "Madre de Dios", "macrozona": "Oriente",    "sanchez_pct": 51.0,   "keiko_pct": 49.0,   "fuente": "estimado" },
+    { "region": "Lima Metropolitana", "macrozona": "Lima/Costa", "sanchez_pct": 46.0, "keiko_pct": 54.0, "fuente": "estimado" },
+    { "region": "Lima Provincias","macrozona": "Lima/Costa", "sanchez_pct": 48.0,  "keiko_pct": 52.0,   "fuente": "estimado" },
+    { "region": "Callao",        "macrozona": "Lima/Costa", "sanchez_pct": 47.0,   "keiko_pct": 53.0,   "fuente": "estimado" },
+    { "region": "Tumbes",        "macrozona": "Norte",      "sanchez_pct": 44.0,   "keiko_pct": 56.0,   "fuente": "estimado" },
+    { "region": "Áncash",        "macrozona": "Costa/Sierra","sanchez_pct": 49.0,  "keiko_pct": 51.0,   "fuente": "estimado" },
+    { "region": "Ica",           "macrozona": "Costa",      "sanchez_pct": 47.0,   "keiko_pct": 53.0,   "fuente": "estimado" },
+    { "region": "Ucayali",       "macrozona": "Selva baja", "sanchez_pct": 47.0,   "keiko_pct": 53.0,   "fuente": "estimado" }
+  ],
+  "projection_assumptions": {
+    "remaining_valid_pool": 280000,
+    "impugnadas_pool": 500000,
+    "remaining_sanchez_share_mean": 0.502,
+    "remaining_sanchez_share_sd": 0.060,
+    "monte_carlo_runs": 50000,
+    "rationale": "Con 100% de actas procesadas, el ~1.53% pendiente corresponde a actas observadas/impugnadas concentradas en mesas con incidencias (varias en zonas andinas del sur donde Sánchez es fuerte). Se modela el voto restante con una media ligeramente favorable a Sánchez pero con alta incertidumbre, más una bolsa de actas impugnadas cuyo desenlace depende de los JEE/JNE."
+  },
+  "sources": [
+    { "title": "ONPE - Resultados oficiales segunda vuelta 2026", "url": "https://resultados.onpe.gob.pe" },
+    { "title": "Infobae - Keiko supera a Sánchez; votos del extranjero clave", "url": "https://www.infobae.com/peru/2026/06/11/keiko-fujimori-supera-a-roberto-sanchez-votos-del-extranjero-clave-en-el-resultado/" },
+    { "title": "Infobae - Votos del extranjero por continente (al 11 jun)", "url": "https://www.infobae.com/peru/2026/06/09/votos-del-extranjero-de-la-segunda-vuelta-2026-en-peru-asi-va-el-conteo-de-la-onpe-por-continente-entre-keiko-fujimori-y-roberto-sanchez/" },
+    { "title": "El Comercio - Diferencia de votos Keiko vs Sánchez", "url": "https://elcomercio.pe/politica/elecciones/cual-es-la-cantidad-de-votos-que-separa-a-keiko-fujimori-y-roberto-sanchez-segun-ultimos-resultados-onpe-de-la-segunda-vuelta-elecciones-peru-2026-noticia/" },
+    { "title": "El Popular - ONPE al 98% región por región", "url": "https://elpopular.pe/actualidad/2026/06/11/resultados-onpe-al-98-region-por-region-asi-va-el-voto-por-keiko-fujimori-y-roberto-sanchez-en-segunda-vuelta-955735" }
+  ]
+}
