@@ -1,0 +1,66 @@
+{
+  "eleccion": "Segunda Elección Presidencial 2026 (Perú)",
+  "fuente": "ONPE — Oficina Nacional de Procesos Electorales",
+  "fuenteUrl": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+  "fechaEleccion": "2026-06-07",
+  "snapshotCapturadoUTC": "2026-06-14T17:10:00Z",
+  "onpeUltimaActualizacion": "2026-06-13T22:30:00-05:00",
+  "onpeUltimoCambio": "2026-06-13T22:30:00-05:00",
+  "actasContabilizadasPct": 98.545,
+  "actasObservadasJEE": 1343,
+  "totalVotosEmitidos": 19393262,
+  "votosBlancosPct": 0.6,
+  "votosNulosViciadosPct": 5.93,
+  "nacional": {
+    "keiko":   { "candidato": "Keiko Fujimori", "partido": "Fuerza Popular",  "pct": 50.051, "votosValidos": 9072289 },
+    "sanchez": { "candidato": "Roberto Sánchez", "partido": "Juntos por el Perú", "pct": 49.949, "votosValidos": 9053801 },
+    "diferenciaVotos": 18488
+  },
+  "regiones": [
+    { "region": "Amazonas",      "keiko": 35.543, "sanchez": 64.457, "actas": 99.0,  "actasAprox": true },
+    { "region": "Áncash",        "keiko": 43.400, "sanchez": 56.600, "actas": 99.0,  "actasAprox": true },
+    { "region": "Apurímac",      "keiko": 18.838, "sanchez": 81.162, "actas": 99.0,  "actasAprox": true },
+    { "region": "Arequipa",      "keiko": 36.406, "sanchez": 63.594, "actas": 99.0,  "actasAprox": true },
+    { "region": "Ayacucho",      "keiko": 20.683, "sanchez": 79.317, "actas": 99.0,  "actasAprox": true },
+    { "region": "Cajamarca",     "keiko": 33.220, "sanchez": 66.780, "actas": 99.0,  "actasAprox": true },
+    { "region": "Callao",        "keiko": 65.598, "sanchez": 34.402, "actas": 99.07, "actasAprox": false },
+    { "region": "Cusco",         "keiko": 21.869, "sanchez": 78.131, "actas": 99.0,  "actasAprox": true },
+    { "region": "Huancavelica",  "keiko": 18.598, "sanchez": 81.402, "actas": 99.0,  "actasAprox": true },
+    { "region": "Huánuco",       "keiko": 35.860, "sanchez": 64.140, "actas": 99.0,  "actasAprox": true },
+    { "region": "Ica",           "keiko": 51.911, "sanchez": 48.089, "actas": 99.0,  "actasAprox": true },
+    { "region": "Junín",         "keiko": 45.069, "sanchez": 54.931, "actas": 99.0,  "actasAprox": true },
+    { "region": "La Libertad",   "keiko": 57.540, "sanchez": 42.460, "actas": 99.49, "actasAprox": false },
+    { "region": "Lambayeque",    "keiko": 58.848, "sanchez": 41.152, "actas": 99.60, "actasAprox": false },
+    { "region": "Lima",          "keiko": 63.500, "sanchez": 36.500, "actas": 99.0,  "actasAprox": true },
+    { "region": "Loreto",        "keiko": 52.950, "sanchez": 47.050, "actas": 98.44, "actasAprox": false },
+    { "region": "Madre de Dios", "keiko": 33.650, "sanchez": 66.350, "actas": 60.36, "actasAprox": false },
+    { "region": "Moquegua",      "keiko": 29.030, "sanchez": 70.970, "actas": 84.60, "actasAprox": false },
+    { "region": "Pasco",         "keiko": 39.236, "sanchez": 60.764, "actas": 99.0,  "actasAprox": true },
+    { "region": "Piura",         "keiko": 56.975, "sanchez": 43.025, "actas": 98.90, "actasAprox": false },
+    { "region": "Puno",          "keiko": 13.578, "sanchez": 86.422, "actas": 99.20, "actasAprox": false },
+    { "region": "San Martín",    "keiko": 45.380, "sanchez": 54.620, "actas": 99.45, "actasAprox": false },
+    { "region": "Tacna",         "keiko": 28.635, "sanchez": 71.365, "actas": 98.70, "actasAprox": false },
+    { "region": "Tumbes",        "keiko": 64.339, "sanchez": 35.661, "actas": 99.80, "actasAprox": false },
+    { "region": "Ucayali",       "keiko": 52.550, "sanchez": 47.460, "actas": 97.19, "actasAprox": false }
+  ],
+  "extranjero": {
+    "actas": 94.495,
+    "totalKeikoPct": 63.429,
+    "totalSanchezPct": 36.571,
+    "totalKeikoVotos": 184435,
+    "totalSanchezVotos": 106338,
+    "continentes": [
+      { "continente": "América",  "keiko": 67.750, "sanchez": 32.250, "keikoVotos": 115380, "sanchezVotos": 57475 },
+      { "continente": "Europa",   "keiko": 55.898, "sanchez": 44.102, "keikoVotos": 59744,  "sanchezVotos": 47136 },
+      { "continente": "Asia",     "keiko": 89.095, "sanchez": 10.905, "keikoVotos": 7974,   "sanchezVotos": 976 },
+      { "continente": "Oceanía",  "keiko": 64.132, "sanchez": 35.868, "keikoVotos": 1307,   "sanchezVotos": 731 },
+      { "continente": "África",   "keiko": 60.000, "sanchez": 40.000, "keikoVotos": 30,     "sanchezVotos": 20 }
+    ]
+  },
+  "notas": [
+    "Los porcentajes son sobre votos válidos. Votos en blanco y nulos/viciados se reportan aparte y no se reparten entre candidatos.",
+    "Los resultados del extranjero ya están incluidos dentro del consolidado nacional.",
+    "Madre de Dios y Moquegua tienen un porcentaje de actas notablemente menor; sus proyecciones llevan un intervalo de confianza más amplio.",
+    "1.343 actas observadas serán resueltas por los Jurados Electorales Especiales (JEE); su resolución es la principal fuente de incertidumbre residual a nivel nacional."
+  ]
+}
