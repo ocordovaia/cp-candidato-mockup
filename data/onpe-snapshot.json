@@ -1,0 +1,29 @@
+{
+  "fuente": "ONPE - Segunda Elección Presidencial 2026 (resultados.onpe.gob.pe / segundavuelta.onpe.gob.pe)",
+  "eleccion": "Segunda vuelta presidencial - Perú 2026",
+  "fecha_eleccion": "2026-06-07",
+  "actas_procesadas_pct": 98.590,
+  "referencia_corte": "2026-06-14",
+  "ultima_actualizacion_datos": "2026-06-14T20:45:00-05:00",
+  "ultima_revision_rutina": "2026-06-15",
+  "nacional": {
+    "fujimori": { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "votos": 9074951, "pct": 50.052 },
+    "sanchez":  { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "votos": 9056119, "pct": 49.948 },
+    "diferencia_votos": 18832,
+    "votos_emitidos": 19393262,
+    "blancos_pct": 0.60,
+    "nulos_pct": 5.93
+  },
+  "extranjero": {
+    "fujimori": { "votos": 184621, "pct": 63.396 },
+    "sanchez":  { "votos": 106697, "pct": 36.604 },
+    "por_continente": {
+      "America":  { "fujimori": 115584, "sanchez": 57744 },
+      "Europa":   { "fujimori": 59726,  "sanchez": 47226 },
+      "Asia":     { "fujimori": 7974,   "sanchez": 976 },
+      "Oceania":  { "fujimori": 1307,   "sanchez": 731 },
+      "Africa":   { "fujimori": 30,     "sanchez": 20 }
+    }
+  },
+  "nota": "Snapshot usado por la rutina programada para detectar nuevos datos. Si actas_procesadas_pct no cambia respecto a la siguiente corrida, no se actualiza el dashboard."
+}
