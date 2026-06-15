@@ -1,0 +1,33 @@
+{
+  "fuente": "ONPE - Conteo oficial Segunda Vuelta 2026 (vía agregadores de prensa; portal resultados.onpe.gob.pe no accesible directamente / HTTP 403)",
+  "ultima_actualizacion_onpe": "2026-06-15T04:10:00-05:00",
+  "ultima_revision_rutina": "2026-06-15T00:00:00-05:00",
+  "actas_contabilizadas_pct": 98.59,
+  "actas_procesadas_pct": 100.0,
+  "nacional": {
+    "fujimori": { "partido": "Fuerza Popular", "votos": 9075519, "pct": 50.010 },
+    "sanchez":  { "partido": "Juntos por el Perú", "votos": 9057024, "pct": 49.990 },
+    "diferencia_votos": 18495
+  },
+  "extranjero": {
+    "actas_pct": 94.495,
+    "fecha_corte": "2026-06-11",
+    "fujimori": { "votos": 184435, "pct": 63.429 },
+    "sanchez":  { "votos": 106338, "pct": 36.571 },
+    "por_continente": {
+      "America":  { "fujimori_pct": 67.750, "fujimori_votos": 115380, "sanchez_pct": 32.250, "sanchez_votos": 57475 },
+      "Europa":   { "fujimori_pct": 55.898, "fujimori_votos": 59744,  "sanchez_pct": 44.102, "sanchez_votos": 47136 },
+      "Asia":     { "fujimori_pct": 89.095, "fujimori_votos": 7974,   "sanchez_pct": 10.905, "sanchez_votos": 976 },
+      "Oceania":  { "fujimori_pct": 64.132, "fujimori_votos": 1307,   "sanchez_pct": 35.868, "sanchez_votos": 731 },
+      "Africa":   { "fujimori_pct": 60.000, "fujimori_votos": 30,     "sanchez_pct": 40.000, "sanchez_votos": 20 }
+    }
+  },
+  "regiones_con_dato_oficial": {
+    "Lima":        { "fujimori_pct": 63.500, "sanchez_pct": 36.500 },
+    "La Libertad": { "fujimori_pct": 57.524, "sanchez_pct": 42.476 },
+    "Piura":       { "fujimori_pct": 56.975, "sanchez_pct": 43.025 },
+    "Arequipa":    { "fujimori_pct": 36.406, "sanchez_pct": 63.594 },
+    "Cusco":       { "fujimori_pct": 21.869, "sanchez_pct": 78.131 },
+    "Puno":        { "fujimori_pct": 13.578, "sanchez_pct": 86.422 }
+  }
+}
