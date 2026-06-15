@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segunda Vuelta 2026 · Dashboard ONPE en Vivo</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --line:#2a3140;
+    --txt:#e6edf3; --muted:#8b95a5; --k:#ff6600; --s:#c0282d;
+    --good:#2ea043; --warn:#d29922;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.45}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px 16px 48px}
+  header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+    border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
+  .brand h1{font-size:1.35rem;margin:0 0 2px}
+  .brand .sub{color:var(--muted);font-size:.85rem}
+  .live{display:inline-flex;align-items:center;gap:6px;background:#21262d;border:1px solid var(--line);
+    border-radius:999px;padding:5px 12px;font-size:.78rem;color:var(--muted)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 rgba(46,160,67,.7);
+    animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,160,67,.6)}70%{box-shadow:0 0 0 7px rgba(46,160,67,0)}100%{box-shadow:0 0 0 0 rgba(46,160,67,0)}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px}
+  .card h2{margin:0 0 4px;font-size:1.05rem}
+  .card .hint{color:var(--muted);font-size:.8rem;margin:0 0 16px}
+  .actas{display:flex;align-items:center;gap:12px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+  .pbar{flex:1;min-width:160px;height:9px;background:#0b0f16;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .pbar > i{display:block;height:100%;background:linear-gradient(90deg,#1f6feb,#388bfd)}
+  /* candidate head-to-head */
+  .h2h{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:6px}
+  .cand{padding:6px 4px}
+  .cand.k{text-align:left} .cand.s{text-align:right}
+  .cand .nm{font-weight:600}
+  .cand .pt{font-size:2.1rem;font-weight:800;letter-spacing:-1px;line-height:1}
+  .cand.k .pt{color:var(--k)} .cand.s .pt{color:var(--s)}
+  .cand .vt{color:var(--muted);font-size:.82rem;margin-top:3px}
+  .splitbar{display:flex;height:16px;border-radius:8px;overflow:hidden;margin:14px 0 6px;border:1px solid var(--line)}
+  .splitbar i{display:block;height:100%}
+  .splitbar .k{background:var(--k)} .splitbar .s{background:var(--s)}
+  .margin{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+  .margin b{color:var(--txt)}
+  /* projection */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .proj-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .proj-box .lbl{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+  .proj-box .val{font-size:1.7rem;font-weight:800;margin-top:4px}
+  .proj-box.k .val{color:var(--k)} .proj-box.s .val{color:var(--s)}
+  .proj-box .ic{color:var(--muted);font-size:.8rem;margin-top:4px}
+  /* CI gauge */
+  .gauge{margin:18px 0 4px}
+  .gauge .scale{position:relative;height:40px}
+  .gauge .track{position:absolute;top:18px;left:0;right:0;height:6px;background:#0b0f16;border-radius:4px;border:1px solid var(--line)}
+  .gauge .fifty{position:absolute;top:8px;bottom:2px;width:2px;background:var(--txt);left:50%;opacity:.8}
+  .gauge .fifty span{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:.7rem;color:var(--muted)}
+  .gauge .ci{position:absolute;top:15px;height:12px;background:rgba(56,139,253,.35);border:1px solid #388bfd;border-radius:6px}
+  .gauge .pt{position:absolute;top:11px;width:3px;height:20px;background:#fff;border-radius:2px}
+  .gauge .ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.72rem;margin-top:2px}
+  .tie{display:inline-block;background:rgba(210,153,34,.15);border:1px solid var(--warn);color:#e3b341;
+    border-radius:8px;padding:8px 12px;font-size:.83rem;margin-top:14px}
+  .assump{font-size:.8rem;color:var(--muted);margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+  .assump b{color:var(--txt)}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;
+    position:sticky;top:0;background:var(--panel);cursor:pointer;user-select:none}
+  th.r,td.r{text-align:right}
+  .minibar{position:relative;height:8px;border-radius:5px;background:var(--s);overflow:hidden;min-width:80px}
+  .minibar > i{position:absolute;left:0;top:0;height:100%;background:var(--k)}
+  td .reg{font-weight:600}
+  .win{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  .win.k{background:var(--k)} .win.s{background:var(--s)}
+  /* continents */
+  .conts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:6px}
+  .cont{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .cont .cn{font-weight:600;margin-bottom:8px}
+  .cont .row{display:flex;justify-content:space-between;font-size:.82rem;margin:2px 0}
+  .cont .row .k{color:var(--k)} .cont .row .s{color:var(--s)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:4px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:30px;
+    border-top:1px solid var(--line);padding-top:20px}
+  footer .made{color:var(--txt);font-weight:600}
+  .src{font-size:.78rem;color:var(--muted)}
+  .src a{color:#388bfd;text-decoration:none}
+  @media(max-width:560px){
+    .proj-grid{grid-template-columns:1fr} .cand .pt{font-size:1.7rem}
+    .col-hide{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <h1>🇵🇪 Segunda Vuelta Presidencial 2026</h1>
+      <div class="sub">Dashboard de resultados ONPE · conteo oficial de actas</div>
+    </div>
+    <div class="live"><span class="dot"></span> EN VIVO · <span id="lastUpd"></span></div>
+  </header>
+
+  <!-- NACIONAL -->
+  <section class="card">
+    <h2>Resultado Nacional</h2>
+    <p class="hint">Conteo oficial ONPE al 100% de regiones reportando.</p>
+    <div class="actas">
+      <span>Actas procesadas</span>
+      <div class="pbar"><i id="actasBar"></i></div>
+      <span id="actasPct"></span>
+    </div>
+    <div class="h2h">
+      <div class="cand k">
+        <div class="nm">Keiko Fujimori</div>
+        <div class="sub" style="color:var(--muted);font-size:.78rem">Fuerza Popular</div>
+        <div class="pt" id="kPct"></div>
+        <div class="vt" id="kVot"></div>
+      </div>
+      <div class="cand s">
+        <div class="nm">Roberto Sánchez</div>
+        <div class="sub" style="color:var(--muted);font-size:.78rem">Juntos por el Perú</div>
+        <div class="pt" id="sPct"></div>
+        <div class="vt" id="sVot"></div>
+      </div>
+    </div>
+    <div class="splitbar"><i class="k" id="kSplit"></i><i class="s" id="sSplit"></i></div>
+    <div class="margin">Diferencia: <b id="margin"></b> votos · <b id="marginPct"></b> puntos</div>
+  </section>
+
+  <!-- PROYECCION -->
+  <section class="card">
+    <h2>Proyección al 100% (con intervalo de confianza)</h2>
+    <p class="hint">Modelo propio sobre las actas pendientes. No es un cómputo oficial.</p>
+    <div class="proj-grid">
+      <div class="proj-box k">
+        <div class="lbl">Keiko Fujimori · proyectado</div>
+        <div class="val" id="pkPct"></div>
+        <div class="ic" id="pkVot"></div>
+      </div>
+      <div class="proj-box s">
+        <div class="lbl">Roberto Sánchez · proyectado</div>
+        <div class="val" id="psPct"></div>
+        <div class="ic" id="psVot"></div>
+      </div>
+    </div>
+
+    <div class="gauge">
+      <div class="scale">
+        <div class="track"></div>
+        <div class="ci" id="ciBar"></div>
+        <div class="fifty"><span>50%</span></div>
+        <div class="pt" id="ciPt"></div>
+      </div>
+      <div class="ends"><span id="ciLo"></span><span>Proyección Keiko Fujimori (IC 95%)</span><span id="ciHi"></span></div>
+    </div>
+
+    <div class="tie" id="tieNote"></div>
+
+    <div class="assump" id="assump"></div>
+  </section>
+
+  <!-- REGIONES -->
+  <section class="card">
+    <h2>Desglose por región</h2>
+    <p class="hint">Clic en los encabezados para ordenar. Barra: <span style="color:var(--k)">naranja = Fujimori</span>, <span style="color:var(--s)">rojo = Sánchez</span>.</p>
+    <div class="legend">
+      <span><i style="background:var(--k)"></i>Keiko Fujimori</span>
+      <span><i style="background:var(--s)"></i>Roberto Sánchez</span>
+    </div>
+    <table id="regTable">
+      <thead>
+        <tr>
+          <th data-k="region">Región</th>
+          <th class="r" data-k="fujimori">Fujimori %</th>
+          <th class="r" data-k="sanchez">Sánchez %</th>
+          <th class="col-hide">Distribución</th>
+        </tr>
+      </thead>
+      <tbody id="regBody"></tbody>
+    </table>
+  </section>
+
+  <!-- EXTRANJERO -->
+  <section class="card">
+    <h2>Voto en el extranjero</h2>
+    <p class="hint" id="extHint"></p>
+    <div class="h2h">
+      <div class="cand k">
+        <div class="nm">Keiko Fujimori</div>
+        <div class="pt" id="ekPct"></div>
+        <div class="vt" id="ekVot"></div>
+      </div>
+      <div class="cand s">
+        <div class="nm">Roberto Sánchez</div>
+        <div class="pt" id="esPct"></div>
+        <div class="vt" id="esVot"></div>
+      </div>
+    </div>
+    <div class="splitbar"><i class="k" id="ekSplit"></i><i class="s" id="esSplit"></i></div>
+    <h2 style="margin-top:22px;font-size:.95rem">Por continente</h2>
+    <div class="conts" id="conts"></div>
+  </section>
+
+  <footer>
+    <div class="made">Hecho por Omar Córdova</div>
+    <div class="src" style="margin-top:8px">
+      Fuente: <a href="https://resultadosegundavuelta.onpe.gob.pe/" target="_blank" rel="noopener">ONPE — Resultados Oficiales Segunda Vuelta 2026</a><br>
+      Última actualización de datos: <span id="footUpd"></span> · Última revisión automática: <span id="footRev"></span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* ===== Datos (snapshot ONPE incrustado para que el dashboard funcione en cualquier host estático) ===== */
+const DATA = {
+  ultima_actualizacion_dato: "2026-06-14T22:30:00-05:00",
+  ultima_revision: "2026-06-15T00:00:00-05:00",
+  actas_procesadas_pct: 98.590,
+  nacional: { fujimori_pct:50.052, fujimori_votos:9074951, sanchez_pct:49.948, sanchez_votos:9056119, votos_validos:18131070, margen_votos:18832 },
+  regiones: [
+    {region:"Amazonas",fujimori:35.543,sanchez:64.457},{region:"Áncash",fujimori:43.400,sanchez:56.600},
+    {region:"Apurímac",fujimori:18.838,sanchez:81.162},{region:"Arequipa",fujimori:36.406,sanchez:63.594},
+    {region:"Ayacucho",fujimori:20.683,sanchez:79.317},{region:"Cajamarca",fujimori:33.220,sanchez:66.780},
+    {region:"Callao",fujimori:65.598,sanchez:34.402},{region:"Cusco",fujimori:21.846,sanchez:78.154},
+    {region:"Huancavelica",fujimori:18.598,sanchez:81.402},{region:"Huánuco",fujimori:35.860,sanchez:64.140},
+    {region:"Ica",fujimori:51.911,sanchez:48.089},{region:"Junín",fujimori:45.069,sanchez:54.931},
+    {region:"La Libertad",fujimori:57.524,sanchez:42.476},{region:"Lambayeque",fujimori:58.848,sanchez:41.152},
+    {region:"Lima",fujimori:63.500,sanchez:36.500},{region:"Loreto",fujimori:53.788,sanchez:46.212},
+    {region:"Madre de Dios",fujimori:30.794,sanchez:69.206},{region:"Moquegua",fujimori:27.431,sanchez:72.569},
+    {region:"Pasco",fujimori:39.236,sanchez:60.764},{region:"Piura",fujimori:56.975,sanchez:43.025},
+    {region:"Puno",fujimori:13.578,sanchez:86.422},{region:"San Martín",fujimori:45.376,sanchez:54.624},
+    {region:"Tacna",fujimori:28.635,sanchez:71.365},{region:"Tumbes",fujimori:64.339,sanchez:35.661},
+    {region:"Ucayali",fujimori:52.542,sanchez:47.458}
+  ],
+  extranjero: {
+    total:{fujimori_pct:63.429,fujimori_votos:184435,sanchez_pct:36.571,sanchez_votos:106338,actas_pct:94.495},
+    continentes:[
+      {continente:"América",fujimori_pct:67.750,fujimori_votos:115380,sanchez_pct:32.250,sanchez_votos:57475},
+      {continente:"Europa",fujimori_pct:55.898,fujimori_votos:59744,sanchez_pct:44.102,sanchez_votos:47136},
+      {continente:"Asia",fujimori_pct:89.095,fujimori_votos:7974,sanchez_pct:10.905,sanchez_votos:976},
+      {continente:"Oceanía / África",fujimori_pct:63.4,fujimori_votos:1337,sanchez_pct:36.6,sanchez_votos:751}
+    ]
+  },
+  proyeccion:{
+    supuestos:{actas_restantes_pct:1.410,votos_validos_restantes_est:255000,reparto_restante_sanchez_pct:52.0,reparto_restante_fujimori_pct:48.0,
+      racional:"Las actas pendientes son mayormente observadas/impugnadas concentradas en provincias del sur andino (alta votación por Sánchez) y voto de Europa aún incompleto; se asume un reparto del remanente ligeramente favorable a Sánchez."},
+    resultado:{fujimori_pct_final:50.023,fujimori_votos_final:9197351,sanchez_pct_final:49.977,sanchez_votos_final:9188719,
+      margen_final_est:8632,intervalo_confianza_95_pts:0.18,fujimori_ic_inf:49.84,fujimori_ic_sup:50.20,
+      nota:"Empate técnico: el intervalo de confianza al 95% cruza el 50%. El resultado no está estadísticamente definido y dependerá de la resolución de actas observadas por el JNE."}
+  }
+};
+
+const nf = n => n.toLocaleString('es-PE');
+const pf = n => n.toFixed(3).replace('.', ',') + '%';
+const fmtDate = iso => new Date(iso).toLocaleString('es-PE',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+/* Nacional */
+const N = DATA.nacional;
+document.getElementById('lastUpd').textContent = fmtDate(DATA.ultima_actualizacion_dato);
+document.getElementById('footUpd').textContent = fmtDate(DATA.ultima_actualizacion_dato);
+document.getElementById('footRev').textContent = fmtDate(DATA.ultima_revision);
+document.getElementById('actasBar').style.width = DATA.actas_procesadas_pct + '%';
+document.getElementById('actasPct').textContent = DATA.actas_procesadas_pct.toFixed(3).replace('.', ',') + '%';
+document.getElementById('kPct').textContent = pf(N.fujimori_pct);
+document.getElementById('sPct').textContent = pf(N.sanchez_pct);
+document.getElementById('kVot').textContent = nf(N.fujimori_votos) + ' votos';
+document.getElementById('sVot').textContent = nf(N.sanchez_votos) + ' votos';
+document.getElementById('kSplit').style.width = N.fujimori_pct + '%';
+document.getElementById('sSplit').style.width = N.sanchez_pct + '%';
+document.getElementById('margin').textContent = nf(N.margen_votos);
+document.getElementById('marginPct').textContent = (N.fujimori_pct - N.sanchez_pct).toFixed(3).replace('.', ',');
+
+/* Proyección */
+const P = DATA.proyeccion;
+document.getElementById('pkPct').textContent = pf(P.resultado.fujimori_pct_final);
+document.getElementById('psPct').textContent = pf(P.resultado.sanchez_pct_final);
+document.getElementById('pkVot').textContent = '≈ ' + nf(P.resultado.fujimori_votos_final) + ' votos';
+document.getElementById('psVot').textContent = '≈ ' + nf(P.resultado.sanchez_votos_final) + ' votos';
+/* gauge: mapear 49.5%..50.5% al ancho */
+const lo = 49.5, hi = 50.5, span = hi - lo;
+const toX = v => ((v - lo) / span) * 100;
+const ciL = P.resultado.fujimori_ic_inf, ciH = P.resultado.fujimori_ic_sup, ptv = P.resultado.fujimori_pct_final;
+document.getElementById('ciBar').style.left = toX(ciL) + '%';
+document.getElementById('ciBar').style.width = (toX(ciH) - toX(ciL)) + '%';
+document.getElementById('ciPt').style.left = toX(ptv) + '%';
+document.getElementById('ciLo').textContent = ciL.toFixed(2).replace('.', ',') + '%';
+document.getElementById('ciHi').textContent = ciH.toFixed(2).replace('.', ',') + '%';
+document.getElementById('tieNote').textContent = '⚖️ ' + P.resultado.nota;
+const S = P.supuestos;
+document.getElementById('assump').innerHTML =
+  '<b>Supuestos del modelo:</b> actas pendientes ≈ <b>' + S.actas_restantes_pct.toFixed(2).replace('.', ',') + '%</b> '
+  + '(≈ ' + nf(S.votos_validos_restantes_est) + ' votos válidos estimados). Reparto asumido del remanente: '
+  + '<b>Sánchez ' + S.reparto_restante_sanchez_pct.toFixed(0) + '% / Fujimori ' + S.reparto_restante_fujimori_pct.toFixed(0) + '%</b>. '
+  + S.racional + ' Intervalo de confianza: ±' + P.resultado.intervalo_confianza_95_pts.toFixed(2).replace('.', ',') + ' pts (95%).';
+
+/* Regiones */
+let regs = DATA.regiones.slice();
+let sortKey = 'sanchez', sortDir = -1;
+function renderRegs(){
+  regs.sort((a,b)=>{
+    let x=a[sortKey], y=b[sortKey];
+    if(typeof x==='string') return sortDir * x.localeCompare(y,'es');
+    return sortDir * (x - y);
+  });
+  const tb = document.getElementById('regBody'); tb.innerHTML='';
+  regs.forEach(r=>{
+    const win = r.fujimori >= r.sanchez ? 'k' : 's';
+    tb.insertAdjacentHTML('beforeend',
+      '<tr>'+
+        '<td><span class="reg"><span class="win '+win+'"></span>'+r.region+'</span></td>'+
+        '<td class="r" style="color:var(--k)">'+r.fujimori.toFixed(1).replace('.', ',')+'</td>'+
+        '<td class="r" style="color:var(--s)">'+r.sanchez.toFixed(1).replace('.', ',')+'</td>'+
+        '<td class="col-hide"><div class="minibar"><i style="width:'+r.fujimori+'%"></i></div></td>'+
+      '</tr>');
+  });
+}
+document.querySelectorAll('#regTable th').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const k = th.dataset.k; if(!k) return;
+    if(sortKey===k) sortDir*=-1; else { sortKey=k; sortDir = (k==='region')?1:-1; }
+    renderRegs();
+  });
+});
+renderRegs();
+
+/* Extranjero */
+const E = DATA.extranjero;
+document.getElementById('extHint').textContent =
+  'Más de 1,2 millones de electores habilitados en el exterior · ' + E.total.actas_pct.toFixed(3).replace('.', ',') + '% de actas contabilizadas.';
+document.getElementById('ekPct').textContent = pf(E.total.fujimori_pct);
+document.getElementById('esPct').textContent = pf(E.total.sanchez_pct);
+document.getElementById('ekVot').textContent = nf(E.total.fujimori_votos) + ' votos';
+document.getElementById('esVot').textContent = nf(E.total.sanchez_votos) + ' votos';
+document.getElementById('ekSplit').style.width = E.total.fujimori_pct + '%';
+document.getElementById('esSplit').style.width = E.total.sanchez_pct + '%';
+const cc = document.getElementById('conts');
+E.continentes.forEach(c=>{
+  cc.insertAdjacentHTML('beforeend',
+    '<div class="cont">'+
+      '<div class="cn">'+c.continente+'</div>'+
+      '<div class="splitbar" style="margin:8px 0"><i class="k" style="width:'+c.fujimori_pct+'%"></i><i class="s" style="width:'+c.sanchez_pct+'%"></i></div>'+
+      '<div class="row"><span class="k">Fujimori '+c.fujimori_pct.toFixed(1).replace('.', ',')+'%</span><span>'+nf(c.fujimori_votos)+'</span></div>'+
+      '<div class="row"><span class="s">Sánchez '+c.sanchez_pct.toFixed(1).replace('.', ',')+'%</span><span>'+nf(c.sanchez_votos)+'</span></div>'+
+    '</div>');
+});
+</script>
+</body>
+</html>

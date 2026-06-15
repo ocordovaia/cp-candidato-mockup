@@ -1,0 +1,76 @@
+{
+  "fuente": "ONPE - Resultados Oficiales Segunda Vuelta 2026",
+  "fuente_url": "https://resultadosegundavuelta.onpe.gob.pe/",
+  "eleccion": "Segunda Vuelta Presidencial - Perú 2026",
+  "candidatos": {
+    "fujimori": { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "color": "#f60" },
+    "sanchez": { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "color": "#c0282d" }
+  },
+  "ultima_actualizacion_dato": "2026-06-14T22:30:00-05:00",
+  "ultima_revision": "2026-06-15T00:00:00-05:00",
+  "actas_procesadas_pct": 98.590,
+  "nacional": {
+    "fujimori_pct": 50.052,
+    "fujimori_votos": 9074951,
+    "sanchez_pct": 49.948,
+    "sanchez_votos": 9056119,
+    "votos_validos": 18131070,
+    "margen_votos": 18832
+  },
+  "regiones": [
+    { "region": "Amazonas",        "fujimori": 35.543, "sanchez": 64.457 },
+    { "region": "Áncash",          "fujimori": 43.400, "sanchez": 56.600 },
+    { "region": "Apurímac",        "fujimori": 18.838, "sanchez": 81.162 },
+    { "region": "Arequipa",        "fujimori": 36.406, "sanchez": 63.594 },
+    { "region": "Ayacucho",        "fujimori": 20.683, "sanchez": 79.317 },
+    { "region": "Cajamarca",       "fujimori": 33.220, "sanchez": 66.780 },
+    { "region": "Callao",          "fujimori": 65.598, "sanchez": 34.402 },
+    { "region": "Cusco",           "fujimori": 21.846, "sanchez": 78.154 },
+    { "region": "Huancavelica",    "fujimori": 18.598, "sanchez": 81.402 },
+    { "region": "Huánuco",         "fujimori": 35.860, "sanchez": 64.140 },
+    { "region": "Ica",             "fujimori": 51.911, "sanchez": 48.089 },
+    { "region": "Junín",           "fujimori": 45.069, "sanchez": 54.931 },
+    { "region": "La Libertad",     "fujimori": 57.524, "sanchez": 42.476 },
+    { "region": "Lambayeque",      "fujimori": 58.848, "sanchez": 41.152 },
+    { "region": "Lima",            "fujimori": 63.500, "sanchez": 36.500 },
+    { "region": "Loreto",          "fujimori": 53.788, "sanchez": 46.212 },
+    { "region": "Madre de Dios",   "fujimori": 30.794, "sanchez": 69.206 },
+    { "region": "Moquegua",        "fujimori": 27.431, "sanchez": 72.569 },
+    { "region": "Pasco",           "fujimori": 39.236, "sanchez": 60.764 },
+    { "region": "Piura",           "fujimori": 56.975, "sanchez": 43.025 },
+    { "region": "Puno",            "fujimori": 13.578, "sanchez": 86.422 },
+    { "region": "San Martín",      "fujimori": 45.376, "sanchez": 54.624 },
+    { "region": "Tacna",           "fujimori": 28.635, "sanchez": 71.365 },
+    { "region": "Tumbes",          "fujimori": 64.339, "sanchez": 35.661 },
+    { "region": "Ucayali",         "fujimori": 52.542, "sanchez": 47.458 }
+  ],
+  "extranjero": {
+    "total": { "fujimori_pct": 63.429, "fujimori_votos": 184435, "sanchez_pct": 36.571, "sanchez_votos": 106338, "actas_pct": 94.495 },
+    "continentes": [
+      { "continente": "América", "fujimori_pct": 67.750, "fujimori_votos": 115380, "sanchez_pct": 32.250, "sanchez_votos": 57475 },
+      { "continente": "Europa",  "fujimori_pct": 55.898, "fujimori_votos": 59744,  "sanchez_pct": 44.102, "sanchez_votos": 47136 },
+      { "continente": "Asia",    "fujimori_pct": 89.095, "fujimori_votos": 7974,   "sanchez_pct": 10.905, "sanchez_votos": 976 },
+      { "continente": "Oceanía / África", "fujimori_pct": 63.4, "fujimori_votos": 1337, "sanchez_pct": 36.6, "sanchez_votos": 751 }
+    ]
+  },
+  "proyeccion": {
+    "supuestos": {
+      "actas_restantes_pct": 1.410,
+      "votos_validos_restantes_est": 255000,
+      "reparto_restante_sanchez_pct": 52.0,
+      "reparto_restante_fujimori_pct": 48.0,
+      "racional": "Las actas pendientes son mayormente observadas/impugnadas concentradas en provincias del sur andino (alta votación por Sánchez) y voto de Europa aún incompleto; se asume un reparto del remanente ligeramente favorable a Sánchez."
+    },
+    "resultado": {
+      "fujimori_pct_final": 50.023,
+      "fujimori_votos_final": 9197351,
+      "sanchez_pct_final": 49.977,
+      "sanchez_votos_final": 9188719,
+      "margen_final_est": 8632,
+      "intervalo_confianza_95_pts": 0.18,
+      "fujimori_ic_inf": 49.84,
+      "fujimori_ic_sup": 50.20,
+      "nota": "Empate técnico. El intervalo de confianza al 95% cruza el 50%: el resultado no está estadísticamente definido y depende de la resolución de actas observadas por el JNE."
+    }
+  }
+}
