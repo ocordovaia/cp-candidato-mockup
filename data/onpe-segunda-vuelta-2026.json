@@ -1,0 +1,39 @@
+{
+  "fuente": "ONPE - Conteo oficial (resultadosegundavuelta.onpe.gob.pe), agregado vía reportes de prensa (El Peruano, El Comercio, RPP, Infobae, La República) por bloqueo 403 al acceso directo automatizado",
+  "eleccion": "Elecciones Generales Perú 2026 - Segunda vuelta presidencial",
+  "fecha_eleccion": "2026-06-07",
+  "ultima_actualizacion_onpe": "2026-06-15T04:10:00-05:00",
+  "snapshot_generado": "2026-06-15",
+  "actas_contabilizadas_pct": 98.59,
+  "votos_emitidos": 19399319,
+  "votos_validos": 18131070,
+  "votos_blancos_pct": 0.60,
+  "votos_viciados_pct": 5.93,
+  "candidatos": {
+    "fujimori": {
+      "nombre": "Keiko Sofía Fujimori Higuchi",
+      "partido": "Fuerza Popular",
+      "votos": 9074951,
+      "pct_validos": 50.052
+    },
+    "sanchez": {
+      "nombre": "Roberto Helbert Sánchez Palomino",
+      "partido": "Juntos por el Perú",
+      "votos": 9056119,
+      "pct_validos": 49.948
+    }
+  },
+  "margen_votos": 18832,
+  "margen_onpe_reportado": 18478,
+  "extranjero": {
+    "actas_procesadas_pct": 100.0,
+    "mesas": 2506,
+    "consulados": 119,
+    "tendencia": "Incorporado al conteo desde 2026-06-08; modificó cifras preliminares en días posteriores"
+  },
+  "regiones_reportadas": {
+    "Cajamarca": { "sanchez_pct": 66, "fujimori_pct": 34, "fuente": "reportado" }
+  },
+  "patron_regional": "Sánchez lidera en la sierra sur y centro (Andes); Fujimori lidera en Lima Metropolitana y la costa norte",
+  "estado": "EN CONTEO - empate técnico, demasiado cerca para declarar ganador"
+}
