@@ -1,0 +1,40 @@
+{
+  "fuente": "ONPE - Resultados Segunda Vuelta Presidencial 2026",
+  "url_oficial": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+  "ultima_actualizacion_onpe": "2026-06-15T04:10:00-05:00",
+  "verificado_por_rutina": "2026-06-15",
+  "actas_contabilizadas_pct": 98.590,
+  "actas_procesadas_pct": 100.0,
+  "nota_actas": "ONPE procesó el 100% de actas el 13-jun; 98.59% están contabilizadas. El ~1.41% restante son actas observadas/impugnadas pendientes de resolución del JNE.",
+  "nacional": {
+    "keiko_fujimori": { "partido": "Fuerza Popular", "votos": 9075519, "pct_validos": 50.052 },
+    "roberto_sanchez": { "partido": "Juntos por el Perú", "votos": 9057024, "pct_validos": 49.948 },
+    "diferencia_votos": 18495
+  },
+  "extranjero": {
+    "keiko_fujimori": { "votos": 184621, "pct_validos": 63.396 },
+    "roberto_sanchez": { "votos": 106697, "pct_validos": 36.604 },
+    "diferencia_votos": 77924,
+    "por_continente": {
+      "america": { "keiko": 115584, "sanchez": 57744 },
+      "europa": { "keiko": 59726, "sanchez": 47226 }
+    }
+  },
+  "regiones_confirmadas": {
+    "Cajamarca": { "ganador": "sanchez", "sanchez_pct": 66.78, "keiko_pct": 33.22, "actas_pct": 99.55 },
+    "Amazonas": { "ganador": "sanchez", "sanchez_pct": 64.457, "keiko_pct": 35.543 },
+    "Lima Metropolitana": { "ganador": "keiko", "keiko_pct": 64.0, "sanchez_pct": 36.0, "nota": "aprox." }
+  },
+  "mapa_regional_direccional": {
+    "sanchez_gana": ["Cajamarca","Amazonas","Cusco","Puno","Apurímac","Ayacucho","Huancavelica","Arequipa","Tacna","Moquegua","Junín","Huánuco","Pasco","Ancash","San Martín","Madre de Dios","Loreto"],
+    "keiko_gana": ["Lima Metropolitana","Lima Provincias","Callao","Tumbes","Piura","Lambayeque","La Libertad","Ica","Ucayali"],
+    "nota": "Sánchez se impone en 17 de 25 circunscripciones (sur y centro andino + Cajamarca/Amazonas); Keiko domina costa norte, Lima, Callao y parte de la selva. Porcentajes exactos por región no confirmados vía fuentes abiertas para todas las regiones."
+  },
+  "proyeccion": {
+    "metodo": "Conteo casi final (98.59% contabilizado, 100% procesado). Proyección sobre el ~1.41% de actas observadas restantes (~260 mil votos válidos estimados).",
+    "ganador_proyectado": "keiko_fujimori",
+    "keiko_pct_central": 50.04,
+    "intervalo_confianza_95": { "keiko_min": 49.94, "keiko_max": 50.14 },
+    "nota": "Empate técnico. El resultado depende de la resolución de actas observadas por el JNE; el margen está dentro del intervalo de incertidumbre."
+  }
+}
