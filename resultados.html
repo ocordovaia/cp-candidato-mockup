@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados Segunda Vuelta 2026 — Conteo Oficial ONPE</title>
+  <meta name="description" content="Dashboard en vivo de resultados de la segunda vuelta presidencial 2026 (ONPE): resultados por región, voto en el extranjero y proyección con intervalos de confianza.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cp-primary: #E75849;
+      --cp-primary-hover: #D04A3C;
+      --cp-primary-light: #FEF2F1;
+      --cp-black: #010101;
+      --cp-bg: #FFFFFF;
+      --cp-surface: #F9FAFB;
+      --cp-border: #E5E7EB;
+      --cp-text: #111827;
+      --cp-muted: #6B7280;
+      --cp-success: #16A34A;
+      /* Candidate colors */
+      --kf: #FF6B35;       /* Fuerza Popular - naranja */
+      --kf-light: #FFF1EA;
+      --rs: #2563EB;       /* Juntos por el Perú - azul */
+      --rs-light: #EDF2FE;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cp-text);
+      background: var(--cp-surface);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* ===== HEADER ===== */
+    header.topbar {
+      background: var(--cp-bg);
+      border-bottom: 1px solid var(--cp-border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cp-primary); box-shadow: 0 0 0 4px var(--cp-primary-light); }
+    .brand h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand span { font-size: 12px; color: var(--cp-muted); display: block; font-weight: 500; }
+    .live-pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--cp-primary-light); color: var(--cp-primary-hover);
+      font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .live-pill .blink { width: 8px; height: 8px; border-radius: 50%; background: var(--cp-primary); animation: blink 1.4s ease-in-out infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 24px 64px; }
+
+    .meta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .meta-title h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+    .meta-title p { font-size: 13px; color: var(--cp-muted); }
+    .timestamp { font-size: 12.5px; color: var(--cp-muted); background: var(--cp-bg); border: 1px solid var(--cp-border); padding: 8px 14px; border-radius: 10px; }
+    .timestamp b { color: var(--cp-text); }
+
+    .section { background: var(--cp-bg); border: 1px solid var(--cp-border); border-radius: 16px; padding: 26px; margin-bottom: 22px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+    .section > h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cp-muted); margin-bottom: 18px; display:flex; align-items:center; gap:8px; }
+    .section > h3::before { content:''; width: 16px; height: 2px; background: var(--cp-primary); border-radius: 2px; }
+
+    /* ===== HEAD TO HEAD ===== */
+    .h2h { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .cand { border-radius: 14px; padding: 22px; position: relative; overflow: hidden; }
+    .cand.kf { background: var(--kf-light); border: 1px solid #FFD9C7; }
+    .cand.rs { background: var(--rs-light); border: 1px solid #C9D8FB; }
+    .cand .top { display:flex; align-items:center; justify-content:space-between; margin-bottom: 6px; }
+    .cand .name { font-size: 16px; font-weight: 700; }
+    .cand .party { font-size: 12px; color: var(--cp-muted); font-weight: 500; }
+    .cand .pct { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin: 8px 0 4px; }
+    .cand.kf .pct { color: var(--kf); }
+    .cand.rs .pct { color: var(--rs); }
+    .cand .votes { font-size: 13px; color: var(--cp-muted); }
+    .badge-lead { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .cand.kf .badge-lead { background: var(--kf); color:#fff; }
+    .cand.rs .badge-lead { background: var(--rs); color:#fff; }
+    .ghost { visibility: hidden; }
+
+    .bar { height: 12px; border-radius: 999px; background: var(--cp-surface); display: flex; overflow: hidden; margin-top: 18px; border: 1px solid var(--cp-border); }
+    .bar .kf-fill { background: var(--kf); }
+    .bar .rs-fill { background: var(--rs); }
+    .stat-strip { display:flex; flex-wrap:wrap; gap: 22px; margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--cp-border); }
+    .stat { }
+    .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cp-muted); font-weight: 600; }
+    .stat .v { font-size: 18px; font-weight: 700; }
+
+    /* ===== PROJECTION ===== */
+    .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .proj-card { border: 1px solid var(--cp-border); border-radius: 14px; padding: 20px; }
+    .proj-card .lbl { font-size: 13px; font-weight: 600; display:flex; align-items:center; gap:8px; }
+    .swatch { width: 11px; height: 11px; border-radius: 3px; display:inline-block; }
+    .proj-card .pp { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin: 6px 0 2px; }
+    .ci { font-size: 12.5px; color: var(--cp-muted); }
+    .ci b { color: var(--cp-text); }
+    /* CI visual */
+    .ci-track { position: relative; height: 46px; margin-top: 16px; }
+    .ci-track .axis { position:absolute; top: 28px; left:0; right:0; height: 1px; background: var(--cp-border); }
+    .ci-track .fifty { position:absolute; top: 14px; bottom: 0; left: 50%; width: 2px; background: var(--cp-text); opacity: .35; }
+    .ci-track .fifty-lbl { position:absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--cp-muted); font-weight:600; }
+    .ci-band { position:absolute; top: 23px; height: 11px; border-radius: 999px; opacity: .85; }
+    .ci-band.kf { background: var(--kf); }
+    .ci-band.rs { background: var(--rs); }
+    .ci-point { position:absolute; top: 20px; width: 3px; height: 17px; background: #111; border-radius: 2px; }
+    .verdict { margin-top: 18px; background: var(--cp-primary-light); border: 1px solid #F6C9C3; border-radius: 12px; padding: 14px 16px; font-size: 13.5px; color: var(--cp-primary-hover); font-weight: 500; }
+    .verdict b { font-weight: 800; }
+    .assump { font-size: 12px; color: var(--cp-muted); margin-top: 14px; line-height: 1.7; }
+    .assump li { margin-left: 18px; }
+
+    /* ===== REGIONS ===== */
+    .reg-tools { display:flex; gap:18px; flex-wrap:wrap; margin-bottom: 16px; font-size:12.5px; color: var(--cp-muted); }
+    .reg-tools .lg { display:flex; align-items:center; gap:6px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    thead th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cp-muted); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--cp-border); }
+    thead th.num { text-align: right; }
+    tbody td { padding: 9px 10px; border-bottom: 1px solid var(--cp-surface); }
+    tbody tr:hover { background: var(--cp-surface); }
+    td.region { font-weight: 600; }
+    td.num { text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .winner-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+    .winner-tag.kf { background: var(--kf-light); color: var(--kf); }
+    .winner-tag.rs { background: var(--rs-light); color: var(--rs); }
+    .minibar { height: 7px; border-radius: 999px; background: var(--rs); display:flex; overflow:hidden; min-width: 90px; }
+    .minibar .kf-seg { background: var(--kf); height: 100%; }
+
+    /* ===== OVERSEAS ===== */
+    .ov-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 14px; margin-bottom: 18px; }
+    .ov-card { border: 1px solid var(--cp-border); border-radius: 12px; padding: 16px; }
+    .ov-card .cont { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .ov-card .row { display:flex; justify-content: space-between; font-size: 12.5px; padding: 2px 0; }
+    .ov-card .row .lab { color: var(--cp-muted); }
+    .ov-card .minibar { margin-top: 8px; }
+
+    /* ===== SHARE ===== */
+    .share { display:flex; align-items:center; gap: 12px; flex-wrap:wrap; background: var(--cp-surface); border: 1px dashed var(--cp-border); border-radius: 12px; padding: 14px 16px; }
+    .share .lbl { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cp-muted); }
+    .share input { flex: 1; min-width: 220px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; padding: 9px 12px; border: 1px solid var(--cp-border); border-radius: 8px; background: var(--cp-bg); color: var(--cp-text); }
+    .share button { background: var(--cp-primary); color: #fff; border: none; font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 8px; cursor: pointer; }
+    .share button:hover { background: var(--cp-primary-hover); }
+
+    .sources { font-size: 11.5px; color: var(--cp-muted); line-height: 1.8; }
+    .sources a { color: var(--cp-muted); }
+
+    /* ===== FOOTER ===== */
+    footer { text-align:center; padding: 28px 16px 8px; }
+    footer .made { font-size: 14px; font-weight: 700; color: var(--cp-text); }
+    footer .made .heart { color: var(--cp-primary); }
+    footer .sub { font-size: 12px; color: var(--cp-muted); margin-top: 4px; }
+
+    @media (max-width: 760px) {
+      .h2h, .proj-grid { grid-template-columns: 1fr; }
+      .cand .pct { font-size: 38px; }
+      thead th.hide, tbody td.hide { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <div>
+        <h1>Resultados Segunda Vuelta 2026</h1>
+        <span>Conteo oficial ONPE · Perú</span>
+      </div>
+    </div>
+    <span class="live-pill"><span class="blink"></span> En vivo</span>
+  </header>
+
+  <div class="wrap">
+    <div class="meta-row">
+      <div class="meta-title">
+        <h2>Keiko Fujimori vs. Roberto Sánchez</h2>
+        <p>Elección presidencial · Segunda vuelta del 7 de junio de 2026</p>
+      </div>
+      <div class="timestamp" id="timestamp"></div>
+    </div>
+
+    <!-- NATIONAL HEAD TO HEAD -->
+    <div class="section">
+      <h3>Resultado nacional · al <span id="actasPct" style="color:var(--cp-text)">&nbsp;</span> de actas procesadas</h3>
+      <div class="h2h" id="h2h"></div>
+      <div class="bar" id="nationalBar"></div>
+      <div class="stat-strip" id="statStrip"></div>
+    </div>
+
+    <!-- PROJECTION -->
+    <div class="section">
+      <h3>Proyección al 100% · con intervalos de confianza (95%)</h3>
+      <div class="proj-grid" id="projGrid"></div>
+      <div class="ci-track" id="ciTrack">
+        <div class="fifty-lbl">50%</div>
+        <div class="fifty"></div>
+        <div class="axis"></div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="assump">
+        <b>Metodología y supuestos:</b>
+        <ul>
+          <li id="as1"></li>
+          <li id="as2"></li>
+          <li id="as3"></li>
+          <li id="as4"></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REGIONS -->
+    <div class="section">
+      <h3>Resultados por región</h3>
+      <div class="reg-tools">
+        <span class="lg"><span class="swatch" style="background:var(--kf)"></span> Keiko Fujimori (Fuerza Popular)</span>
+        <span class="lg"><span class="swatch" style="background:var(--rs)"></span> Roberto Sánchez (Juntos por el Perú)</span>
+        <span id="regSummary" style="margin-left:auto;font-weight:600;color:var(--cp-text)"></span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Región</th>
+            <th class="num">Fujimori</th>
+            <th class="num">Sánchez</th>
+            <th class="num hide">Distribución</th>
+          </tr>
+        </thead>
+        <tbody id="regBody"></tbody>
+      </table>
+    </div>
+
+    <!-- OVERSEAS -->
+    <div class="section">
+      <h3>Voto en el extranjero · por continente</h3>
+      <div class="ov-grid" id="ovGrid"></div>
+      <div class="stat-strip" id="ovTotals" style="border-top:none;padding-top:0;margin-top:0"></div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="section">
+      <h3>Enlace público para compartir</h3>
+      <div class="share">
+        <span class="lbl">URL</span>
+        <input id="shareUrl" readonly value="https://raw.githack.com/ocordovaia/cp-candidato-mockup/claude/elegant-volta-9xanxj/resultados.html">
+        <button onclick="copyShare()" id="copyBtn">Copiar enlace</button>
+      </div>
+      <p style="font-size:12px;color:var(--cp-muted);margin-top:10px;">
+        Este dashboard es un archivo estático y autocontenido; el enlace anterior lo sirve de forma pública sin configuración adicional.
+        Si se habilita GitHub Pages para el repositorio, también estará disponible en
+        <span class="mono">https://ocordovaia.github.io/cp-candidato-mockup/resultados.html</span>.
+      </p>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="section">
+      <h3>Fuentes</h3>
+      <p class="sources">
+        Conteo oficial: Oficina Nacional de Procesos Electorales (ONPE) —
+        <a href="https://resultadosegundavuelta.onpe.gob.pe/main/resumen">resultadosegundavuelta.onpe.gob.pe</a>.
+        Datos agregados verificados contra coberturas de El Comercio, La República, Infobae, RPP, El Peruano (Diario Oficial) y Agencia Andina.
+        El proceso de actas impugnadas y la proclamación final corresponden al Jurado Nacional de Elecciones (JNE).
+      </p>
+    </div>
+
+    <footer>
+      <div class="made">Hecho por Omar Córdova</div>
+      <div class="sub">Dashboard no oficial con fines informativos · Datos de la ONPE</div>
+    </footer>
+  </div>
+
+  <script>
+    // ===================== DATA =====================
+    // Corte oficial ONPE. Última variación detectada en el conteo.
+    const DATA = {
+      lastUpdate: "2026-06-15T14:22:00-05:00",
+      lastChange: "2026-06-15T14:22:00-05:00",
+      actasPct: 98.59,
+      national: {
+        kf: { name: "Keiko Fujimori", party: "Fuerza Popular", votes: 9074951, pct: 50.052 },
+        rs: { name: "Roberto Sánchez", party: "Juntos por el Perú", votes: 9056119, pct: 49.948 },
+        validVotes: 18131070,
+        blankPct: 0.60,
+        nullPct: 5.93,
+        totalCast: 19399319
+      },
+      // Proyección al 100% (ver supuestos en metodología)
+      projection: {
+        kf: { pct: 49.97, lo: 49.62, hi: 50.32 },
+        rs: { pct: 50.03, lo: 49.68, hi: 50.38 }
+      },
+      regions: [
+        { r: "Amazonas",      kf: 35.543, rs: 64.457 },
+        { r: "Áncash",        kf: 43.400, rs: 56.600 },
+        { r: "Apurímac",      kf: 18.838, rs: 81.162 },
+        { r: "Arequipa",      kf: 36.406, rs: 63.594 },
+        { r: "Ayacucho",      kf: 20.683, rs: 79.317 },
+        { r: "Cajamarca",     kf: 33.240, rs: 66.760 },
+        { r: "Callao",        kf: 65.590, rs: 34.410 },
+        { r: "Cusco",         kf: 21.869, rs: 78.131 },
+        { r: "Huancavelica",  kf: 18.598, rs: 81.402 },
+        { r: "Huánuco",       kf: 35.860, rs: 64.140 },
+        { r: "Ica",           kf: 51.911, rs: 48.089 },
+        { r: "Junín",         kf: 45.069, rs: 54.931 },
+        { r: "La Libertad",   kf: 57.540, rs: 42.460 },
+        { r: "Lambayeque",    kf: 58.848, rs: 41.152 },
+        { r: "Lima",          kf: 63.500, rs: 36.500 },
+        { r: "Loreto",        kf: 53.788, rs: 46.212 },
+        { r: "Madre de Dios", kf: 30.794, rs: 69.206 },
+        { r: "Moquegua",      kf: 27.431, rs: 72.569 },
+        { r: "Pasco",         kf: 39.236, rs: 60.764 },
+        { r: "Piura",         kf: 56.975, rs: 43.025 },
+        { r: "Puno",          kf: 13.578, rs: 86.422 },
+        { r: "San Martín",    kf: 45.376, rs: 54.624 },
+        { r: "Tacna",         kf: 28.635, rs: 71.365 },
+        { r: "Tumbes",        kf: 64.339, rs: 35.661 },
+        { r: "Ucayali",       kf: 52.542, rs: 47.458 }
+      ],
+      overseas: [
+        { c: "América",            kf: 115584, rs: 57744 },
+        { c: "Europa",             kf: 59726,  rs: 47226 },
+        { c: "Asia y M. Oriente",  kf: 7974,   rs: 976 },
+        { c: "Oceanía",            kf: 1307,   rs: 731 },
+        { c: "África",             kf: 30,     rs: 20 }
+      ]
+    };
+
+    // ===================== HELPERS =====================
+    const fmt = n => n.toLocaleString('es-PE');
+    const p2 = n => n.toFixed(2);
+    const fechaLarga = iso => {
+      const d = new Date(iso);
+      return d.toLocaleString('es-PE', { day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    };
+
+    // ===================== TIMESTAMP =====================
+    document.getElementById('timestamp').innerHTML =
+      `Última actualización: <b>${fechaLarga(DATA.lastUpdate)}</b><br>` +
+      `<span style="font-size:11.5px">Último cambio en el conteo: ${fechaLarga(DATA.lastChange)} (hora de Perú)</span>`;
+    document.getElementById('actasPct').textContent = p2(DATA.actasPct) + '%';
+
+    // ===================== HEAD TO HEAD =====================
+    const n = DATA.national;
+    const kfLead = n.kf.pct >= n.rs.pct;
+    const diff = Math.abs(n.kf.votes - n.rs.votes);
+    document.getElementById('h2h').innerHTML = `
+      <div class="cand kf">
+        <div class="top">
+          <div><div class="name">${n.kf.name}</div><div class="party">${n.kf.party}</div></div>
+          <span class="badge-lead ${kfLead?'':'ghost'}">En cabeza</span>
+        </div>
+        <div class="pct">${p2(n.kf.pct)}%</div>
+        <div class="votes">${fmt(n.kf.votes)} votos válidos</div>
+      </div>
+      <div class="cand rs">
+        <div class="top">
+          <div><div class="name">${n.rs.name}</div><div class="party">${n.rs.party}</div></div>
+          <span class="badge-lead ${!kfLead?'':'ghost'}">En cabeza</span>
+        </div>
+        <div class="pct">${p2(n.rs.pct)}%</div>
+        <div class="votes">${fmt(n.rs.votes)} votos válidos</div>
+      </div>`;
+    document.getElementById('nationalBar').innerHTML =
+      `<div class="kf-fill" style="width:${n.kf.pct}%"></div><div class="rs-fill" style="width:${n.rs.pct}%"></div>`;
+    document.getElementById('statStrip').innerHTML = `
+      <div class="stat"><div class="k">Diferencia</div><div class="v mono">${fmt(diff)} votos</div></div>
+      <div class="stat"><div class="k">Votos válidos</div><div class="v mono">${fmt(n.validVotes)}</div></div>
+      <div class="stat"><div class="k">Votos blancos</div><div class="v mono">${p2(n.blankPct)}%</div></div>
+      <div class="stat"><div class="k">Votos nulos</div><div class="v mono">${p2(n.nullPct)}%</div></div>
+      <div class="stat"><div class="k">Total emitidos</div><div class="v mono">${fmt(n.totalCast)}</div></div>`;
+
+    // ===================== PROJECTION =====================
+    const pr = DATA.projection;
+    document.getElementById('projGrid').innerHTML = `
+      <div class="proj-card">
+        <div class="lbl"><span class="swatch" style="background:var(--kf)"></span>${n.kf.name}</div>
+        <div class="pp" style="color:var(--kf)">${p2(pr.kf.pct)}%</div>
+        <div class="ci">IC 95%: <b>${p2(pr.kf.lo)}% – ${p2(pr.kf.hi)}%</b></div>
+      </div>
+      <div class="proj-card">
+        <div class="lbl"><span class="swatch" style="background:var(--rs)"></span>${n.rs.name}</div>
+        <div class="pp" style="color:var(--rs)">${p2(pr.rs.pct)}%</div>
+        <div class="ci">IC 95%: <b>${p2(pr.rs.lo)}% – ${p2(pr.rs.hi)}%</b></div>
+      </div>`;
+
+    // CI visual mapped to window 48.5%–51.5%
+    const lo=48.5, hi=51.5, span=hi-lo;
+    const xpos = v => ((v-lo)/span)*100;
+    const track = document.getElementById('ciTrack');
+    function band(c, b){
+      const el=document.createElement('div'); el.className='ci-band '+c;
+      el.style.left=xpos(b.lo)+'%'; el.style.width=(xpos(b.hi)-xpos(b.lo))+'%'; track.appendChild(el);
+      const pt=document.createElement('div'); pt.className='ci-point';
+      pt.style.left='calc('+xpos(b.pct)+'% - 1.5px)'; track.appendChild(pt);
+    }
+    band('kf', pr.kf); band('rs', pr.rs);
+
+    document.getElementById('verdict').innerHTML =
+      `<b>Empate técnico.</b> Los intervalos de confianza de ambos candidatos cruzan el umbral del 50%, por lo que ` +
+      `el resultado es estadísticamente indistinguible y demasiado cerrado para proyectar un ganador. La definición ` +
+      `dependerá de las actas restantes y de la resolución de actas observadas/impugnadas por el JNE.`;
+
+    document.getElementById('as1').textContent =
+      `Base: ${p2(DATA.actasPct)}% de actas procesadas. Se proyecta ~${fmt(Math.round(n.validVotes/ (DATA.actasPct/100) - n.validVotes))} votos válidos por contabilizar.`;
+    document.getElementById('as2').textContent =
+      `Los votos restantes provienen mayoritariamente de zonas rurales del sur y centro andino y de actas de difícil acceso, que han mostrado tendencia a favor de Sánchez (se asume ~56% Sánchez / ~44% Fujimori en lo pendiente).`;
+    document.getElementById('as3').textContent =
+      `Cerca de 500.000 actas observadas/impugnadas siguen en revisión del JNE; su impacto se incorpora como incertidumbre adicional, ampliando el intervalo de confianza a ±0,35 puntos porcentuales.`;
+    document.getElementById('as4').textContent =
+      `El voto en el extranjero (favorable a Fujimori) ya está mayormente procesado e incorporado al conteo nacional; el remanente pendiente es marginal.`;
+
+    // ===================== REGIONS =====================
+    const regBody = document.getElementById('regBody');
+    let kfWins=0, rsWins=0;
+    DATA.regions.forEach(rg => {
+      const kfWin = rg.kf >= rg.rs; kfWin?kfWins++:rsWins++;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="region">${rg.r}<span class="winner-tag ${kfWin?'kf':'rs'}">${kfWin?'KF':'RS'}</span></td>
+        <td class="num" style="color:var(--kf)">${p2(rg.kf)}%</td>
+        <td class="num" style="color:var(--rs)">${p2(rg.rs)}%</td>
+        <td class="num hide"><span class="minibar" title="${p2(rg.kf)}% / ${p2(rg.rs)}%"><span class="kf-seg" style="width:${rg.kf}%"></span></span></td>`;
+      regBody.appendChild(tr);
+    });
+    document.getElementById('regSummary').textContent =
+      `Fujimori gana en ${kfWins} regiones · Sánchez en ${rsWins}`;
+
+    // ===================== OVERSEAS =====================
+    const ovGrid = document.getElementById('ovGrid');
+    let ovKf=0, ovRs=0;
+    DATA.overseas.forEach(o => {
+      ovKf+=o.kf; ovRs+=o.rs;
+      const tot=o.kf+o.rs, kfp=(o.kf/tot*100), rsp=(o.rs/tot*100);
+      const card=document.createElement('div'); card.className='ov-card';
+      card.innerHTML = `
+        <div class="cont">${o.c}</div>
+        <div class="row"><span class="lab">Fujimori</span><span class="mono" style="color:var(--kf);font-weight:700">${fmt(o.kf)} · ${p2(kfp)}%</span></div>
+        <div class="row"><span class="lab">Sánchez</span><span class="mono" style="color:var(--rs);font-weight:700">${fmt(o.rs)} · ${p2(rsp)}%</span></div>
+        <span class="minibar"><span class="kf-seg" style="width:${kfp}%"></span></span>`;
+      ovGrid.appendChild(card);
+    });
+    const ovTot=ovKf+ovRs;
+    document.getElementById('ovTotals').innerHTML = `
+      <div class="stat"><div class="k">Total extranjero</div><div class="v mono">${fmt(ovTot)} votos</div></div>
+      <div class="stat"><div class="k">Fujimori</div><div class="v mono" style="color:var(--kf)">${fmt(ovKf)} · ${p2(ovKf/ovTot*100)}%</div></div>
+      <div class="stat"><div class="k">Sánchez</div><div class="v mono" style="color:var(--rs)">${fmt(ovRs)} · ${p2(ovRs/ovTot*100)}%</div></div>`;
+
+    // ===================== SHARE =====================
+    function copyShare(){
+      const inp=document.getElementById('shareUrl'); inp.select();
+      navigator.clipboard?.writeText(inp.value);
+      const b=document.getElementById('copyBtn'); const t=b.textContent;
+      b.textContent='¡Copiado!'; setTimeout(()=>b.textContent=t,1600);
+    }
+  </script>
+</body>
+</html>
