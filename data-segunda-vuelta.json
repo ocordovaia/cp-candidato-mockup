@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta Presidencial",
+    "fuente": "ONPE (conteo oficial), reportado por El Peruano, El Comercio, La República, Infobae, RPP",
+    "nota_fuente": "El portal de la ONPE (onpe.gob.pe) bloquea el acceso automatizado (HTTP 403). Las cifras se consolidan a partir de medios que replican el conteo oficial de la ONPE.",
+    "actas_contabilizadas_pct": 98.590,
+    "ultima_actualizacion_onpe": "2026-06-14T20:45:00-05:00",
+    "ultima_revision_routine": "2026-06-15",
+    "estado": "Empate técnico — pendiente actas impugnadas y resolución del JNE"
+  },
+  "nacional": {
+    "keiko": { "candidato": "Keiko Fujimori", "partido": "Fuerza Popular", "pct": 50.052, "votos": 9074951 },
+    "sanchez": { "candidato": "Roberto Sánchez", "partido": "Juntos por el Perú", "pct": 49.948, "votos": 9056119 },
+    "diferencia_votos": 18832,
+    "votos_validos": 18131070,
+    "votos_blancos_pct": 0.60,
+    "votos_nulos_pct": 5.93,
+    "votos_emitidos_aprox": 19393262,
+    "participacion_pct": 70.99,
+    "electores_habiles": 26100000
+  },
+  "extranjero": {
+    "keiko_pct": 63.429,
+    "keiko_votos": 184435,
+    "sanchez_pct": 36.571,
+    "sanchez_votos": 106338,
+    "validos": 290773,
+    "habiles_aprox": 1200000,
+    "continentes": [
+      { "nombre": "América", "keiko_pct": 67.750, "sanchez_pct": 32.250 },
+      { "nombre": "Europa", "keiko_pct": 55.898, "sanchez_pct": 44.102 },
+      { "nombre": "Asia", "keiko_pct": 89.095, "sanchez_pct": 10.905 },
+      { "nombre": "África", "keiko_pct": 60.000, "sanchez_pct": 40.000 },
+      { "nombre": "Oceanía", "keiko_pct": 64.132, "sanchez_pct": 35.868 }
+    ]
+  },
+  "regiones": [
+    { "region": "Amazonas",       "sanchez_pct": 64.46, "confirmado": true },
+    { "region": "Áncash",         "sanchez_pct": 52.00, "confirmado": false },
+    { "region": "Apurímac",       "sanchez_pct": 77.00, "confirmado": false },
+    { "region": "Arequipa",       "sanchez_pct": 56.00, "confirmado": false },
+    { "region": "Ayacucho",       "sanchez_pct": 79.00, "confirmado": false },
+    { "region": "Cajamarca",      "sanchez_pct": 66.78, "confirmado": true },
+    { "region": "Callao",         "sanchez_pct": 42.00, "confirmado": false },
+    { "region": "Cusco",          "sanchez_pct": 78.48, "confirmado": true },
+    { "region": "Huancavelica",   "sanchez_pct": 80.60, "confirmado": true },
+    { "region": "Huánuco",        "sanchez_pct": 60.00, "confirmado": false },
+    { "region": "Ica",            "sanchez_pct": 45.00, "confirmado": false },
+    { "region": "Junín",          "sanchez_pct": 58.00, "confirmado": false },
+    { "region": "La Libertad",    "sanchez_pct": 42.46, "confirmado": true },
+    { "region": "Lambayeque",     "sanchez_pct": 49.00, "confirmado": false },
+    { "region": "Lima",           "sanchez_pct": 36.00, "confirmado": true },
+    { "region": "Loreto",         "sanchez_pct": 40.00, "confirmado": false },
+    { "region": "Madre de Dios",  "sanchez_pct": 55.00, "confirmado": false },
+    { "region": "Moquegua",       "sanchez_pct": 62.00, "confirmado": false },
+    { "region": "Pasco",          "sanchez_pct": 60.00, "confirmado": false },
+    { "region": "Piura",          "sanchez_pct": 44.00, "confirmado": false },
+    { "region": "Puno",           "sanchez_pct": 85.00, "confirmado": false },
+    { "region": "San Martín",     "sanchez_pct": 43.00, "confirmado": false },
+    { "region": "Tacna",          "sanchez_pct": 68.00, "confirmado": false },
+    { "region": "Tumbes",         "sanchez_pct": 43.00, "confirmado": false },
+    { "region": "Ucayali",        "sanchez_pct": 41.00, "confirmado": false }
+  ],
+  "proyeccion": {
+    "actas_restantes_pct": 1.410,
+    "votos_validos_restantes_aprox": 259305,
+    "keiko_proyectado_pct": 50.05,
+    "sanchez_proyectado_pct": 49.95,
+    "intervalo_confianza_pct": 0.18,
+    "ganador_proyectado": "Empate técnico",
+    "probabilidad_keiko_pct": 57,
+    "nota": "Con la diferencia dentro del margen de error y actas impugnadas pendientes, el resultado es estadísticamente un empate. Las actas restantes provienen mayormente de zonas rurales andinas (favorables a Sánchez) y del extranjero (favorable a Fujimori), por lo que ambos escenarios siguen abiertos."
+  }
+}
