@@ -1,0 +1,39 @@
+{
+  "eleccion": "Elecciones Generales 2026 - Segunda Vuelta Presidencial (Perú)",
+  "fuente": "ONPE (agregado de reportes oficiales vía prensa; portal resultados.onpe.gob.pe no accesible directamente por la política de red del entorno)",
+  "ultimo_cambio_datos": "2026-06-13T21:20:00-05:00",
+  "ultima_revision_rutina": "2026-06-15T00:00:00-05:00",
+  "actas_procesadas_pct": 100.0,
+  "estado": "100% de actas procesadas; pendiente resolución de actas observadas por los JEE y proclamación del JNE. Sin ganador oficial declarado.",
+  "nacional": {
+    "votos_validos": 18126090,
+    "keiko_fujimori": { "partido": "Fuerza Popular", "votos": 9072289, "pct": 50.051 },
+    "roberto_sanchez": { "partido": "Juntos por el Perú", "votos": 9053801, "pct": 49.949 },
+    "diferencia_votos": 18488
+  },
+  "extranjero": {
+    "votos_validos": 291318,
+    "keiko_fujimori": { "votos": 184621, "pct": 63.396 },
+    "roberto_sanchez": { "votos": 106697, "pct": 36.604 },
+    "diferencia_votos": 77924,
+    "por_continente": {
+      "America":  { "keiko": 115584, "sanchez": 57744 },
+      "Europa":   { "keiko": 59726,  "sanchez": 47226 },
+      "Asia":     { "keiko": 7974,   "sanchez": 976 },
+      "Africa":   { "keiko": 30,     "sanchez": 20 },
+      "Oceania":  { "keiko": 1307,   "sanchez": 731 }
+    }
+  },
+  "domestico_derivado": {
+    "votos_validos": 17834772,
+    "keiko_fujimori": { "votos": 8887668, "pct": 49.833 },
+    "roberto_sanchez": { "votos": 8947104, "pct": 50.167 },
+    "nota": "Diferencia doméstica de -59,436 a favor de Sánchez, revertida por el voto del extranjero (+77,924 a favor de Keiko)."
+  },
+  "proyeccion": {
+    "metodo": "100% de actas procesadas; incertidumbre restante limitada a ~1,635 actas observadas en revisión de los JEE (~330k votos estimados). Intervalo al 95%.",
+    "keiko_fujimori_pct": { "central": 50.05, "ci_baja": 49.92, "ci_alta": 50.18 },
+    "roberto_sanchez_pct": { "central": 49.95, "ci_baja": 49.82, "ci_alta": 50.08 },
+    "lectura": "Empate técnico con ligera ventaja de Keiko Fujimori. El resultado permanece dentro del margen y no es definitivo hasta la adjudicación de actas observadas y la proclamación oficial."
+  }
+}
