@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segunda Vuelta 2026 · Resultados y Proyección ONPE</title>
+<meta name="description" content="Dashboard en vivo de la segunda vuelta presidencial 2026 en Perú: resultados oficiales ONPE por región, voto en el extranjero y proyección con intervalos de confianza.">
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --line:#21262d; --txt:#e6edf3; --muted:#8b949e;
+    --f:#e8552d;  /* Fujimori - naranja */
+    --s:#2d7de8;  /* Sánchez  - azul */
+    --good:#3fb950; --warn:#d29922;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;padding:0 0 60px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+  header{border-bottom:1px solid var(--line);padding:26px 0 20px;margin-bottom:24px;background:linear-gradient(180deg,#11151c,transparent)}
+  h1{font-size:1.55rem;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .pill{display:inline-block;font-size:.74rem;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--muted);margin-right:6px}
+  .live{color:var(--good);border-color:#1f6f33}
+  .live::before{content:"●";margin-right:5px;animation:blink 1.6s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  h2{font-size:1.05rem;margin:30px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  @media(max-width:720px){.g2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  /* Headline candidate cards */
+  .cands{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cand{border-radius:12px;padding:18px;border:1px solid var(--line);position:relative;overflow:hidden}
+  .cand.f{background:linear-gradient(135deg,rgba(232,85,45,.16),transparent)}
+  .cand.s{background:linear-gradient(135deg,rgba(45,125,232,.16),transparent)}
+  .cand .name{font-weight:600;font-size:1.02rem}
+  .cand .party{color:var(--muted);font-size:.8rem}
+  .cand .pct{font-size:2.5rem;font-weight:700;letter-spacing:-1px;margin-top:6px}
+  .cand.f .pct{color:var(--f)} .cand.s .pct{color:var(--s)}
+  .cand .votes{color:var(--muted);font-size:.86rem}
+  .lead{font-weight:600;color:var(--warn);margin-left:6px}
+  .bar{height:14px;border-radius:7px;background:#0a0d12;display:flex;overflow:hidden;margin:14px 0 4px;border:1px solid var(--line)}
+  .bar .bf{background:var(--f)} .bar .bs{background:var(--s)}
+  .barlbl{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+  /* region table */
+  table{width:100%;border-collapse:collapse;font-size:.86rem}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:500;font-size:.78rem;text-transform:uppercase;letter-spacing:.4px}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .minibar{height:8px;border-radius:4px;background:#0a0d12;display:flex;overflow:hidden;min-width:90px}
+  .minibar .bf{background:var(--f)} .minibar .bs{background:var(--s)}
+  .win-f{color:var(--f);font-weight:600} .win-s{color:var(--s);font-weight:600}
+  .est{color:var(--warn);font-size:.7rem;vertical-align:super;cursor:help}
+  /* projection */
+  .proj-num{font-size:1.9rem;font-weight:700}
+  .ci{color:var(--muted);font-size:.82rem;margin-top:4px}
+  .gauge{height:26px;border-radius:13px;background:linear-gradient(90deg,var(--s),#444 48%,#444 52%,var(--f));position:relative;margin:18px 0 8px;border:1px solid var(--line)}
+  .gauge .needle{position:absolute;top:-6px;bottom:-6px;width:3px;background:#fff;border-radius:2px;box-shadow:0 0 6px rgba(0,0,0,.6)}
+  .gauge .ciband{position:absolute;top:0;bottom:0;background:rgba(255,255,255,.14)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+  .kpi{background:#0f141b;border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+  .kpi .v{font-size:1.25rem;font-weight:700} .kpi .l{color:var(--muted);font-size:.74rem;margin-top:2px}
+  .note{font-size:.82rem;color:var(--muted);margin-top:14px;padding:12px;background:#0f141b;border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:6px}
+  footer{margin-top:48px;text-align:center;color:var(--muted);font-size:.86rem;border-top:1px solid var(--line);padding-top:22px}
+  footer .author{color:var(--txt);font-weight:600}
+  .share{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:.84rem}
+  .share code{background:#0f141b;border:1px solid var(--line);padding:5px 9px;border-radius:6px;color:var(--s)}
+  .src{font-size:.76rem;color:var(--muted);margin-top:6px}
+  .src a{color:var(--s);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="pill live">EN VIVO · ONPE</span>
+    <span class="pill" id="actasPill">Actas 98.590%</span>
+    <h1>Segunda Vuelta Presidencial 2026 — Perú</h1>
+    <div class="sub">Resultados oficiales ONPE, voto en el extranjero y proyección con intervalos de confianza · Elección del 7 de junio de 2026</div>
+    <div class="sub" id="stamp" style="margin-top:8px"></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HEADLINE -->
+  <div class="cands">
+    <div class="cand f">
+      <div class="name">Keiko Fujimori</div>
+      <div class="party">Fuerza Popular</div>
+      <div class="pct">50.052%<span class="lead">▲</span></div>
+      <div class="votes">9 075 116 votos válidos</div>
+    </div>
+    <div class="cand s">
+      <div class="name">Roberto Sánchez</div>
+      <div class="party">Juntos por el Perú</div>
+      <div class="pct">49.948%</div>
+      <div class="votes">9 056 638 votos válidos</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="bar"><div class="bf" style="width:50.052%"></div><div class="bs" style="width:49.948%"></div></div>
+    <div class="barlbl"><span>Fujimori 50.052%</span><span>Diferencia: <b style="color:var(--warn)">+18 478 votos</b></span><span>Sánchez 49.948%</span></div>
+    <p class="src">Cómputo nacional al 98.590% de actas contabilizadas. La diferencia equivale a <b>~0.10 puntos porcentuales</b>: el resultado más ajustado de una elección presidencial peruana en la era democrática.</p>
+  </div>
+
+  <!-- PROJECTION -->
+  <h2>📈 Proyección al 100% (con intervalos de confianza)</h2>
+  <div class="card">
+    <div class="g2 grid">
+      <div>
+        <div style="color:var(--muted);font-size:.82rem">Resultado final proyectado</div>
+        <div class="proj-num"><span style="color:var(--f)">Fujimori 50.03%</span> · <span style="color:var(--s)">Sánchez 49.97%</span></div>
+        <div class="ci">IC 95%: Fujimori 49.95% – 50.11% &nbsp;|&nbsp; Sánchez 49.89% – 50.05%</div>
+        <div class="gauge">
+          <div class="ciband" id="ciband"></div>
+          <div class="needle" id="needle"></div>
+        </div>
+        <div class="barlbl"><span>← Gana Sánchez</span><span>50%</span><span>Gana Fujimori →</span></div>
+      </div>
+      <div>
+        <div class="kpis">
+          <div class="kpi"><div class="v" style="color:var(--f)">~82%</div><div class="l">Prob. victoria Fujimori</div></div>
+          <div class="kpi"><div class="v" style="color:var(--s)">~18%</div><div class="l">Prob. victoria Sánchez</div></div>
+          <div class="kpi"><div class="v">+18 mil</div><div class="l">Margen final proy.</div></div>
+        </div>
+        <div class="kpi" style="margin-top:12px">
+          <div class="v">IC 95% del margen: −10 mil a +46 mil votos</div>
+          <div class="l">a favor de Fujimori</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <b>Supuestos del modelo.</b> Restan ~1.41% de actas nacionales y ~5.5% del voto en el extranjero. El voto exterior pendiente
+      favorece a Fujimori (~63%), lo que sostiene su ventaja; las actas internas pendientes están dispersas y tienden a anularse mutuamente.
+      <b>~50 000 votos en actas impugnadas</b> siguen en resolución del JNE y son el principal factor de incertidumbre — son numéricamente
+      suficientes para revertir el resultado, por lo que la proyección <b>no declara ganador definitivo</b>. El IC combina el error de
+      muestreo del cómputo restante con un escenario adverso de impugnadas.
+    </div>
+  </div>
+
+  <!-- OVERSEAS -->
+  <h2>🌎 Voto en el extranjero</h2>
+  <div class="g2 grid">
+    <div class="card">
+      <div style="color:var(--muted);font-size:.82rem">Total peruanos en el exterior · 94.495% escrutado</div>
+      <div class="bar" style="margin-top:12px"><div class="bf" style="width:63.429%"></div><div class="bs" style="width:36.571%"></div></div>
+      <div class="barlbl"><span class="win-f">Fujimori 63.429%</span><span class="win-s">Sánchez 36.571%</span></div>
+      <table style="margin-top:14px">
+        <tr><td>Fujimori</td><td class="num">184 435</td><td class="num">63.429%</td></tr>
+        <tr><td>Sánchez</td><td class="num">106 338</td><td class="num">36.571%</td></tr>
+      </table>
+      <p class="src">El voto exterior (≈1.21 M de electores hábiles, 4.4% del padrón) ha sido decisivo para inclinar el cómputo a favor de Fujimori.</p>
+    </div>
+    <div class="card">
+      <div style="color:var(--muted);font-size:.82rem">Por continente y países clave</div>
+      <table style="margin-top:10px">
+        <thead><tr><th>Ámbito</th><th class="num">Fujimori</th><th class="num">Sánchez</th></tr></thead>
+        <tbody>
+          <tr><td>América</td><td class="num win-f">67.75%</td><td class="num">32.25%</td></tr>
+          <tr><td>Europa <span class="est" title="Estimado a partir de España e Italia">≈</span></td><td class="num win-f">54.0%</td><td class="num">46.0%</td></tr>
+          <tr><td>Asia</td><td class="num win-f">89.10%</td><td class="num">10.90%</td></tr>
+          <tr><td>🇺🇸 EE.UU.</td><td class="num win-f">76.56%</td><td class="num">23.44%</td></tr>
+          <tr><td>🇪🇸 España</td><td class="num win-f">60.11%</td><td class="num">39.89%</td></tr>
+          <tr><td>🇮🇹 Italia</td><td class="num win-f">50.71%</td><td class="num">49.29%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REGIONS -->
+  <h2>🗺️ Resultados por región (25 circunscripciones)</h2>
+  <div class="card">
+    <table id="regTable">
+      <thead><tr><th>Región</th><th>Distribución</th><th class="num">Fujimori</th><th class="num">Sánchez</th><th class="num">Proy. ganador</th></tr></thead>
+      <tbody id="regBody"></tbody>
+    </table>
+    <p class="src" style="margin-top:12px">
+      Sánchez se impone en <b>17 de 25 circunscripciones</b> (sur y centro andino); Fujimori domina Lima, Callao, la costa norte y la selva baja.
+      <span class="est">≈</span> = región con cómputo aún parcial al momento del corte; cifra estimada según tendencia. El resto corresponde al cómputo oficial ONPE.
+    </p>
+  </div>
+
+  <!-- SHARE -->
+  <h2>🔗 Enlace público para compartir</h2>
+  <div class="card">
+    <div class="share">
+      <span>Enlace público (GitHub Pages):</span>
+      <code>https://ocordovaia.github.io/cp-candidato-mockup/segunda-vuelta-2026.html</code>
+    </div>
+    <p class="src" style="margin-top:10px">
+      El dashboard es un archivo estático autónomo (sin dependencias externas), listo para publicarse en GitHub Pages.
+      El enlace queda activo en cuanto se habilite Pages para la rama que lo publica.
+    </p>
+  </div>
+
+  <footer>
+    <div id="footStamp"></div>
+    <div class="share" style="justify-content:center">
+      <span>Fuente: ONPE · Cómputo oficial</span>
+    </div>
+    <p class="src">Datos recopilados de cobertura de prensa de los resultados oficiales ONPE (El Peruano, Infobae, El Comercio, RPP, Gestión) — el portal resultados.onpe.gob.pe bloquea accesos automatizados.</p>
+    <p style="margin-top:18px">Hecho por <span class="author">Omar Córdova</span></p>
+  </footer>
+</div>
+
+<script>
+const REGIONS = {
+  "Lima":{f:63.499,s:36.501}, "Callao":{f:65.598,s:34.402}, "Piura":{f:56.975,s:43.025},
+  "Lambayeque":{f:58.848,s:41.152}, "La Libertad":{f:57.525,s:42.475}, "Loreto":{f:53.788,s:46.212},
+  "Ucayali":{f:52.542,s:47.458}, "Ica":{f:51.911,s:48.089}, "Tumbes":{f:55.0,s:45.0,est:true},
+  "Madre de Dios":{f:51.5,s:48.5,est:true}, "San Martín":{f:45.376,s:54.624}, "Áncash":{f:43.4,s:56.6},
+  "Junín":{f:45.069,s:54.931}, "Huánuco":{f:35.86,s:64.14}, "Amazonas":{f:35.543,s:64.457},
+  "Cajamarca":{f:33.22,s:66.78}, "Pasco":{f:42.0,s:58.0,est:true}, "Apurímac":{f:20.0,s:80.0,est:true},
+  "Ayacucho":{f:20.683,s:79.317}, "Huancavelica":{f:18.598,s:81.402}, "Cusco":{f:21.869,s:78.131},
+  "Arequipa":{f:36.406,s:63.594}, "Moquegua":{f:27.431,s:72.569}, "Tacna":{f:28.635,s:71.365},
+  "Puno":{f:13.578,s:86.422}
+};
+// sort: Fujimori-leaning first (desc by f)
+const rows = Object.entries(REGIONS).sort((a,b)=>b[1].f-a[1].f);
+const body = document.getElementById('regBody');
+for(const [name,d] of rows){
+  const winF = d.f>d.s;
+  const est = d.est ? ' <span class="est" title="Cómputo parcial; cifra estimada por tendencia">≈</span>' : '';
+  body.insertAdjacentHTML('beforeend',
+    `<tr>
+      <td>${name}${est}</td>
+      <td><div class="minibar"><div class="bf" style="width:${d.f}%"></div><div class="bs" style="width:${d.s}%"></div></div></td>
+      <td class="num ${winF?'win-f':''}">${d.f.toFixed(1)}%</td>
+      <td class="num ${!winF?'win-s':''}">${d.s.toFixed(1)}%</td>
+      <td class="num ${winF?'win-f':'win-s'}">${winF?'Fujimori':'Sánchez'}</td>
+    </tr>`);
+}
+
+// projection gauge: center 50%. Map share 49.5..50.5 -> 0..100% width
+function pos(share){ return Math.max(0,Math.min(100,(share-49.5)*100)); }
+document.getElementById('needle').style.left = pos(50.03)+'%';
+const lo=pos(49.95), hi=pos(50.11);
+const band=document.getElementById('ciband');
+band.style.left=lo+'%'; band.style.width=(hi-lo)+'%';
+
+// timestamps
+const upd = new Date('2026-06-13T23:50:25-05:00');
+const chk = new Date('2026-06-15T00:00:00-05:00');
+const fmt = d => d.toLocaleString('es-PE',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:true});
+document.getElementById('stamp').innerHTML =
+  `🕑 Último dato ONPE: <b>${fmt(upd)}</b> (hora Perú) · Última verificación de la rutina: ${fmt(chk)}`;
+document.getElementById('footStamp').innerHTML = `Última actualización de datos: <b>${fmt(upd)}</b> (hora de Perú, UTC−5)`;
+</script>
+</body>
+</html>

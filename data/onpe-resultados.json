@@ -1,0 +1,55 @@
+{
+  "fuente": "ONPE - Resultados Oficiales Segunda Vuelta 2026 (recopilado vía agregadores de prensa; resultados.onpe.gob.pe responde 403 a accesos automatizados)",
+  "eleccion": "Segunda Vuelta Presidencial 2026",
+  "fecha_eleccion": "2026-06-07",
+  "ultima_actualizacion_onpe": "2026-06-13T23:50:25-05:00",
+  "ultima_verificacion_rutina": "2026-06-15T00:00:00-05:00",
+  "actas_procesadas_nacional_pct": 98.590,
+  "actas_procesadas_extranjero_pct": 94.495,
+  "nacional": {
+    "fujimori": { "votos": 9075116, "pct": 50.052 },
+    "sanchez":  { "votos": 9056638, "pct": 49.948 },
+    "diferencia_votos": 18478
+  },
+  "extranjero": {
+    "fujimori": { "votos": 184435, "pct": 63.429 },
+    "sanchez":  { "votos": 106338, "pct": 36.571 }
+  },
+  "regiones": {
+    "Lima":          { "f": 63.499, "s": 36.501, "est": false },
+    "Callao":        { "f": 65.598, "s": 34.402, "est": false },
+    "Piura":         { "f": 56.975, "s": 43.025, "est": false },
+    "Lambayeque":    { "f": 58.848, "s": 41.152, "est": false },
+    "La Libertad":   { "f": 57.525, "s": 42.475, "est": false },
+    "Loreto":        { "f": 53.788, "s": 46.212, "est": false },
+    "Ucayali":       { "f": 52.542, "s": 47.458, "est": false },
+    "Ica":           { "f": 51.911, "s": 48.089, "est": false },
+    "Tumbes":        { "f": 55.000, "s": 45.000, "est": true },
+    "Madre de Dios": { "f": 51.500, "s": 48.500, "est": true },
+    "San Martin":    { "f": 45.376, "s": 54.624, "est": false },
+    "Ancash":        { "f": 43.400, "s": 56.600, "est": false },
+    "Junin":         { "f": 45.069, "s": 54.931, "est": false },
+    "Huanuco":       { "f": 35.860, "s": 64.140, "est": false },
+    "Amazonas":      { "f": 35.543, "s": 64.457, "est": false },
+    "Cajamarca":     { "f": 33.220, "s": 66.780, "est": false },
+    "Pasco":         { "f": 42.000, "s": 58.000, "est": true },
+    "Apurimac":      { "f": 20.000, "s": 80.000, "est": true },
+    "Ayacucho":      { "f": 20.683, "s": 79.317, "est": false },
+    "Huancavelica":  { "f": 18.598, "s": 81.402, "est": false },
+    "Cusco":         { "f": 21.869, "s": 78.131, "est": false },
+    "Arequipa":      { "f": 36.406, "s": 63.594, "est": false },
+    "Moquegua":      { "f": 27.431, "s": 72.569, "est": false },
+    "Tacna":         { "f": 28.635, "s": 71.365, "est": false },
+    "Puno":          { "f": 13.578, "s": 86.422, "est": false }
+  },
+  "extranjero_detalle": {
+    "Americas":  { "f": 67.750, "s": 32.250, "votos_f": 115380, "votos_s": 57475, "est": false },
+    "Europa":    { "f": 54.000, "s": 46.000, "est": true },
+    "Asia":      { "f": 89.095, "s": 10.905, "votos_f": 7974, "votos_s": 976, "est": false }
+  },
+  "paises_clave": {
+    "Estados Unidos": { "f": 76.559, "votos_f": 44440 },
+    "Espana":         { "f": 60.114, "s": 39.886, "votos_f": 32510, "votos_s": 21571 },
+    "Italia":         { "f": 50.710, "s": 49.290, "votos_f": 19563, "votos_s": 19015 }
+  }
+}
