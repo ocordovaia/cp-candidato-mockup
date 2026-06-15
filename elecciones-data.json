@@ -1,0 +1,58 @@
+{
+  "_comment": "Estado del último chequeo del conteo ONPE — usado por la rutina para detectar datos nuevos. Si data_timestamp y actas no cambian respecto a este archivo, se omite la actualización.",
+  "source": "ONPE — Presentación de Resultados (https://resultadosegundavuelta.onpe.gob.pe/)",
+  "data_timestamp": "2026-06-14T14:45:00-05:00",
+  "fetched_at": "2026-06-15T00:00:00-05:00",
+  "actas_contabilizadas_pct": 98.590,
+  "national": {
+    "fujimori_pct": 50.052,
+    "fujimori_votos": 9074951,
+    "sanchez_pct": 49.948,
+    "sanchez_votos": 9056119,
+    "diferencia_votos": 18832,
+    "votos_emitidos": 19399319,
+    "blanco_pct": 0.60,
+    "nulo_pct": 5.93
+  },
+  "extranjero": {
+    "actas_pct": 94.495,
+    "fujimori_pct": 63.429,
+    "fujimori_votos": 184435,
+    "sanchez_pct": 36.571,
+    "sanchez_votos": 106338,
+    "electores_habiles": 1210813
+  },
+  "projection": {
+    "tipo": "estimacion_no_oficial",
+    "central_margen_pt_fujimori": 0.05,
+    "ic95_pt": [-0.30, 0.35],
+    "estado": "empate_tecnico"
+  },
+  "regiones": {
+    "Puno": {"kf": 13.578, "rs": 86.422},
+    "Huancavelica": {"kf": 18.598, "rs": 81.402},
+    "Apurímac": {"kf": 18.838, "rs": 81.162},
+    "Ayacucho": {"kf": 20.683, "rs": 79.317},
+    "Cusco": {"kf": 21.869, "rs": 78.131},
+    "Moquegua": {"kf": 27.431, "rs": 72.569},
+    "Tacna": {"kf": 28.635, "rs": 71.365},
+    "Madre de Dios": {"kf": 30.794, "rs": 69.206},
+    "Cajamarca": {"kf": 33.220, "rs": 66.780},
+    "Amazonas": {"kf": 35.543, "rs": 64.457},
+    "Huánuco": {"kf": 35.860, "rs": 64.140},
+    "Arequipa": {"kf": 36.406, "rs": 63.594},
+    "Pasco": {"kf": 39.236, "rs": 60.764},
+    "Áncash": {"kf": 43.400, "rs": 56.600},
+    "Junín": {"kf": 45.069, "rs": 54.931},
+    "San Martín": {"kf": 45.376, "rs": 54.624},
+    "Ica": {"kf": 51.911, "rs": 48.089},
+    "Ucayali": {"kf": 52.542, "rs": 47.458},
+    "Loreto": {"kf": 53.002, "rs": 46.998},
+    "Piura": {"kf": 56.975, "rs": 43.025},
+    "La Libertad": {"kf": 57.540, "rs": 42.460},
+    "Lambayeque": {"kf": 58.500, "rs": 41.500},
+    "Lima": {"kf": 63.550, "rs": 36.450},
+    "Tumbes": {"kf": 64.339, "rs": 35.661},
+    "Callao": {"kf": 65.606, "rs": 34.394}
+  }
+}
