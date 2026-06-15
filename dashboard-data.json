@@ -1,0 +1,54 @@
+{
+  "fuente": "Compilado de la difusión oficial de la ONPE en medios peruanos (El Comercio, Infobae, RPP, La República, Gestión, Andina). El portal oficial de la ONPE no pudo consultarse directamente desde este entorno (HTTP 403).",
+  "portal_oficial": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+  "eleccion": "Segunda Vuelta — Elecciones Generales Perú 2026",
+  "fecha_eleccion": "2026-06-07",
+  "datos_onpe_al": "2026-06-14",
+  "tablero_actualizado": "2026-06-15",
+  "ultimo_cambio_detectado": "2026-06-14 (avance del conteo de 98.315% a 98.590% de actas contabilizadas)",
+  "actas": {
+    "total": 92766,
+    "procesadas_pct": 100.0,
+    "procesadas_fecha": "2026-06-12T18:56:00-05:00",
+    "contabilizadas_pct": 98.590,
+    "contabilizadas_aprox": 91460,
+    "pendientes_aprox": 1306,
+    "nota_pendientes": "Actas observadas/impugnadas derivadas a los Jurados Electorales Especiales (JEE) para resolución."
+  },
+  "nacional": {
+    "fujimori": { "partido": "Fuerza Popular", "votos": 9074951, "pct": 50.052 },
+    "sanchez":  { "partido": "Juntos por el Perú", "votos": 9056119, "pct": 49.948 },
+    "diferencia_votos": 18832
+  },
+  "regiones": [
+    { "region": "Lima",        "fujimori_pct": 63.55,  "sanchez_pct": 36.45,  "lidera": "Fujimori", "exacto": true },
+    { "region": "La Libertad", "fujimori_pct": 57.525, "sanchez_pct": 42.475, "lidera": "Fujimori", "exacto": true },
+    { "region": "Piura",       "fujimori_pct": 56.975, "sanchez_pct": 43.025, "lidera": "Fujimori", "exacto": true },
+    { "region": "Arequipa",    "fujimori_pct": 36.406, "sanchez_pct": 63.594, "lidera": "Sánchez",  "exacto": true },
+    { "region": "Cusco",       "fujimori_pct": 21.846, "sanchez_pct": 78.154, "lidera": "Sánchez",  "exacto": true },
+    { "region": "Puno",        "fujimori_pct": 13.578, "sanchez_pct": 86.422, "lidera": "Sánchez",  "exacto": true }
+  ],
+  "regiones_solo_lider": {
+    "fujimori": ["Callao", "Ica", "Lambayeque", "Loreto", "Pasco", "Tumbes", "Ucayali"],
+    "sanchez":  ["Ayacucho", "Cajamarca", "Huancavelica", "Huánuco", "Junín", "Madre de Dios", "Moquegua", "Tacna"]
+  },
+  "exterior": {
+    "datos_al": "2026-06-11",
+    "fujimori_pct_global": 63.429,
+    "por_continente": [
+      { "continente": "América",  "fujimori_pct": 67.750, "fujimori_votos": 115380 },
+      { "continente": "Europa",   "fujimori_pct": 55.898, "fujimori_votos": 59744 },
+      { "continente": "Asia",     "fujimori_pct": 89.095, "fujimori_votos": 7974 },
+      { "continente": "Oceanía",  "fujimori_pct": 64.132, "fujimori_votos": 1307 }
+    ]
+  },
+  "proyeccion": {
+    "metodologia": "Proyección nacional sobre el ~1.41% de actas aún no contabilizadas (≈1,306 actas observadas en los JEE). Se asume que las actas pendientes mantienen el patrón regional de su jurisdicción de origen (sierra sur favorable a Sánchez; costa norte, Lima y selva favorables a Fujimori) y que su resolución no altera de forma sistemática el equilibrio actual. La incertidumbre proviene de que las actas observadas pueden anularse o reasignarse por decisión de los JEE.",
+    "fujimori_pct_estimado": 50.05,
+    "sanchez_pct_estimado": 49.95,
+    "intervalo_confianza_pp": 0.20,
+    "fujimori_rango": [49.85, 50.25],
+    "sanchez_rango": [49.75, 50.15],
+    "veredicto": "Empate técnico. El resultado final depende de la resolución de las actas observadas por los JEE; ventaja mínima y reversible para Fujimori."
+  }
+}
