@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta Presidencial",
+    "fuente": "ONPE (Oficina Nacional de Procesos Electorales)",
+    "fuenteUrl": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+    "fechaEleccion": "2026-06-07",
+    "actasContabilizadasPct": 98.590,
+    "ultimaActualizacionOnpe": "2026-06-15T04:10:00-05:00",
+    "ultimoCambioDetectado": "2026-06-15T04:10:00-05:00",
+    "generadoPor": "Omar Córdova",
+    "revisadoEl": "2026-06-16T00:00:00-05:00",
+    "nota": "Datos extraídos del conteo oficial de la ONPE y replicados por medios (El Peruano, El Comercio, Infobae, RPP, La República). Las proyecciones son una estimación propia, no oficial."
+  },
+  "candidatos": [
+    { "id": "fujimori", "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "color": "#e8531a" },
+    { "id": "sanchez", "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "color": "#c8102e" }
+  ],
+  "nacional": {
+    "fujimoriPct": 50.052,
+    "sanchezPct": 49.948,
+    "fujimoriVotos": 9075519,
+    "sanchezVotos": 9057024,
+    "votosValidos": 18132543,
+    "margenVotos": 18495,
+    "margenPct": 0.104,
+    "votosBlancosPct": 0.60,
+    "votosNulosPct": 5.93,
+    "totalVotantes": 19399319
+  },
+  "extranjero": {
+    "actasPct": 94.495,
+    "fujimoriPct": 63.429,
+    "sanchezPct": 36.571,
+    "fujimoriVotos": 184435,
+    "sanchezVotos": 106338,
+    "totalVotos": 290773,
+    "continentes": [
+      { "nombre": "América", "fujimoriPct": 67.750, "sanchezPct": 32.250, "fujimoriVotos": 115380, "sanchezVotos": 57475 },
+      { "nombre": "Europa",  "fujimoriPct": 55.898, "sanchezPct": 44.102, "fujimoriVotos": 59744,  "sanchezVotos": 47136 },
+      { "nombre": "Asia",    "fujimoriPct": 89.095, "sanchezPct": 10.905, "fujimoriVotos": 7974,   "sanchezVotos": 976 }
+    ]
+  },
+  "regiones": [
+    { "region": "Amazonas",      "fujimoriPct": 35.543, "sanchezPct": 64.457 },
+    { "region": "Áncash",        "fujimoriPct": 43.400, "sanchezPct": 56.600 },
+    { "region": "Apurímac",      "fujimoriPct": 18.838, "sanchezPct": 81.162 },
+    { "region": "Arequipa",      "fujimoriPct": 36.406, "sanchezPct": 63.594 },
+    { "region": "Ayacucho",      "fujimoriPct": 20.683, "sanchezPct": 79.317 },
+    { "region": "Cajamarca",     "fujimoriPct": 33.240, "sanchezPct": 66.760 },
+    { "region": "Callao",        "fujimoriPct": 65.606, "sanchezPct": 34.394 },
+    { "region": "Cusco",         "fujimoriPct": 21.869, "sanchezPct": 78.131 },
+    { "region": "Huancavelica",  "fujimoriPct": 18.598, "sanchezPct": 81.402 },
+    { "region": "Huánuco",       "fujimoriPct": 35.860, "sanchezPct": 64.140 },
+    { "region": "Ica",           "fujimoriPct": 51.911, "sanchezPct": 48.089 },
+    { "region": "Junín",         "fujimoriPct": 45.069, "sanchezPct": 54.931 },
+    { "region": "La Libertad",   "fujimoriPct": 57.525, "sanchezPct": 42.475 },
+    { "region": "Lambayeque",    "fujimoriPct": 58.848, "sanchezPct": 41.152 },
+    { "region": "Lima",          "fujimoriPct": 63.550, "sanchezPct": 36.450 },
+    { "region": "Loreto",        "fujimoriPct": 53.788, "sanchezPct": 46.212 },
+    { "region": "Madre de Dios", "fujimoriPct": 30.794, "sanchezPct": 69.206 },
+    { "region": "Moquegua",      "fujimoriPct": 27.431, "sanchezPct": 72.569 },
+    { "region": "Pasco",         "fujimoriPct": 39.236, "sanchezPct": 60.764 },
+    { "region": "Piura",         "fujimoriPct": 56.975, "sanchezPct": 43.025 },
+    { "region": "Puno",          "fujimoriPct": 13.578, "sanchezPct": 86.422 },
+    { "region": "San Martín",    "fujimoriPct": 45.376, "sanchezPct": 54.624 },
+    { "region": "Tacna",         "fujimoriPct": 28.635, "sanchezPct": 71.365 },
+    { "region": "Tumbes",        "fujimoriPct": 64.339, "sanchezPct": 35.661 },
+    { "region": "Ucayali",       "fujimoriPct": 52.542, "sanchezPct": 47.458 }
+  ],
+  "proyeccion": {
+    "metodo": "Estimación sobre el ~1.41% de actas pendientes (≈259.000 votos válidos), asumiendo que el remanente combina actas del extranjero —favorables a Fujimori (~63%)— con actas observadas domésticas de reparto mixto. Reparto del remanente asumido: 51.5% Fujimori / 48.5% Sánchez.",
+    "fujimoriPctProyectado": 50.07,
+    "sanchezPctProyectado": 49.93,
+    "fujimoriIC95": [49.95, 50.18],
+    "sanchezIC95": [49.82, 50.05],
+    "probabilidadVictoria": { "fujimori": 80, "sanchez": 20 },
+    "veredicto": "Demasiado cerrado para declarar. Ventaja para Keiko Fujimori, pero el margen (~0.10 pts) está dentro del rango de un eventual reconteo de actas observadas.",
+    "votosValidosRemanentesEstimados": 259323
+  }
+}

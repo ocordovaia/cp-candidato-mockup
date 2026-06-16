@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados ONPE · Segunda Vuelta Perú 2026 — Tablero en vivo</title>
+<meta name="description" content="Tablero de resultados de la segunda vuelta presidencial Perú 2026 (ONPE): conteo nacional, regional, voto del extranjero y proyección con intervalos de confianza.">
+<style>
+  :root{
+    --fuji:#e8531a; --fuji-soft:#fde4d8;
+    --san:#c8102e;  --san-soft:#f8d7dd;
+    --ink:#13182a; --muted:#5b6478; --line:#e7eaf1; --bg:#f4f6fb; --card:#fff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.45}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px 18px 60px}
+  header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:6px}
+  h1{font-size:1.5rem;margin:0;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+  .stamp{font-size:.8rem;color:var(--muted);text-align:right;background:var(--card);
+         border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+  .stamp b{color:var(--ink)}
+  .live{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:6px;
+        animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.5)}70%{box-shadow:0 0 0 7px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px;
+        box-shadow:0 1px 2px rgba(20,30,60,.04)}
+  .card h2{font-size:1.05rem;margin:0 0 4px;letter-spacing:-.2px}
+  .card .h-note{color:var(--muted);font-size:.82rem;margin:0 0 14px}
+  /* national head-to-head */
+  .h2h{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .cand{border-radius:14px;padding:16px;border:1px solid var(--line);position:relative;overflow:hidden}
+  .cand.lead{border-width:2px}
+  .cand.f{background:linear-gradient(180deg,var(--fuji-soft),#fff)}
+  .cand.f.lead{border-color:var(--fuji)}
+  .cand.s{background:linear-gradient(180deg,var(--san-soft),#fff)}
+  .cand.s.lead{border-color:var(--san)}
+  .cand .nm{font-weight:700;font-size:1.02rem}
+  .cand .pt{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+  .cand .pct{font-size:2.5rem;font-weight:800;letter-spacing:-1.5px;line-height:1}
+  .cand.f .pct{color:var(--fuji)} .cand.s .pct{color:var(--san)}
+  .cand .vt{font-size:.85rem;color:var(--muted);margin-top:2px}
+  .crown{position:absolute;top:12px;right:14px;font-size:.72rem;font-weight:700;text-transform:uppercase;
+         letter-spacing:.5px;padding:3px 8px;border-radius:999px;background:#fff;border:1px solid currentColor}
+  .cand.f .crown{color:var(--fuji)} .cand.s .crown{color:var(--san)}
+  .bar{height:14px;border-radius:8px;overflow:hidden;display:flex;margin:16px 0 6px;border:1px solid var(--line)}
+  .bar .f{background:var(--fuji)} .bar .s{background:var(--san)}
+  .barlbl{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted)}
+  .margin{text-align:center;margin-top:14px;font-size:.9rem;color:var(--muted)}
+  .margin b{color:var(--ink)}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .pill{font-size:.8rem;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted)}
+  .pill b{color:var(--ink)}
+  /* regions */
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+  th{font-size:.74rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:600}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .rbar{height:8px;border-radius:5px;overflow:hidden;display:flex;min-width:120px}
+  .rbar .f{background:var(--fuji)} .rbar .s{background:var(--san)}
+  .win-f{color:var(--fuji);font-weight:700} .win-s{color:var(--san);font-weight:700}
+  .tag{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:999px;color:#fff}
+  .tag.f{background:var(--fuji)} .tag.s{background:var(--san)}
+  /* continents */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .mini{border:1px solid var(--line);border-radius:12px;padding:12px}
+  .mini h3{margin:0 0 8px;font-size:.95rem}
+  .mini .row{display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:3px}
+  /* projection */
+  .proj-head{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .gauge{flex:1;min-width:260px}
+  .ci{margin-top:10px}
+  .ci .label{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px}
+  .citrack{position:relative;height:26px;background:var(--bg);border:1px solid var(--line);border-radius:8px}
+  .ciband{position:absolute;top:0;bottom:0;border-radius:6px;opacity:.85}
+  .ciband.f{background:var(--fuji-soft);border:1px solid var(--fuji)}
+  .ciband.s{background:var(--san-soft);border:1px solid var(--san)}
+  .cipoint{position:absolute;top:-3px;bottom:-3px;width:3px;border-radius:2px}
+  .cipoint.f{background:var(--fuji)} .cipoint.s{background:var(--san)}
+  .fifty{position:absolute;top:-6px;bottom:-6px;left:50%;width:2px;background:#13182a;opacity:.55}
+  .fifty::after{content:"50%";position:absolute;top:-16px;left:-12px;font-size:.7rem;color:var(--muted)}
+  .prob{display:flex;gap:10px;margin-top:6px}
+  .probbox{flex:1;text-align:center;border-radius:12px;padding:12px;border:1px solid var(--line)}
+  .probbox.f{background:var(--fuji-soft)} .probbox.s{background:var(--san-soft)}
+  .probbox .big{font-size:1.8rem;font-weight:800;line-height:1}
+  .probbox.f .big{color:var(--fuji)} .probbox.s .big{color:var(--san)}
+  .verdict{margin-top:14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px 14px;
+           font-size:.9rem;color:#7c2d12}
+  .method{font-size:.8rem;color:var(--muted);margin-top:10px}
+  .share{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  .share input{flex:1;min-width:220px;font-size:.82rem;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink)}
+  .share button{font-size:.85rem;font-weight:600;padding:9px 16px;border:none;border-radius:9px;background:var(--ink);color:#fff;cursor:pointer}
+  .share button:active{transform:translateY(1px)}
+  .disclaimer{font-size:.78rem;color:var(--muted);margin-top:18px;line-height:1.5}
+  footer{margin-top:34px;text-align:center;font-size:.9rem;color:var(--muted);
+         border-top:1px solid var(--line);padding-top:18px}
+  footer b{color:var(--ink)}
+  @media(max-width:640px){.h2h{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}.cand .pct{font-size:2.1rem}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>Segunda Vuelta Perú 2026 · Resultados ONPE</h1>
+      <p class="sub">Keiko Fujimori (Fuerza Popular) vs. Roberto Sánchez (Juntos por el Perú)</p>
+    </div>
+    <div class="stamp" id="stamp"><span class="live"></span>cargando…</div>
+  </header>
+
+  <!-- NACIONAL -->
+  <section class="card">
+    <h2>Resultado nacional</h2>
+    <p class="h-note" id="nat-note"></p>
+    <div class="h2h" id="h2h"></div>
+    <div class="bar" id="natbar"></div>
+    <div class="barlbl"><span id="natlblF"></span><span id="natlblS"></span></div>
+    <div class="margin" id="margin"></div>
+    <div class="pills" id="pills"></div>
+  </section>
+
+  <!-- PROYECCIÓN -->
+  <section class="card">
+    <h2>Proyección de resultado final</h2>
+    <p class="h-note">Estimación propia (no oficial) sobre las actas pendientes. Lectura: con el margen actual, el resultado está dentro del rango de incertidumbre.</p>
+    <div class="prob" id="prob"></div>
+    <div class="ci">
+      <div class="label"><span>Intervalo de confianza 95% — voto válido proyectado</span><span class="hide-sm">49% — 51%</span></div>
+      <div class="citrack" id="citrack"><div class="fifty"></div></div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+    <p class="method" id="method"></p>
+  </section>
+
+  <!-- EXTRANJERO -->
+  <section class="card">
+    <h2>Voto en el extranjero</h2>
+    <p class="h-note" id="ext-note"></p>
+    <div class="h2h" id="ext-h2h" style="margin-bottom:14px"></div>
+    <div class="grid3" id="continentes"></div>
+  </section>
+
+  <!-- REGIONES -->
+  <section class="card">
+    <h2>Resultados por región</h2>
+    <p class="h-note">25 circunscripciones (24 departamentos + Callao). Ordenadas según ventaja. Toca un encabezado para reordenar.</p>
+    <table>
+      <thead>
+        <tr>
+          <th data-k="region">Región</th>
+          <th class="num" data-k="fujimoriPct">Fujimori</th>
+          <th class="num" data-k="sanchezPct">Sánchez</th>
+          <th>Distribución</th>
+          <th class="hide-sm">Gana</th>
+        </tr>
+      </thead>
+      <tbody id="regbody"></tbody>
+    </table>
+  </section>
+
+  <!-- COMPARTIR -->
+  <section class="card">
+    <h2>Enlace público para compartir</h2>
+    <p class="h-note">Este tablero es estático y se sirve desde un repositorio público; el enlace funciona sin necesidad de iniciar sesión.</p>
+    <div class="share">
+      <input id="shareUrl" readonly value="https://htmlpreview.github.io/?https://github.com/ocordovaia/cp-candidato-mockup/blob/claude/elegant-volta-dxcv9a/dashboard-onpe.html">
+      <button onclick="copyShare()">Copiar enlace</button>
+    </div>
+    <p class="method">Al fusionar en <code>main</code> con GitHub Pages activo: <b>https://ocordovaia.github.io/cp-candidato-mockup/dashboard-onpe.html</b></p>
+  </section>
+
+  <p class="disclaimer" id="disclaimer"></p>
+
+  <footer>
+    Hecho por <b>Omar Córdova</b>
+  </footer>
+</div>
+
+<script id="data" type="application/json">
+{
+  "meta": {
+    "actasContabilizadasPct": 98.590,
+    "ultimaActualizacionOnpe": "2026-06-15T04:10:00-05:00",
+    "ultimoCambioDetectado": "2026-06-15T04:10:00-05:00",
+    "fuenteUrl": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen"
+  },
+  "nacional": {
+    "fujimoriPct": 50.052, "sanchezPct": 49.948,
+    "fujimoriVotos": 9075519, "sanchezVotos": 9057024,
+    "votosValidos": 18132543, "margenVotos": 18495, "margenPct": 0.104,
+    "votosBlancosPct": 0.60, "votosNulosPct": 5.93, "totalVotantes": 19399319
+  },
+  "extranjero": {
+    "actasPct": 94.495, "fujimoriPct": 63.429, "sanchezPct": 36.571,
+    "fujimoriVotos": 184435, "sanchezVotos": 106338, "totalVotos": 290773,
+    "continentes": [
+      { "nombre": "América", "fujimoriPct": 67.750, "sanchezPct": 32.250, "fujimoriVotos": 115380, "sanchezVotos": 57475 },
+      { "nombre": "Europa",  "fujimoriPct": 55.898, "sanchezPct": 44.102, "fujimoriVotos": 59744,  "sanchezVotos": 47136 },
+      { "nombre": "Asia",    "fujimoriPct": 89.095, "sanchezPct": 10.905, "fujimoriVotos": 7974,   "sanchezVotos": 976 }
+    ]
+  },
+  "regiones": [
+    { "region": "Amazonas", "fujimoriPct": 35.543, "sanchezPct": 64.457 },
+    { "region": "Áncash", "fujimoriPct": 43.400, "sanchezPct": 56.600 },
+    { "region": "Apurímac", "fujimoriPct": 18.838, "sanchezPct": 81.162 },
+    { "region": "Arequipa", "fujimoriPct": 36.406, "sanchezPct": 63.594 },
+    { "region": "Ayacucho", "fujimoriPct": 20.683, "sanchezPct": 79.317 },
+    { "region": "Cajamarca", "fujimoriPct": 33.240, "sanchezPct": 66.760 },
+    { "region": "Callao", "fujimoriPct": 65.606, "sanchezPct": 34.394 },
+    { "region": "Cusco", "fujimoriPct": 21.869, "sanchezPct": 78.131 },
+    { "region": "Huancavelica", "fujimoriPct": 18.598, "sanchezPct": 81.402 },
+    { "region": "Huánuco", "fujimoriPct": 35.860, "sanchezPct": 64.140 },
+    { "region": "Ica", "fujimoriPct": 51.911, "sanchezPct": 48.089 },
+    { "region": "Junín", "fujimoriPct": 45.069, "sanchezPct": 54.931 },
+    { "region": "La Libertad", "fujimoriPct": 57.525, "sanchezPct": 42.475 },
+    { "region": "Lambayeque", "fujimoriPct": 58.848, "sanchezPct": 41.152 },
+    { "region": "Lima", "fujimoriPct": 63.550, "sanchezPct": 36.450 },
+    { "region": "Loreto", "fujimoriPct": 53.788, "sanchezPct": 46.212 },
+    { "region": "Madre de Dios", "fujimoriPct": 30.794, "sanchezPct": 69.206 },
+    { "region": "Moquegua", "fujimoriPct": 27.431, "sanchezPct": 72.569 },
+    { "region": "Pasco", "fujimoriPct": 39.236, "sanchezPct": 60.764 },
+    { "region": "Piura", "fujimoriPct": 56.975, "sanchezPct": 43.025 },
+    { "region": "Puno", "fujimoriPct": 13.578, "sanchezPct": 86.422 },
+    { "region": "San Martín", "fujimoriPct": 45.376, "sanchezPct": 54.624 },
+    { "region": "Tacna", "fujimoriPct": 28.635, "sanchezPct": 71.365 },
+    { "region": "Tumbes", "fujimoriPct": 64.339, "sanchezPct": 35.661 },
+    { "region": "Ucayali", "fujimoriPct": 52.542, "sanchezPct": 47.458 }
+  ],
+  "proyeccion": {
+    "fujimoriPctProyectado": 50.07, "sanchezPctProyectado": 49.93,
+    "fujimoriIC95": [49.95, 50.18], "sanchezIC95": [49.82, 50.05],
+    "probabilidadVictoria": { "fujimori": 80, "sanchez": 20 },
+    "veredicto": "Demasiado cerrado para declarar un ganador. Ventaja para Keiko Fujimori, pero el margen (~0.10 pts) está dentro del rango de un eventual reconteo de actas observadas.",
+    "metodo": "Estimación sobre el ~1.41% de actas pendientes (≈259.000 votos válidos), asumiendo que el remanente combina actas del extranjero —favorables a Fujimori (~63%)— con actas observadas domésticas de reparto mixto (51.5% Fujimori / 48.5% Sánchez)."
+  }
+}
+</script>
+
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const nf = new Intl.NumberFormat('es-PE');
+const pf = n => n.toFixed(n < 1 ? 3 : 3) + '%';
+const p2 = n => n.toFixed(2) + '%';
+
+// ---- timestamp ----
+(function(){
+  const d = new Date(D.meta.ultimaActualizacionOnpe);
+  const fmt = d.toLocaleString('es-PE',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  document.getElementById('stamp').innerHTML =
+    '<span class="live"></span>Última actualización ONPE<br><b>'+fmt+'</b> · '+D.meta.actasContabilizadasPct.toFixed(3)+'% de actas';
+})();
+
+// ---- nacional ----
+(function(){
+  const n = D.nacional;
+  const fLead = n.fujimoriPct >= n.sanchezPct;
+  document.getElementById('nat-note').textContent =
+    'Conteo oficial al '+n.actasContabilizadasPct+'% de actas · '+D.meta.actasContabilizadasPct.toFixed(3)+'% procesadas';
+  document.getElementById('h2h').innerHTML = `
+    <div class="cand f ${fLead?'lead':''}">${fLead?'<span class="crown">Adelante</span>':''}
+      <div class="nm">Keiko Fujimori</div><div class="pt">Fuerza Popular</div>
+      <div class="pct">${p2(n.fujimoriPct)}</div><div class="vt">${nf.format(n.fujimoriVotos)} votos</div></div>
+    <div class="cand s ${!fLead?'lead':''}">${!fLead?'<span class="crown">Adelante</span>':''}
+      <div class="nm">Roberto Sánchez</div><div class="pt">Juntos por el Perú</div>
+      <div class="pct">${p2(n.sanchezPct)}</div><div class="vt">${nf.format(n.sanchezVotos)} votos</div></div>`;
+  document.getElementById('natbar').innerHTML =
+    `<div class="f" style="width:${n.fujimoriPct}%"></div><div class="s" style="width:${n.sanchezPct}%"></div>`;
+  document.getElementById('natlblF').innerHTML = 'Fujimori '+p2(n.fujimoriPct);
+  document.getElementById('natlblS').innerHTML = p2(n.sanchezPct)+' Sánchez';
+  document.getElementById('margin').innerHTML =
+    `Diferencia: <b>${nf.format(n.margenVotos)} votos</b> (${n.margenPct.toFixed(3)} pts)`;
+  document.getElementById('pills').innerHTML = `
+    <span class="pill">Votos válidos: <b>${nf.format(n.votosValidos)}</b></span>
+    <span class="pill">Blancos: <b>${n.votosBlancosPct}%</b></span>
+    <span class="pill">Nulos: <b>${n.votosNulosPct}%</b></span>
+    <span class="pill">Total votantes: <b>${nf.format(n.totalVotantes)}</b></span>`;
+})();
+
+// ---- proyección ----
+(function(){
+  const p = D.proyeccion;
+  document.getElementById('prob').innerHTML = `
+    <div class="probbox f"><div class="big">${p.probabilidadVictoria.fujimori}%</div>prob. victoria Fujimori</div>
+    <div class="probbox s"><div class="big">${p.probabilidadVictoria.sanchez}%</div>prob. victoria Sánchez</div>`;
+  // CI track maps 49%..51% to 0..100%
+  const lo=49, hi=51, span=hi-lo;
+  const pos = v => ((v-lo)/span*100);
+  const t = document.getElementById('citrack');
+  const fBand=document.createElement('div'); fBand.className='ciband f';
+  fBand.style.left=pos(p.fujimoriIC95[0])+'%'; fBand.style.width=(pos(p.fujimoriIC95[1])-pos(p.fujimoriIC95[0]))+'%';
+  fBand.title='Fujimori IC95: '+p.fujimoriIC95.join('–')+'%';
+  const sBand=document.createElement('div'); sBand.className='ciband s';
+  sBand.style.left=pos(p.sanchezIC95[0])+'%'; sBand.style.width=(pos(p.sanchezIC95[1])-pos(p.sanchezIC95[0]))+'%';
+  sBand.title='Sánchez IC95: '+p.sanchezIC95.join('–')+'%';
+  const fPt=document.createElement('div'); fPt.className='cipoint f'; fPt.style.left=pos(p.fujimoriPctProyectado)+'%';
+  const sPt=document.createElement('div'); sPt.className='cipoint s'; sPt.style.left=pos(p.sanchezPctProyectado)+'%';
+  t.append(sBand,fBand,sPt,fPt);
+  document.getElementById('verdict').innerHTML =
+    `<b>Proyección:</b> Fujimori ${p.fujimoriPctProyectado}% (IC95 ${p.fujimoriIC95[0]}–${p.fujimoriIC95[1]}%) · `+
+    `Sánchez ${p.sanchezPctProyectado}% (IC95 ${p.sanchezIC95[0]}–${p.sanchezIC95[1]}%).<br>${p.veredicto}`;
+  document.getElementById('method').textContent = 'Método: '+p.metodo;
+})();
+
+// ---- extranjero ----
+(function(){
+  const e = D.extranjero;
+  document.getElementById('ext-note').textContent =
+    'Peruanos en el exterior · '+e.actasPct+'% de actas · total '+nf.format(e.totalVotos)+' votos';
+  document.getElementById('ext-h2h').innerHTML = `
+    <div class="cand f lead"><span class="crown">Gana</span>
+      <div class="nm">Keiko Fujimori</div><div class="pt">Voto exterior</div>
+      <div class="pct">${p2(e.fujimoriPct)}</div><div class="vt">${nf.format(e.fujimoriVotos)} votos</div></div>
+    <div class="cand s">
+      <div class="nm">Roberto Sánchez</div><div class="pt">Voto exterior</div>
+      <div class="pct">${p2(e.sanchezPct)}</div><div class="vt">${nf.format(e.sanchezVotos)} votos</div></div>`;
+  document.getElementById('continentes').innerHTML = e.continentes.map(c=>`
+    <div class="mini"><h3>${c.nombre}</h3>
+      <div class="row"><span class="win-f">Fujimori</span><b>${p2(c.fujimoriPct)}</b></div>
+      <div class="row"><span class="win-s">Sánchez</span><b>${p2(c.sanchezPct)}</b></div>
+      <div class="rbar" style="margin-top:6px"><div class="f" style="width:${c.fujimoriPct}%"></div><div class="s" style="width:${c.sanchezPct}%"></div></div>
+      <div class="row" style="margin-top:6px;color:var(--muted)"><span>${nf.format(c.fujimoriVotos)}</span><span>${nf.format(c.sanchezVotos)}</span></div>
+    </div>`).join('');
+})();
+
+// ---- regiones ----
+let regSort = {k:'margin', asc:false};
+function renderRegions(){
+  const rows = D.regiones.map(r=>({...r, margin:r.fujimoriPct-r.sanchezPct, win: r.fujimoriPct>=r.sanchezPct?'f':'s'}));
+  rows.sort((a,b)=>{
+    let va=a[regSort.k], vb=b[regSort.k];
+    if(typeof va==='string'){return regSort.asc? va.localeCompare(vb): vb.localeCompare(va);}
+    return regSort.asc? va-vb : vb-va;
+  });
+  document.getElementById('regbody').innerHTML = rows.map(r=>`
+    <tr>
+      <td>${r.region}</td>
+      <td class="num ${r.win==='f'?'win-f':''}">${p2(r.fujimoriPct)}</td>
+      <td class="num ${r.win==='s'?'win-s':''}">${p2(r.sanchezPct)}</td>
+      <td><div class="rbar"><div class="f" style="width:${r.fujimoriPct}%"></div><div class="s" style="width:${r.sanchezPct}%"></div></div></td>
+      <td class="hide-sm"><span class="tag ${r.win}">${r.win==='f'?'Fujimori':'Sánchez'}</span></td>
+    </tr>`).join('');
+}
+document.querySelectorAll('th[data-k]').forEach(th=>{
+  th.style.cursor='pointer';
+  th.onclick=()=>{const k=th.dataset.k; if(regSort.k===k)regSort.asc=!regSort.asc; else {regSort.k=k;regSort.asc=false;} renderRegions();};
+});
+renderRegions();
+
+// ---- disclaimer ----
+document.getElementById('disclaimer').innerHTML =
+  'Fuente de datos: conteo oficial de la <a href="'+D.meta.fuenteUrl+'">ONPE</a>, replicado por El Peruano, El Comercio, Infobae, RPP y La República. '+
+  'Los porcentajes corresponden a votos válidos. Las <b>proyecciones e intervalos de confianza son una estimación propia</b> basada en supuestos sobre las actas pendientes y no constituyen un resultado oficial. '+
+  'Tablero generado automáticamente; se omite la actualización cuando la ONPE no publica nuevos datos desde la última verificación.';
+
+// ---- compartir ----
+function copyShare(){
+  const i=document.getElementById('shareUrl'); i.select();
+  navigator.clipboard?.writeText(i.value).then(()=>{const b=event.target;const t=b.textContent;b.textContent='¡Copiado!';setTimeout(()=>b.textContent=t,1500);}).catch(()=>document.execCommand('copy'));
+}
+</script>
+</body>
+</html>
