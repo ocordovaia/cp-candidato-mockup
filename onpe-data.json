@@ -1,0 +1,50 @@
+{
+  "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta",
+  "fuente": "ONPE — Oficina Nacional de Procesos Electorales (resultados.onpe.gob.pe)",
+  "ultima_verificacion": "2026-06-16T18:30:00-05:00",
+  "ultimo_cambio_detectado": "2026-06-16T12:22:00-05:00",
+  "nota_ultimo_cambio": "Actualización de actas de La Libertad (99.87% contabilizado).",
+  "nacional": {
+    "actas_contabilizadas_pct": 99.03,
+    "timestamp_dato": "2026-06-15T23:45:00-05:00",
+    "votos_emitidos": 19487161,
+    "blancos_pct": 0.6,
+    "nulos_pct": 5.93,
+    "votos_validos_estimados": 18214649,
+    "candidatos": {
+      "keiko_fujimori": { "partido": "Fuerza Popular", "pct_validos": 50.09, "votos": 9123718 },
+      "roberto_sanchez": { "partido": "Juntos por el Perú", "pct_validos": 49.91, "votos": 9090931 }
+    },
+    "margen_votos": 32787,
+    "margen_pct": 0.18
+  },
+  "extranjero": {
+    "electores_habiles": 1210813,
+    "pct_padron_nacional": 4.4,
+    "keiko_fujimori": { "pct": 63.396, "votos": 184639 },
+    "roberto_sanchez": { "pct": 36.604, "votos": 106607 },
+    "por_continente": {
+      "America":  { "keiko": 115584, "sanchez": 57744 },
+      "Europa":   { "keiko": 59726,  "sanchez": 47226 },
+      "Asia_Medio_Oriente": { "keiko": 7974, "sanchez": 976 },
+      "Oceania":  { "keiko": 1307,   "sanchez": 731 }
+    }
+  },
+  "regiones": [
+    { "region": "Puno",        "keiko": 13.578, "sanchez": 86.422, "actas_pct": null,   "ganador": "sanchez" },
+    { "region": "Cusco",       "keiko": 21.869, "sanchez": 78.131, "actas_pct": null,   "ganador": "sanchez" },
+    { "region": "Cajamarca",   "keiko": 33.24,  "sanchez": 66.76,  "actas_pct": 99.98,  "ganador": "sanchez" },
+    { "region": "Arequipa",    "keiko": 36.406, "sanchez": 63.594, "actas_pct": null,   "ganador": "sanchez" },
+    { "region": "Piura",       "keiko": 56.975, "sanchez": 43.025, "actas_pct": null,   "ganador": "keiko" },
+    { "region": "La Libertad", "keiko": 57.56,  "sanchez": 42.44,  "actas_pct": 99.87,  "ganador": "keiko" },
+    { "region": "Lima",        "keiko": 63.55,  "sanchez": 36.45,  "actas_pct": 97.42,  "ganador": "keiko" }
+  ],
+  "proyeccion": {
+    "metodologia": "Con 99.03% de actas contabilizadas y un margen de ~32,800 votos (0.18 pts), el remanente (~0.97% de actas, incluye actas observadas en recuento de Bagua, Lambayeque, Chanchamayo y Tambopata, y actas pendientes de Loreto) no alcanza estadísticamente para revertir el resultado salvo un sesgo extremo (>18 pts) a favor de Sánchez en lo que falta.",
+    "keiko_fujimori_pct": 50.07,
+    "roberto_sanchez_pct": 49.93,
+    "intervalo_confianza_95": { "keiko_min": 49.85, "keiko_max": 50.29 },
+    "probabilidad_victoria_keiko": 0.87,
+    "estado": "Demasiado cerca para declaración oficial; ventaja consistente de Keiko Fujimori a falta de actas observadas."
+  }
+}
