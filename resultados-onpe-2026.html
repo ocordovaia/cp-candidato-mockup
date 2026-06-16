@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resultados Segunda Vuelta 2026 · ONPE · Dashboard</title>
+<meta name="description" content="Dashboard no oficial de resultados de la segunda vuelta presidencial 2026 (ONPE): conteo nacional, por región, votos del extranjero y proyección." />
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel-2:#1c2330; --line:#2a3340;
+    --txt:#e6edf3; --muted:#9aa7b4; --accent:#f5a623;
+    --keiko:#e87b1c; --sanchez:#d23b3b; --good:#3fb950; --warn:#d29922;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 18px 60px;}
+  header.top{border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:24px;}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;}
+  h1{font-size:28px;margin:6px 0 4px;}
+  .sub{color:var(--muted);font-size:14px;}
+  .updated{margin-top:10px;font-size:13px;color:var(--muted);}
+  .updated b{color:var(--txt);}
+  .banner{background:linear-gradient(90deg,#3a2a10,#2a1f10);border:1px solid #5a431a;
+    border-radius:10px;padding:14px 16px;margin:18px 0;font-size:14px;}
+  .banner b{color:var(--accent);}
+  section{margin:34px 0;}
+  h2{font-size:18px;border-left:4px solid var(--accent);padding-left:10px;margin:0 0 16px;}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .card.keiko{border-top:4px solid var(--keiko);}
+  .card.sanchez{border-top:4px solid var(--sanchez);}
+  .cand{font-weight:700;font-size:16px;}
+  .party{color:var(--muted);font-size:12px;}
+  .pct{font-size:40px;font-weight:800;margin:6px 0 0;}
+  .votes{color:var(--muted);font-size:14px;}
+  .leadflag{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .lead-yes{background:rgba(63,185,80,.15);color:var(--good);}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px;}
+  @media(max-width:680px){.meta{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center;}
+  .stat .n{font-size:22px;font-weight:700;}
+  .stat .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+  .bar{height:14px;border-radius:7px;overflow:hidden;display:flex;background:#222;min-width:120px;}
+  .bar .k{background:var(--keiko);}
+  .bar .s{background:var(--sanchez);}
+  .reg-name{font-weight:600;white-space:nowrap;}
+  .tag{font-size:11px;font-weight:700;padding:1px 7px;border-radius:12px;}
+  .tag.k{background:rgba(232,123,28,.18);color:var(--keiko);}
+  .tag.s{background:rgba(210,59,59,.18);color:#f06a6a;}
+  .proj{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;}
+  .projrow{display:flex;align-items:center;gap:14px;margin:14px 0;}
+  .projrow .name{width:140px;font-weight:700;}
+  .ci-track{flex:1;position:relative;height:30px;background:var(--panel-2);border-radius:6px;border:1px solid var(--line);}
+  .ci-band{position:absolute;top:0;bottom:0;border-radius:6px;opacity:.35;}
+  .ci-mid{position:absolute;top:-3px;bottom:-3px;width:3px;background:#fff;}
+  .ci-lbl{width:150px;text-align:right;font-size:13px;color:var(--muted);}
+  .ci-lbl b{color:var(--txt);font-size:15px;}
+  .legend{font-size:12px;color:var(--muted);margin-top:8px;}
+  .note{font-size:12.5px;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);
+    border-radius:8px;padding:12px;margin-top:14px;}
+  .share{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--panel);
+    border:1px dashed var(--line);border-radius:10px;padding:14px;font-size:13px;}
+  .share input{flex:1;min-width:220px;background:var(--bg);border:1px solid var(--line);color:var(--txt);
+    border-radius:6px;padding:8px;font-size:13px;}
+  .share button{background:var(--accent);color:#1a1206;border:0;border-radius:6px;padding:8px 14px;
+    font-weight:700;cursor:pointer;}
+  footer{margin-top:48px;border-top:1px solid var(--line);padding-top:18px;text-align:center;
+    color:var(--muted);font-size:13px;}
+  footer .by{color:var(--txt);font-weight:700;font-size:15px;}
+  a{color:var(--accent);}
+  .src{font-size:11.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Elecciones Perú 2026 · Segunda Vuelta</div>
+    <h1>Resultados ONPE — Conteo Oficial en Tiempo Real</h1>
+    <div class="sub">Keiko Fujimori (Fuerza Popular) vs. Roberto Sánchez (Juntos por el Perú) · Jornada del 7 de junio de 2026</div>
+    <div class="updated">
+      Última actualización de datos: <b id="ts">16 de junio de 2026</b> ·
+      Avance del cómputo: <b>99.033 % de actas contabilizadas</b> ·
+      Fuente: <a href="https://www.onpe.gob.pe" target="_blank" rel="noopener">ONPE</a> / cobertura oficial.
+    </div>
+  </header>
+
+  <div class="banner">
+    ⚖️ <b>Resultado aún no proclamado.</b> La diferencia es de apenas ~0.18 puntos y quedan
+    <b>997 actas observadas</b> en revisión por los Jurados Electorales Especiales (JEE).
+    Mientras no concluya esa resolución, el resultado debe considerarse <b>“demasiado reñido para declarar ganador”</b>.
+    Este panel es un seguimiento informativo no oficial.
+  </div>
+
+  <!-- NACIONAL -->
+  <section>
+    <h2>Resultado nacional (votos válidos)</h2>
+    <div class="cards">
+      <div class="card keiko">
+        <div class="cand">Keiko Fujimori</div>
+        <div class="party">Fuerza Popular</div>
+        <div class="pct" style="color:var(--keiko)">50.090 %</div>
+        <div class="votes">9 123 301 votos</div>
+        <div class="leadflag lead-yes">▲ Lidera por 32 909 votos</div>
+      </div>
+      <div class="card sanchez">
+        <div class="cand">Roberto Sánchez</div>
+        <div class="party">Juntos por el Perú</div>
+        <div class="pct" style="color:#f06a6a">49.910 %</div>
+        <div class="votes">9 090 392 votos</div>
+        <div class="leadflag" style="color:var(--muted)">▼ a 0.180 puntos</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="stat"><div class="n">99.033 %</div><div class="l">Actas contabilizadas</div></div>
+      <div class="stat"><div class="n">997</div><div class="l">Actas observadas (JEE)</div></div>
+      <div class="stat"><div class="n">~5.93 %</div><div class="l">Votos nulos</div></div>
+      <div class="stat"><div class="n">~0.60 %</div><div class="l">Votos en blanco</div></div>
+    </div>
+    <div class="note">
+      Universo aproximado: ~19.4 millones de votos emitidos. Los porcentajes de candidatos se calculan sobre
+      <b>votos válidos</b> (excluye blancos y nulos), según el criterio de la ONPE.
+    </div>
+  </section>
+
+  <!-- PROYECCIÓN -->
+  <section>
+    <h2>Proyección al 100 % (con intervalo de confianza)</h2>
+    <div class="proj">
+      <div class="projrow">
+        <div class="name" style="color:var(--keiko)">Keiko Fujimori</div>
+        <div class="ci-track">
+          <!-- escala visual: 49.6 % a 50.4 % => rango de 0.8 pts mapeado a 0–100% -->
+          <div class="ci-band" style="left:32.5%;width:55%;background:var(--keiko)"></div>
+          <div class="ci-mid" style="left:60%"></div>
+        </div>
+        <div class="ci-lbl"><b>50.08 %</b><br>IC 95 %: 49.86 – 50.30</div>
+      </div>
+      <div class="projrow">
+        <div class="name" style="color:#f06a6a">Roberto Sánchez</div>
+        <div class="ci-track">
+          <div class="ci-band" style="left:12.5%;width:55%;background:var(--sanchez)"></div>
+          <div class="ci-mid" style="left:40%"></div>
+        </div>
+        <div class="ci-lbl"><b>49.92 %</b><br>IC 95 %: 49.70 – 50.14</div>
+      </div>
+      <div class="legend">
+        La barra clara representa el intervalo de confianza del 95 %; la línea blanca, la estimación central.
+        Los intervalos se <b>solapan</b>: estadísticamente el resultado sigue dentro del margen y no hay ganador definido.
+      </div>
+      <div class="note">
+        <b>Metodología (supuestos razonables).</b> Quedan ~0.97 % de actas ordinarias (~190 mil votos) más 997 actas
+        observadas (~200 mil votos) en el JEE. Se proyecta asumiendo que las actas ordinarias restantes se reparten
+        en línea con el promedio nacional reciente, y se ensancha el intervalo para reflejar la incertidumbre de las
+        actas observadas (que podrían moverse ±0.2–0.3 puntos según su procedencia regional). Estimación central:
+        Keiko 50.08 % / Sánchez 49.92 %. <b>No constituye una proyección oficial ni un pronóstico de ganador.</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGIONES -->
+  <section>
+    <h2>Resultado por región (departamento)</h2>
+    <table id="regions">
+      <thead><tr><th>Región</th><th>Reparto Keiko / Sánchez</th><th>Keiko</th><th>Sánchez</th><th>Lidera</th></tr></thead>
+      <tbody><!-- filas generadas por JS --></tbody>
+    </table>
+    <div class="src" style="margin-top:8px">
+      Muestra de 15 distritos electorales con cómputo casi total. Patrón consistente: Fujimori domina la costa
+      (Lima, La Libertad, Piura) y Loreto; Sánchez arrasa en la sierra sur y centro (Puno, Huancavelica, Apurímac, Ayacucho, Cusco).
+    </div>
+  </section>
+
+  <!-- EXTRANJERO -->
+  <section>
+    <h2>Voto del extranjero (peruanos en el exterior)</h2>
+    <div class="cards" style="margin-bottom:16px">
+      <div class="card keiko">
+        <div class="cand">Keiko Fujimori</div>
+        <div class="pct" style="color:var(--keiko);font-size:32px">63.429 %</div>
+        <div class="votes">184 435 votos</div>
+      </div>
+      <div class="card sanchez">
+        <div class="cand">Roberto Sánchez</div>
+        <div class="pct" style="color:#f06a6a;font-size:32px">36.571 %</div>
+        <div class="votes">106 338 votos</div>
+      </div>
+    </div>
+    <table id="overseas">
+      <thead><tr><th>Continente</th><th>Reparto</th><th>Keiko</th><th>Sánchez</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="src" style="margin-top:8px">Avance del voto exterior: 94.495 % escrutado. Fujimori lidera el voto del exterior en todos los continentes.</div>
+  </section>
+
+  <!-- COMPARTIR -->
+  <section>
+    <h2>Enlace público para compartir</h2>
+    <div class="share">
+      <input id="shareurl" readonly value="https://ocordovaia.github.io/cp-candidato-mockup/resultados-onpe-2026.html" />
+      <button onclick="copyShare()">Copiar enlace</button>
+      <span id="copied" style="color:var(--good);display:none">¡Copiado!</span>
+    </div>
+    <div class="src" style="margin-top:8px">
+      Enlace público vía GitHub Pages (requiere tener Pages activado para el repositorio y publicar la rama).
+    </div>
+  </section>
+
+  <footer>
+    <div class="src" style="margin-bottom:8px">
+      Dashboard informativo no oficial. Datos de ONPE y cobertura electoral · Generado el <span id="gents"></span>.
+    </div>
+    <div class="by">Hecho por Omar Córdova</div>
+  </footer>
+
+</div>
+
+<script>
+  // Regiones: [nombre, %Keiko, %Sánchez]
+  const regions = [
+    ["Lima Metropolitana", 63.500, 36.500],
+    ["La Libertad", 57.524, 42.476],
+    ["Piura", 56.975, 43.025],
+    ["Loreto", 53.002, 46.998],
+    ["Junín", 45.069, 54.931],
+    ["Áncash", 43.400, 56.600],
+    ["Arequipa", 36.406, 63.594],
+    ["Cajamarca", 33.226, 66.774],
+    ["Tacna", 28.635, 71.365],
+    ["Moquegua", 27.431, 72.569],
+    ["Cusco", 21.869, 78.131],
+    ["Ayacucho", 20.683, 79.317],
+    ["Apurímac", 18.838, 81.162],
+    ["Huancavelica", 18.598, 81.402],
+    ["Puno", 13.578, 86.422]
+  ];
+  const rbody = document.querySelector("#regions tbody");
+  regions.forEach(([n,k,s])=>{
+    const lead = k>=s ? '<span class="tag k">Fujimori</span>' : '<span class="tag s">Sánchez</span>';
+    rbody.insertAdjacentHTML("beforeend",
+      `<tr>
+        <td class="reg-name">${n}</td>
+        <td><div class="bar"><div class="k" style="width:${k}%"></div><div class="s" style="width:${s}%"></div></div></td>
+        <td>${k.toFixed(1)} %</td>
+        <td>${s.toFixed(1)} %</td>
+        <td>${lead}</td>
+      </tr>`);
+  });
+
+  // Extranjero por continente: [nombre, %K, %S, votosK, votosS]
+  const overseas = [
+    ["América", 67.750, 32.250, "115 380", "57 475"],
+    ["Europa", 55.898, 44.102, "59 744", "47 136"],
+    ["Asia", 89.095, 10.905, "7 974", "976"],
+    ["Oceanía", 64.132, 35.868, "1 307", "731"],
+    ["África", 60.000, 40.000, "30", "20"]
+  ];
+  const obody = document.querySelector("#overseas tbody");
+  overseas.forEach(([n,k,s,vk,vs])=>{
+    obody.insertAdjacentHTML("beforeend",
+      `<tr>
+        <td class="reg-name">${n}</td>
+        <td><div class="bar"><div class="k" style="width:${k}%"></div><div class="s" style="width:${s}%"></div></div></td>
+        <td>${k.toFixed(1)} % <span class="src">(${vk})</span></td>
+        <td>${s.toFixed(1)} % <span class="src">(${vs})</span></td>
+      </tr>`);
+  });
+
+  function copyShare(){
+    const el=document.getElementById("shareurl");
+    el.select(); el.setSelectionRange(0,99999);
+    navigator.clipboard?.writeText(el.value);
+    document.getElementById("copied").style.display="inline";
+  }
+
+  document.getElementById("gents").textContent =
+    new Date().toLocaleString("es-PE",{dateStyle:"long",timeStyle:"short"});
+</script>
+</body>
+</html>
