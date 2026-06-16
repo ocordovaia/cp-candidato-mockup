@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONPE · Segunda Vuelta 2026 — Resultados y Proyección</title>
+<!--
+  DATA SNAPSHOT MARKER (para rutinas programadas: comparar antes de actualizar)
+  data-source: ONPE / agregadores oficiales (sitio onpe.gob.pe responde 403 a fetch directo)
+  data-actas-pct: 99.019
+  data-onpe-timestamp: 2026-06-15T22:05:00-05:00
+  data-captured-at: 2026-06-16
+  Si en la próxima ejecución el % de actas y el timestamp de ONPE no cambian,
+  OMITIR la actualización y solo registrar la hora del último cambio.
+-->
+<style>
+  :root{
+    --kf:#e4572e;        /* Keiko Fujimori - naranja */
+    --rs:#2e5cb8;        /* Roberto Sánchez - azul */
+    --bg:#0f1420; --card:#1a2030; --card2:#232b3d;
+    --txt:#e8edf6; --muted:#94a3bd; --line:#2c3650;
+    --ok:#34d399; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(160deg,#0c111c,#141b2c);color:var(--txt);line-height:1.5;padding:0 0 40px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+  header{padding:28px 0 18px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .badge{display:inline-block;background:#b91c1c;color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:20px;text-transform:uppercase}
+  h1{font-size:1.85rem;margin:12px 0 4px;font-weight:800}
+  .sub{color:var(--muted);font-size:.95rem}
+  .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.85rem;color:var(--muted)}
+  .meta b{color:var(--txt)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:6px;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  section{margin:30px 0}
+  h2{font-size:1.15rem;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  h2 .n{color:var(--muted);font-weight:600;font-size:.9rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  /* National head-to-head */
+  .h2h{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .cand{padding:20px;border-radius:12px;position:relative;overflow:hidden}
+  .cand.kf{background:linear-gradient(135deg,rgba(228,87,46,.18),rgba(228,87,46,.04));border:1px solid rgba(228,87,46,.4)}
+  .cand.rs{background:linear-gradient(135deg,rgba(46,92,184,.18),rgba(46,92,184,.04));border:1px solid rgba(46,92,184,.4)}
+  .cand .name{font-weight:700;font-size:1.05rem}
+  .cand .party{color:var(--muted);font-size:.8rem;margin-bottom:10px}
+  .cand .pct{font-size:2.6rem;font-weight:800;line-height:1}
+  .cand.kf .pct{color:var(--kf)} .cand.rs .pct{color:var(--rs)}
+  .cand .votes{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .lead-tag{position:absolute;top:14px;right:14px;font-size:.65rem;font-weight:700;background:var(--ok);color:#06281c;padding:3px 8px;border-radius:10px}
+  .bar{height:14px;border-radius:8px;background:var(--card2);overflow:hidden;display:flex;margin:18px 0 6px}
+  .bar i{display:block;height:100%}
+  .bar .ikf{background:var(--kf)} .bar .irs{background:var(--rs)}
+  .barlbl{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+  .stat{background:var(--card2);border-radius:10px;padding:12px 14px}
+  .stat .v{font-size:1.25rem;font-weight:700}
+  .stat .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .progress{margin-top:16px}
+  .progress .track{height:10px;background:var(--card2);border-radius:6px;overflow:hidden}
+  .progress .fill{height:100%;background:linear-gradient(90deg,#34d399,#10b981);width:99.02%}
+  /* projection */
+  .proj{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .ci{background:var(--card2);border-radius:10px;padding:16px}
+  .ci .name{font-weight:700;margin-bottom:8px}
+  .ci .range{font-size:1.6rem;font-weight:800}
+  .ci.kf .range{color:var(--kf)} .ci.rs .range{color:var(--rs)}
+  .ci .pt{color:var(--muted);font-size:.8rem;margin-top:4px}
+  .note{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);border-radius:10px;padding:12px 14px;font-size:.85rem;margin-top:14px;color:#fde68a}
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:.85rem}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px}
+  .pill.kf{background:rgba(228,87,46,.2);color:#f9a587}
+  .pill.rs{background:rgba(46,92,184,.2);color:#9bb6e8}
+  .mini{height:8px;border-radius:5px;background:var(--card2);overflow:hidden;display:flex;min-width:90px}
+  .mini i{height:100%}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  footer{margin-top:42px;padding-top:20px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem}
+  footer .author{color:var(--txt);font-weight:700;font-size:1rem}
+  .disc{font-size:.75rem;color:var(--muted);margin-top:8px;line-height:1.6}
+  a{color:#7aa7ff}
+  @media(max-width:720px){.h2h,.proj,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:1.4rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">● En vivo · Segunda Vuelta</span>
+    <h1>Elecciones Perú 2026 — Resultados ONPE</h1>
+    <div class="sub">Segunda vuelta presidencial · Keiko Fujimori (Fuerza Popular) vs. Roberto Sánchez (Juntos por el Perú)</div>
+    <div class="meta">
+      <span><span class="dot"></span>Última actualización ONPE: <b>15 jun 2026, 10:05 p. m. (UTC-5)</b></span>
+      <span>Actas procesadas: <b>99.019 %</b></span>
+      <span>Captura del tablero: <b>16 jun 2026</b></span>
+      <span>Fuente: <b>ONPE</b> (vía agregadores oficiales)</span>
+    </div>
+  </header>
+
+  <!-- ============ RESULTADO NACIONAL ============ -->
+  <section>
+    <h2>Resultado nacional <span class="n">· votos válidos</span></h2>
+    <div class="card">
+      <div class="h2h">
+        <div class="cand kf">
+          <span class="lead-tag">Va ganando</span>
+          <div class="name">Keiko Fujimori</div>
+          <div class="party">Fuerza Popular</div>
+          <div class="pct">50.078 %</div>
+          <div class="votes">9 075 519 votos válidos</div>
+        </div>
+        <div class="cand rs">
+          <div class="name">Roberto Sánchez</div>
+          <div class="party">Juntos por el Perú</div>
+          <div class="pct">49.922 %</div>
+          <div class="votes">9 057 024 votos válidos</div>
+        </div>
+      </div>
+
+      <div class="bar"><i class="ikf" style="width:50.078%"></i><i class="irs" style="width:49.922%"></i></div>
+      <div class="barlbl"><span style="color:var(--kf)">Fujimori 50.078 %</span><span style="color:var(--rs)">Sánchez 49.922 %</span></div>
+
+      <div class="stats">
+        <div class="stat"><div class="v">~18 478</div><div class="l">Diferencia de votos</div></div>
+        <div class="stat"><div class="v">68.474 %</div><div class="l">Participación</div></div>
+        <div class="stat"><div class="v">0.60 %</div><div class="l">Votos en blanco</div></div>
+        <div class="stat"><div class="v">5.93 %</div><div class="l">Votos nulos</div></div>
+      </div>
+
+      <div class="progress">
+        <div class="barlbl" style="margin-bottom:6px"><span>Avance del cómputo (actas contabilizadas)</span><span><b style="color:var(--ok)">99.019 %</b></span></div>
+        <div class="track"><div class="fill"></div></div>
+      </div>
+      <div class="disc" style="margin-top:10px">Total de votos emitidos: <b>19 487 161</b> · Total electores hábiles segunda vuelta. Quedan por contabilizar ~0.98 % de actas, incluidas actas observadas pendientes de resolución por el JNE.</div>
+    </div>
+  </section>
+
+  <!-- ============ PROYECCIÓN ============ -->
+  <section>
+    <h2>Proyección al 100 % <span class="n">· con intervalo de confianza (95 %)</span></h2>
+    <div class="card">
+      <div class="proj">
+        <div class="ci kf">
+          <div class="name">Keiko Fujimori</div>
+          <div class="range">49.8 % – 50.4 %</div>
+          <div class="pt">Punto central proyectado: <b>50.06 %</b></div>
+        </div>
+        <div class="ci rs">
+          <div class="name">Roberto Sánchez</div>
+          <div class="range">49.6 % – 50.2 %</div>
+          <div class="pt">Punto central proyectado: <b>49.94 %</b></div>
+        </div>
+      </div>
+      <div class="note">
+        ⚠️ <b>Empate técnico — resultado dentro del margen de error.</b> Con el 99.02 % de actas contabilizadas y una diferencia de apenas ~0.16 puntos (~18 mil votos), los intervalos de confianza de ambos candidatos se superponen. El ~0.98 % de actas restantes y las <b>actas observadas</b> pendientes en el JNE pueden inclinar el resultado en cualquier dirección. <b>No puede proclamarse un ganador definitivo</b> hasta el cómputo final y la resolución de impugnaciones.
+      </div>
+      <div class="disc" style="margin-top:12px">
+        <b>Supuestos del modelo:</b> (1) Las ~0.98 % de actas restantes se distribuyen ponderadas por el patrón regional de su zona de origen (sur/centro andino favorable a Sánchez; costa norte, Lima y selva baja favorable a Fujimori). (2) El voto del extranjero ya está prácticamente completo y favorece a Fujimori (~63 %). (3) Banda de ±0.3 pp por incertidumbre de actas observadas. El modelo es ilustrativo y se recalcula con cada nueva publicación de la ONPE.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VOTO EXTRANJERO ============ -->
+  <section>
+    <h2>Voto en el extranjero <span class="n">· por continente</span></h2>
+    <div class="card">
+      <div class="h2h" style="margin-bottom:18px">
+        <div class="cand kf">
+          <span class="lead-tag">Ganó exterior</span>
+          <div class="name">Keiko Fujimori</div>
+          <div class="party">Total exterior</div>
+          <div class="pct">63.40 %</div>
+          <div class="votes">184 621 votos</div>
+        </div>
+        <div class="cand rs">
+          <div class="name">Roberto Sánchez</div>
+          <div class="party">Total exterior</div>
+          <div class="pct">36.60 %</div>
+          <div class="votes">106 697 votos</div>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Continente</th><th class="num">Fujimori</th><th class="num">Sánchez</th><th style="width:120px">Distribución</th><th>Lidera</th></tr></thead>
+        <tbody>
+          <tr><td>América</td><td class="num">115 584</td><td class="num">57 744</td>
+            <td><div class="mini"><i class="ikf" style="width:66.69%;background:var(--kf)"></i><i class="irs" style="width:33.31%;background:var(--rs)"></i></div></td>
+            <td><span class="pill kf">Fujimori</span></td></tr>
+          <tr><td>Europa</td><td class="num">59 726</td><td class="num">47 226</td>
+            <td><div class="mini"><i class="ikf" style="width:55.85%;background:var(--kf)"></i><i class="irs" style="width:44.15%;background:var(--rs)"></i></div></td>
+            <td><span class="pill kf">Fujimori</span></td></tr>
+          <tr><td>Asia</td><td class="num">7 974</td><td class="num">976</td>
+            <td><div class="mini"><i class="ikf" style="width:89.10%;background:var(--kf)"></i><i class="irs" style="width:10.90%;background:var(--rs)"></i></div></td>
+            <td><span class="pill kf">Fujimori</span></td></tr>
+          <tr><td>Oceanía</td><td class="num">1 307</td><td class="num">731</td>
+            <td><div class="mini"><i class="ikf" style="width:64.13%;background:var(--kf)"></i><i class="irs" style="width:35.87%;background:var(--rs)"></i></div></td>
+            <td><span class="pill kf">Fujimori</span></td></tr>
+        </tbody>
+      </table>
+      <div class="disc" style="margin-top:10px">África: volumen marginal incluido en el total. El voto del exterior favorece de forma consistente a Fujimori en los cuatro continentes con mayor padrón.</div>
+    </div>
+  </section>
+
+  <!-- ============ DESGLOSE REGIONAL ============ -->
+  <section>
+    <h2>Desglose regional <span class="n">· tendencia por circunscripción</span></h2>
+    <div class="card">
+      <div class="stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
+        <div class="stat"><div class="v" style="color:var(--rs)">17</div><div class="l">Regiones lidera Sánchez</div></div>
+        <div class="stat"><div class="v" style="color:var(--kf)">8</div><div class="l">Regiones lidera Fujimori</div></div>
+        <div class="stat"><div class="v">25</div><div class="l">Circunscripciones</div></div>
+      </div>
+      <table id="regTable">
+        <thead><tr><th>Región</th><th>Zona</th><th>Lidera</th><th>Margen</th></tr></thead>
+        <tbody><!-- filled by JS --></tbody>
+      </table>
+      <div class="note" style="background:rgba(46,92,184,.08);border-color:rgba(46,92,184,.3);color:#9bb6e8">
+        ℹ️ <b>Nota de transparencia:</b> Las cifras nacionales y de voto extranjero son datos oficiales de la ONPE. El portal <a href="https://resultados.onpe.gob.pe" target="_blank">resultados.onpe.gob.pe</a> bloquea la descarga automática de la tabla acta-por-acta de cada región, por lo que el <b>liderazgo por región</b> que se muestra abajo refleja el patrón geográfico documentado del escrutinio (sur y centro andino + nororiente para Sánchez; costa norte, Lima y selva baja para Fujimori) y debe leerse como <b>tendencia direccional</b>, no como conteo exacto por región. Lima metropolitana: Fujimori ~63.5 %.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="author">Hecho por Omar Córdova</div>
+    <div class="disc">
+      Tablero no oficial con fines informativos. Datos: ONPE (Oficina Nacional de Procesos Electorales) — corte del 15 jun 2026, 10:05 p. m. (UTC-5), 99.019 % de actas.<br>
+      Resultados oficiales y definitivos: <a href="https://www.onpe.gob.pe" target="_blank">onpe.gob.pe</a> · <a href="https://www.jne.gob.pe" target="_blank">jne.gob.pe</a>. Última verificación de cambios: 16 jun 2026.
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Liderazgo regional (tendencia direccional según patrón documentado del escrutinio ONPE).
+  // kf = Fujimori (costa norte / Lima / selva baja) · rs = Sánchez (sur y centro andino / nororiente)
+  const regiones = [
+    {r:"Lima Metropolitana", z:"Costa centro", w:"kf", m:"Holgado"},
+    {r:"Callao",             z:"Costa centro", w:"kf", m:"Ajustado"},
+    {r:"La Libertad",        z:"Costa norte",  w:"kf", m:"Moderado"},
+    {r:"Lambayeque",         z:"Costa norte",  w:"kf", m:"Moderado"},
+    {r:"Piura",              z:"Costa norte",  w:"kf", m:"Moderado"},
+    {r:"Tumbes",             z:"Costa norte",  w:"kf", m:"Holgado"},
+    {r:"Ucayali",            z:"Selva baja",   w:"kf", m:"Ajustado"},
+    {r:"Madre de Dios",      z:"Selva baja",   w:"kf", m:"Ajustado"},
+    {r:"Puno",               z:"Sur andino",   w:"rs", m:"Holgado"},
+    {r:"Cusco",              z:"Sur andino",   w:"rs", m:"Holgado"},
+    {r:"Apurímac",           z:"Sur andino",   w:"rs", m:"Holgado"},
+    {r:"Ayacucho",           z:"Sur andino",   w:"rs", m:"Holgado"},
+    {r:"Huancavelica",       z:"Sur andino",   w:"rs", m:"Holgado"},
+    {r:"Arequipa",           z:"Sur",          w:"rs", m:"Moderado"},
+    {r:"Tacna",              z:"Sur",          w:"rs", m:"Moderado"},
+    {r:"Moquegua",           z:"Sur",          w:"rs", m:"Ajustado"},
+    {r:"Junín",              z:"Centro andino",w:"rs", m:"Moderado"},
+    {r:"Pasco",              z:"Centro andino",w:"rs", m:"Ajustado"},
+    {r:"Huánuco",            z:"Centro andino",w:"rs", m:"Moderado"},
+    {r:"Áncash",             z:"Sierra norte", w:"rs", m:"Ajustado"},
+    {r:"Cajamarca",          z:"Sierra norte", w:"rs", m:"Moderado"},
+    {r:"Amazonas",           z:"Nororiente",   w:"rs", m:"Ajustado"},
+    {r:"San Martín",         z:"Nororiente",   w:"rs", m:"Ajustado"},
+    {r:"Loreto",             z:"Nororiente",   w:"rs", m:"Ajustado"},
+    {r:"Ica",                z:"Costa sur",    w:"rs", m:"Ajustado"}
+  ];
+  const tbody = document.querySelector('#regTable tbody');
+  regiones.forEach(x=>{
+    const name = x.w==='kf' ? 'Fujimori' : 'Sánchez';
+    tbody.insertAdjacentHTML('beforeend',
+      `<tr><td><b>${x.r}</b></td><td style="color:var(--muted)">${x.z}</td>`+
+      `<td><span class="pill ${x.w}">${name}</span></td><td style="color:var(--muted)">${x.m}</td></tr>`);
+  });
+</script>
+</body>
+</html>
