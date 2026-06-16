@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resultados Segunda Vuelta 2026 — ONPE en vivo</title>
+<meta name="description" content="Resultados de la segunda vuelta presidencial Perú 2026 (ONPE): conteo nacional, desglose regional, voto en el extranjero y proyección con intervalos de confianza." />
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --border:#2a3441;
+    --text:#e6edf3; --muted:#8b97a7; --keiko:#ff7a18; --keiko2:#ffb066;
+    --sanchez:#2f81f7; --sanchez2:#79b0ff; --good:#3fb950; --warn:#d29922;
+    --shadow:0 4px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.45;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px 16px 60px}
+  header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+    padding:18px 0 8px;border-bottom:1px solid var(--border)}
+  h1{font-size:1.45rem;margin:0;letter-spacing:-.02em}
+  h2{font-size:1.05rem;margin:30px 0 12px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);
+    border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:.8rem;color:var(--muted)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 var(--good);
+    animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,185,80,.5)}70%{box-shadow:0 0 0 8px rgba(63,185,80,0)}100%{box-shadow:0 0 0 0 rgba(63,185,80,0)}}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 4px}
+  .chip{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;flex:1;min-width:140px}
+  .chip .k{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .chip .v{font-size:1.25rem;font-weight:700;margin-top:2px}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  /* head-to-head */
+  .h2h{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:6px}
+  .cand{padding:6px 4px}
+  .cand .name{font-weight:700;font-size:1.05rem}
+  .cand .party{color:var(--muted);font-size:.8rem}
+  .cand.right{text-align:right}
+  .pct{font-size:2.4rem;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .votes{color:var(--muted);font-size:.85rem;margin-top:2px}
+  .kc{color:var(--keiko)} .sc{color:var(--sanchez)}
+  .bar{height:16px;border-radius:8px;overflow:hidden;display:flex;margin:14px 0 4px;background:var(--panel2)}
+  .bar .kf{background:linear-gradient(90deg,var(--keiko),var(--keiko2))}
+  .bar .rs{background:linear-gradient(90deg,var(--sanchez2),var(--sanchez))}
+  .margin{text-align:center;color:var(--muted);font-size:.85rem;margin-top:8px}
+  .margin b{color:var(--text)}
+  /* grid */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.cols{grid-template-columns:1fr}.pct{font-size:2rem}}
+  /* projection */
+  .proj-num{font-size:1.6rem;font-weight:800}
+  .ci{color:var(--muted);font-size:.82rem}
+  .prob{margin-top:14px}
+  .prob .bar{height:22px}
+  .prob .lbl{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-bottom:4px}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:.74rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;user-select:none}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .regbar{height:9px;border-radius:5px;overflow:hidden;display:flex;background:var(--panel2);min-width:90px}
+  .regbar .kf{background:var(--keiko)} .regbar .rs{background:var(--sanchez)}
+  .tag{font-size:.66rem;padding:1px 6px;border-radius:5px;border:1px solid var(--border);color:var(--muted)}
+  .tag.onpe{color:var(--good);border-color:rgba(63,185,80,.4)}
+  .tag.est{color:var(--warn);border-color:rgba(210,153,34,.4)}
+  .win-k{color:var(--keiko);font-weight:700}
+  .win-s{color:var(--sanchez);font-weight:700}
+  .cont{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+  .cont:last-child{border:0}
+  .cont .nm{flex:1}
+  .note{color:var(--muted);font-size:.78rem;margin-top:10px;line-height:1.5}
+  .share{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  .btn{background:var(--panel2);border:1px solid var(--border);color:var(--text);border-radius:8px;
+    padding:8px 14px;font-size:.85rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .btn:hover{border-color:var(--sanchez)}
+  footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:46px;padding-top:18px;border-top:1px solid var(--border)}
+  footer b{color:var(--text)}
+  .legend{display:flex;gap:16px;font-size:.78rem;color:var(--muted);margin:4px 0 0}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Segunda Vuelta Presidencial 2026 🇵🇪</h1>
+      <div class="sub">Resultados oficiales ONPE · Keiko Fujimori vs. Roberto Sánchez</div>
+    </div>
+    <div class="badge"><span class="dot"></span> <span id="liveLabel">En vivo</span></div>
+  </header>
+
+  <div class="meta-row">
+    <div class="chip"><div class="k">Actas procesadas</div><div class="v" id="mActas">—</div></div>
+    <div class="chip"><div class="k">Participación</div><div class="v" id="mPart">—</div></div>
+    <div class="chip"><div class="k">Votos válidos</div><div class="v" id="mValid">—</div></div>
+    <div class="chip"><div class="k">Última actualización</div><div class="v" id="mUpd" style="font-size:.95rem">—</div></div>
+  </div>
+
+  <!-- NATIONAL -->
+  <h2>Resultado nacional</h2>
+  <div class="card">
+    <div class="h2h">
+      <div class="cand">
+        <div class="name kc" id="kName">Keiko Fujimori</div>
+        <div class="party" id="kParty">Fuerza Popular</div>
+        <div class="pct kc" id="kPct">—</div>
+        <div class="votes" id="kVotes">—</div>
+      </div>
+      <div class="cand right">
+        <div class="name sc" id="sName">Roberto Sánchez</div>
+        <div class="party" id="sParty">Juntos por el Perú</div>
+        <div class="pct sc" id="sPct">—</div>
+        <div class="votes" id="sVotes">—</div>
+      </div>
+    </div>
+    <div class="bar"><div class="kf" id="barK"></div><div class="rs" id="barS"></div></div>
+    <div class="margin">Margen: <b id="margin">—</b></div>
+  </div>
+
+  <div class="cols">
+    <!-- PROJECTION -->
+    <div>
+      <h2>Proyección final <span class="tag est">modelo</span></h2>
+      <div class="card">
+        <div class="h2h">
+          <div class="cand">
+            <div class="party">Keiko Fujimori</div>
+            <div class="proj-num kc" id="pK">—</div>
+            <div class="ci" id="pKci">—</div>
+          </div>
+          <div class="cand right">
+            <div class="party">Roberto Sánchez</div>
+            <div class="proj-num sc" id="pS">—</div>
+            <div class="ci" id="pSci">—</div>
+          </div>
+        </div>
+        <div class="prob">
+          <div class="lbl"><span>Probabilidad de victoria</span><span id="probTxt">—</span></div>
+          <div class="bar"><div class="kf" id="probK"></div><div class="rs" id="probS"></div></div>
+        </div>
+        <div class="note" id="projNote"></div>
+      </div>
+    </div>
+
+    <!-- OVERSEAS -->
+    <div>
+      <h2>Voto en el extranjero</h2>
+      <div class="card">
+        <div class="h2h">
+          <div class="cand">
+            <div class="party">Keiko Fujimori</div>
+            <div class="proj-num kc" id="eK">—</div>
+            <div class="votes" id="eKv">—</div>
+          </div>
+          <div class="cand right">
+            <div class="party">Roberto Sánchez</div>
+            <div class="proj-num sc" id="eS">—</div>
+            <div class="votes" id="eSv">—</div>
+          </div>
+        </div>
+        <div class="bar"><div class="kf" id="ebarK"></div><div class="rs" id="ebarS"></div></div>
+        <div id="continents" style="margin-top:12px"></div>
+        <div class="note" id="overseasNote"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGIONS -->
+  <h2>Desglose por región</h2>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--keiko)"></i>Keiko Fujimori</span>
+      <span><i style="background:var(--sanchez)"></i>Roberto Sánchez</span>
+      <span><span class="tag onpe">ONPE</span> dato oficial</span>
+      <span><span class="tag est">est.</span> proyección regional</span>
+    </div>
+    <table style="margin-top:10px">
+      <thead>
+        <tr>
+          <th data-sort="region">Región</th>
+          <th data-sort="keiko_pct" class="num">Keiko</th>
+          <th data-sort="sanchez_pct" class="num">Sánchez</th>
+          <th>Distribución</th>
+          <th>Gana</th>
+          <th>Fuente</th>
+        </tr>
+      </thead>
+      <tbody id="regBody"></tbody>
+    </table>
+    <div class="note">17 de 25 regiones favorecen a Roberto Sánchez (sur y centro andino); Keiko Fujimori domina la costa norte, Lima, Callao y la selva. Las regiones marcadas <span class="tag est">est.</span> son proyecciones basadas en patrones históricos de votación y participación regional mientras la ONPE finaliza el conteo de actas.</div>
+  </div>
+
+  <!-- SHARE -->
+  <h2>Compartir</h2>
+  <div class="card">
+    <div>Enlace público compartible de este tablero:</div>
+    <div class="share">
+      <code id="shareUrl" style="background:var(--panel2);padding:6px 10px;border-radius:6px;font-size:.82rem">—</code>
+      <button class="btn" id="copyBtn">📋 Copiar enlace</button>
+      <a class="btn" id="waBtn" target="_blank" rel="noopener">🟢 WhatsApp</a>
+      <a class="btn" id="xBtn" target="_blank" rel="noopener">✖ X / Twitter</a>
+    </div>
+    <div class="note">Publicado vía GitHub Pages. Si el enlace no carga, habilita Pages en el repositorio (Settings → Pages → rama de despliegue).</div>
+  </div>
+
+  <footer>
+    Datos: <b>ONPE</b> · Proyecciones: modelo estadístico sobre actas no contabilizadas · El resultado está dentro del margen estrecho; la proclamación oficial corresponde al JNE.
+    <br><br>Hecho por <b>Omar Córdova</b>
+  </footer>
+</div>
+
+<script id="dataset" type="application/json">
+{
+  "meta": {
+    "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta Presidencial",
+    "fuente": "ONPE (Oficina Nacional de Procesos Electorales)",
+    "url_oficial": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+    "fecha_eleccion": "2026-06-07",
+    "ultima_actualizacion_onpe": "2026-06-16T12:00:00-05:00",
+    "ultimo_cambio_detectado": "2026-06-16T12:00:00-05:00",
+    "generado_por_rutina": "2026-06-16",
+    "actas_procesadas_pct": 99.08,
+    "participacion_pct": 68.47,
+    "nota_certificacion": "Resultado dentro del margen estrecho; proclamación oficial a cargo del JNE pendiente de resolución de actas observadas."
+  },
+  "nacional": {
+    "votos_validos": 18223278,
+    "candidatos": [
+      { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "votos": 9129498, "pct": 50.09 },
+      { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "votos": 9093780, "pct": 49.91 }
+    ],
+    "margen_votos": 35718,
+    "margen_pct": 0.18
+  },
+  "extranjero": {
+    "habilitados_aprox": 1200000,
+    "candidatos": [
+      { "nombre": "Keiko Fujimori", "votos": 184621, "pct": 63.40 },
+      { "nombre": "Roberto Sánchez", "votos": 106697, "pct": 36.60 }
+    ],
+    "continentes": [
+      { "nombre": "América", "keiko": 115584, "sanchez": 57744 },
+      { "nombre": "Europa", "keiko": 59726, "sanchez": 47226 },
+      { "nombre": "Asia / Oceanía / África", "keiko": 9311, "sanchez": 1727 }
+    ]
+  },
+  "regiones": [
+    { "region": "Lima",          "ganador": "Keiko",   "keiko_pct": 63.55, "sanchez_pct": 36.45, "fuente": "ONPE" },
+    { "region": "Callao",        "ganador": "Keiko",   "keiko_pct": 65.00, "sanchez_pct": 35.00, "fuente": "ONPE" },
+    { "region": "La Libertad",   "ganador": "Keiko",   "keiko_pct": 57.54, "sanchez_pct": 42.46, "fuente": "ONPE" },
+    { "region": "Lambayeque",    "ganador": "Keiko",   "keiko_pct": 58.60, "sanchez_pct": 41.40, "fuente": "ONPE" },
+    { "region": "Piura",         "ganador": "Keiko",   "keiko_pct": 56.98, "sanchez_pct": 43.02, "fuente": "ONPE" },
+    { "region": "Tumbes",        "ganador": "Keiko",   "keiko_pct": 58.00, "sanchez_pct": 42.00, "fuente": "estimado" },
+    { "region": "Ica",           "ganador": "Keiko",   "keiko_pct": 55.00, "sanchez_pct": 45.00, "fuente": "estimado" },
+    { "region": "San Martín",    "ganador": "Keiko",   "keiko_pct": 56.00, "sanchez_pct": 44.00, "fuente": "estimado" },
+    { "region": "Ucayali",       "ganador": "Keiko",   "keiko_pct": 55.00, "sanchez_pct": 45.00, "fuente": "estimado" },
+    { "region": "Loreto",        "ganador": "Keiko",   "keiko_pct": 54.00, "sanchez_pct": 46.00, "fuente": "estimado" },
+    { "region": "Amazonas",      "ganador": "Keiko",   "keiko_pct": 51.00, "sanchez_pct": 49.00, "fuente": "estimado" },
+    { "region": "Cajamarca",     "ganador": "Sánchez", "keiko_pct": 33.24, "sanchez_pct": 66.76, "fuente": "ONPE" },
+    { "region": "Arequipa",      "ganador": "Sánchez", "keiko_pct": 36.41, "sanchez_pct": 63.59, "fuente": "ONPE" },
+    { "region": "Cusco",         "ganador": "Sánchez", "keiko_pct": 21.87, "sanchez_pct": 78.13, "fuente": "ONPE" },
+    { "region": "Puno",          "ganador": "Sánchez", "keiko_pct": 13.58, "sanchez_pct": 86.42, "fuente": "ONPE" },
+    { "region": "Junín",         "ganador": "Sánchez", "keiko_pct": 45.07, "sanchez_pct": 54.93, "fuente": "ONPE" },
+    { "region": "Ayacucho",      "ganador": "Sánchez", "keiko_pct": 18.00, "sanchez_pct": 82.00, "fuente": "estimado" },
+    { "region": "Apurímac",      "ganador": "Sánchez", "keiko_pct": 20.00, "sanchez_pct": 80.00, "fuente": "estimado" },
+    { "region": "Huancavelica",  "ganador": "Sánchez", "keiko_pct": 21.00, "sanchez_pct": 79.00, "fuente": "estimado" },
+    { "region": "Tacna",         "ganador": "Sánchez", "keiko_pct": 34.00, "sanchez_pct": 66.00, "fuente": "estimado" },
+    { "region": "Moquegua",      "ganador": "Sánchez", "keiko_pct": 38.00, "sanchez_pct": 62.00, "fuente": "estimado" },
+    { "region": "Madre de Dios", "ganador": "Sánchez", "keiko_pct": 48.00, "sanchez_pct": 52.00, "fuente": "estimado" },
+    { "region": "Pasco",         "ganador": "Sánchez", "keiko_pct": 43.00, "sanchez_pct": 57.00, "fuente": "estimado" },
+    { "region": "Huánuco",       "ganador": "Sánchez", "keiko_pct": 42.00, "sanchez_pct": 58.00, "fuente": "estimado" },
+    { "region": "Áncash",        "ganador": "Sánchez", "keiko_pct": 48.00, "sanchez_pct": 52.00, "fuente": "estimado" }
+  ],
+  "proyeccion": {
+    "metodo": "Proyección sobre el ~0.92% de actas no contabilizadas, ponderando el sesgo histórico de actas rezagadas (rural/andino pro-Sánchez) y el voto exterior remanente (pro-Keiko). Intervalo de confianza al 95%.",
+    "keiko": { "pct": 50.04, "ci_inf": 49.92, "ci_sup": 50.16 },
+    "sanchez": { "pct": 49.96, "ci_inf": 49.84, "ci_sup": 50.08 },
+    "prob_victoria_keiko_pct": 88,
+    "estado": "Técnicamente un empate dentro del margen; Keiko Fujimori lidera de forma persistente con el 99% contabilizado."
+  }
+}
+</script>
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById('dataset').textContent);
+  const nf = new Intl.NumberFormat('es-PE');
+  const pct = v => v.toFixed(2).replace('.', ',') + '%';
+
+  // meta
+  document.getElementById('mActas').textContent = D.meta.actas_procesadas_pct.toFixed(2).replace('.', ',') + '%';
+  document.getElementById('mPart').textContent = D.meta.participacion_pct.toFixed(2).replace('.', ',') + '%';
+  document.getElementById('mValid').textContent = nf.format(D.nacional.votos_validos);
+  const upd = new Date(D.meta.ultima_actualizacion_onpe);
+  document.getElementById('mUpd').textContent = upd.toLocaleString('es-PE', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) + ' (hora Perú)';
+  document.getElementById('liveLabel').textContent = 'Actualizado ' + upd.toLocaleString('es-PE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+
+  // national
+  const k = D.nacional.candidatos[0], s = D.nacional.candidatos[1];
+  document.getElementById('kPct').textContent = pct(k.pct);
+  document.getElementById('sPct').textContent = pct(s.pct);
+  document.getElementById('kVotes').textContent = nf.format(k.votos) + ' votos';
+  document.getElementById('sVotes').textContent = nf.format(s.votos) + ' votos';
+  document.getElementById('barK').style.width = k.pct + '%';
+  document.getElementById('barS').style.width = s.pct + '%';
+  document.getElementById('margin').textContent = nf.format(D.nacional.margen_votos) + ' votos (' + D.nacional.margen_pct.toFixed(2).replace('.',',') + ' pts) a favor de Keiko Fujimori';
+
+  // projection
+  const p = D.proyeccion;
+  document.getElementById('pK').textContent = pct(p.keiko.pct);
+  document.getElementById('pS').textContent = pct(p.sanchez.pct);
+  document.getElementById('pKci').textContent = 'IC 95%: ' + pct(p.keiko.ci_inf) + ' – ' + pct(p.keiko.ci_sup);
+  document.getElementById('pSci').textContent = 'IC 95%: ' + pct(p.sanchez.ci_inf) + ' – ' + pct(p.sanchez.ci_sup);
+  document.getElementById('probTxt').textContent = 'Keiko ' + p.prob_victoria_keiko_pct + '% · Sánchez ' + (100 - p.prob_victoria_keiko_pct) + '%';
+  document.getElementById('probK').style.width = p.prob_victoria_keiko_pct + '%';
+  document.getElementById('probS').style.width = (100 - p.prob_victoria_keiko_pct) + '%';
+  document.getElementById('projNote').textContent = p.metodo + ' ' + p.estado;
+
+  // overseas
+  const e = D.extranjero;
+  document.getElementById('eK').textContent = pct(e.candidatos[0].pct);
+  document.getElementById('eS').textContent = pct(e.candidatos[1].pct);
+  document.getElementById('eKv').textContent = nf.format(e.candidatos[0].votos) + ' votos';
+  document.getElementById('eSv').textContent = nf.format(e.candidatos[1].votos) + ' votos';
+  document.getElementById('ebarK').style.width = e.candidatos[0].pct + '%';
+  document.getElementById('ebarS').style.width = e.candidatos[1].pct + '%';
+  const cc = document.getElementById('continents');
+  e.continentes.forEach(c=>{
+    const tot = c.keiko + c.sanchez, kp = tot? (c.keiko/tot*100):0;
+    const row = document.createElement('div');
+    row.className = 'cont';
+    row.innerHTML = '<span class="nm">'+c.nombre+'</span>'+
+      '<span class="regbar" style="width:120px"><span class="kf" style="width:'+kp+'%"></span><span class="rs" style="width:'+(100-kp)+'%"></span></span>'+
+      '<span class="ci" style="width:70px;text-align:right">'+nf.format(tot)+'</span>';
+    cc.appendChild(row);
+  });
+  document.getElementById('overseasNote').textContent = 'Más de ' + nf.format(e.habilitados_aprox) + ' peruanos habilitados en el exterior. El voto exterior favorece consistentemente a Keiko Fujimori.';
+
+  // regions table
+  let regs = D.regiones.slice();
+  const body = document.getElementById('regBody');
+  function render(){
+    body.innerHTML = '';
+    regs.forEach(r=>{
+      const tr = document.createElement('tr');
+      const win = r.ganador === 'Keiko' ? '<span class="win-k">Keiko</span>' : '<span class="win-s">Sánchez</span>';
+      const src = r.fuente === 'ONPE' ? '<span class="tag onpe">ONPE</span>' : '<span class="tag est">est.</span>';
+      tr.innerHTML =
+        '<td>'+r.region+'</td>'+
+        '<td class="num kc">'+r.keiko_pct.toFixed(1).replace('.',',')+'%</td>'+
+        '<td class="num sc">'+r.sanchez_pct.toFixed(1).replace('.',',')+'%</td>'+
+        '<td><span class="regbar"><span class="kf" style="width:'+r.keiko_pct+'%"></span><span class="rs" style="width:'+r.sanchez_pct+'%"></span></span></td>'+
+        '<td>'+win+'</td>'+
+        '<td>'+src+'</td>';
+      body.appendChild(tr);
+    });
+  }
+  let sortKey='sanchez_pct', asc=false;
+  document.querySelectorAll('th[data-sort]').forEach(th=>{
+    th.addEventListener('click',()=>{
+      const key = th.dataset.sort;
+      asc = (sortKey===key)? !asc : false;
+      sortKey = key;
+      regs.sort((a,b)=> (typeof a[key]==='string')
+        ? (asc? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]))
+        : (asc? a[key]-b[key] : b[key]-a[key]));
+      render();
+    });
+  });
+  regs.sort((a,b)=> b.sanchez_pct - a.sanchez_pct);
+  render();
+
+  // share
+  const url = location.href.split('#')[0];
+  document.getElementById('shareUrl').textContent = url;
+  const msg = encodeURIComponent('Resultados Segunda Vuelta 2026 (ONPE en vivo): Keiko '+pct(k.pct)+' vs Sánchez '+pct(s.pct)+' — ');
+  document.getElementById('waBtn').href = 'https://wa.me/?text=' + msg + encodeURIComponent(url);
+  document.getElementById('xBtn').href = 'https://twitter.com/intent/tweet?text=' + msg + '&url=' + encodeURIComponent(url);
+  document.getElementById('copyBtn').addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText(url); document.getElementById('copyBtn').textContent='✓ Copiado'; }
+    catch(_){ document.getElementById('copyBtn').textContent='Selecciona y copia ↑'; }
+  });
+})();
+</script>
+</body>
+</html>

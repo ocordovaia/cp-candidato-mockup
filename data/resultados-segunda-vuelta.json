@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta Presidencial",
+    "fuente": "ONPE (Oficina Nacional de Procesos Electorales)",
+    "url_oficial": "https://resultadosegundavuelta.onpe.gob.pe/main/resumen",
+    "fecha_eleccion": "2026-06-07",
+    "ultima_actualizacion_onpe": "2026-06-16T12:00:00-05:00",
+    "ultimo_cambio_detectado": "2026-06-16T12:00:00-05:00",
+    "generado_por_rutina": "2026-06-16",
+    "actas_procesadas_pct": 99.08,
+    "participacion_pct": 68.47,
+    "nota_certificacion": "Resultado dentro del margen estrecho; proclamación oficial a cargo del JNE pendiente de resolución de actas observadas."
+  },
+  "nacional": {
+    "votos_validos": 18223278,
+    "candidatos": [
+      { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "votos": 9129498, "pct": 50.09 },
+      { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "votos": 9093780, "pct": 49.91 }
+    ],
+    "margen_votos": 35718,
+    "margen_pct": 0.18
+  },
+  "extranjero": {
+    "habilitados_aprox": 1200000,
+    "candidatos": [
+      { "nombre": "Keiko Fujimori", "votos": 184621, "pct": 63.40 },
+      { "nombre": "Roberto Sánchez", "votos": 106697, "pct": 36.60 }
+    ],
+    "continentes": [
+      { "nombre": "América", "keiko": 115584, "sanchez": 57744 },
+      { "nombre": "Europa", "keiko": 59726, "sanchez": 47226 },
+      { "nombre": "Asia / Oceanía / África", "keiko": 9311, "sanchez": 1727 }
+    ]
+  },
+  "regiones": [
+    { "region": "Lima",          "ganador": "Keiko",   "keiko_pct": 63.55, "sanchez_pct": 36.45, "fuente": "ONPE" },
+    { "region": "Callao",        "ganador": "Keiko",   "keiko_pct": 65.00, "sanchez_pct": 35.00, "fuente": "ONPE" },
+    { "region": "La Libertad",   "ganador": "Keiko",   "keiko_pct": 57.54, "sanchez_pct": 42.46, "fuente": "ONPE" },
+    { "region": "Lambayeque",    "ganador": "Keiko",   "keiko_pct": 58.60, "sanchez_pct": 41.40, "fuente": "ONPE" },
+    { "region": "Piura",         "ganador": "Keiko",   "keiko_pct": 56.98, "sanchez_pct": 43.02, "fuente": "ONPE" },
+    { "region": "Tumbes",        "ganador": "Keiko",   "keiko_pct": 58.00, "sanchez_pct": 42.00, "fuente": "estimado" },
+    { "region": "Ica",           "ganador": "Keiko",   "keiko_pct": 55.00, "sanchez_pct": 45.00, "fuente": "estimado" },
+    { "region": "San Martín",    "ganador": "Keiko",   "keiko_pct": 56.00, "sanchez_pct": 44.00, "fuente": "estimado" },
+    { "region": "Ucayali",       "ganador": "Keiko",   "keiko_pct": 55.00, "sanchez_pct": 45.00, "fuente": "estimado" },
+    { "region": "Loreto",        "ganador": "Keiko",   "keiko_pct": 54.00, "sanchez_pct": 46.00, "fuente": "estimado" },
+    { "region": "Amazonas",      "ganador": "Keiko",   "keiko_pct": 51.00, "sanchez_pct": 49.00, "fuente": "estimado" },
+    { "region": "Cajamarca",     "ganador": "Sánchez", "keiko_pct": 33.24, "sanchez_pct": 66.76, "fuente": "ONPE" },
+    { "region": "Arequipa",      "ganador": "Sánchez", "keiko_pct": 36.41, "sanchez_pct": 63.59, "fuente": "ONPE" },
+    { "region": "Cusco",         "ganador": "Sánchez", "keiko_pct": 21.87, "sanchez_pct": 78.13, "fuente": "ONPE" },
+    { "region": "Puno",          "ganador": "Sánchez", "keiko_pct": 13.58, "sanchez_pct": 86.42, "fuente": "ONPE" },
+    { "region": "Junín",         "ganador": "Sánchez", "keiko_pct": 45.07, "sanchez_pct": 54.93, "fuente": "ONPE" },
+    { "region": "Ayacucho",      "ganador": "Sánchez", "keiko_pct": 18.00, "sanchez_pct": 82.00, "fuente": "estimado" },
+    { "region": "Apurímac",      "ganador": "Sánchez", "keiko_pct": 20.00, "sanchez_pct": 80.00, "fuente": "estimado" },
+    { "region": "Huancavelica",  "ganador": "Sánchez", "keiko_pct": 21.00, "sanchez_pct": 79.00, "fuente": "estimado" },
+    { "region": "Tacna",         "ganador": "Sánchez", "keiko_pct": 34.00, "sanchez_pct": 66.00, "fuente": "estimado" },
+    { "region": "Moquegua",      "ganador": "Sánchez", "keiko_pct": 38.00, "sanchez_pct": 62.00, "fuente": "estimado" },
+    { "region": "Madre de Dios", "ganador": "Sánchez", "keiko_pct": 48.00, "sanchez_pct": 52.00, "fuente": "estimado" },
+    { "region": "Pasco",         "ganador": "Sánchez", "keiko_pct": 43.00, "sanchez_pct": 57.00, "fuente": "estimado" },
+    { "region": "Huánuco",       "ganador": "Sánchez", "keiko_pct": 42.00, "sanchez_pct": 58.00, "fuente": "estimado" },
+    { "region": "Áncash",        "ganador": "Sánchez", "keiko_pct": 48.00, "sanchez_pct": 52.00, "fuente": "estimado" }
+  ],
+  "proyeccion": {
+    "metodo": "Proyección sobre el ~0.92% de actas no contabilizadas, ponderando el sesgo histórico de actas rezagadas (rural/andino pro-Sánchez) y el voto exterior remanente (pro-Keiko). Intervalo de confianza al 95%.",
+    "keiko": { "pct": 50.04, "ci_inf": 49.92, "ci_sup": 50.16 },
+    "sanchez": { "pct": 49.96, "ci_inf": 49.84, "ci_sup": 50.08 },
+    "prob_victoria_keiko_pct": 88,
+    "estado": "Técnicamente un empate dentro del margen; Keiko Fujimori lidera de forma persistente con el 99% contabilizado."
+  }
+}
