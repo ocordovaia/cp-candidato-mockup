@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "eleccion": "Segunda Vuelta Presidencial - Elecciones Generales Perú 2026",
+    "fuente": "ONPE (Oficina Nacional de Procesos Electorales)",
+    "fecha_eleccion": "2026-06-07",
+    "fecha_corte_datos": "2026-06-16T12:00:00-05:00",
+    "fecha_generacion_dashboard": "2026-06-16",
+    "actas_contabilizadas_pct": 99.082,
+    "nota_ultimo_cambio": "Primera generación del tablero. Corte ONPE al 99.082% (16/06/2026 12:00). Avance previo conocido: 99.033% (15/06/2026 23:45)."
+  },
+  "nacional": {
+    "keiko_fujimori": { "partido": "Fuerza Popular", "votos": 9129498, "pct_validos": 50.090 },
+    "roberto_sanchez": { "partido": "Juntos por el Perú", "votos": 9093780, "pct_validos": 49.910 },
+    "diferencia_votos": 35543,
+    "votos_blancos_pct": 0.6,
+    "votos_nulos_pct": 5.93,
+    "total_votos_emitidos": 19487161,
+    "participacion_pct": 68.474
+  },
+  "regiones": [
+    { "region": "Amazonas", "zona": "Selva norte", "keiko": 35.543, "sanchez": 64.457, "ganador": "Sánchez" },
+    { "region": "Áncash", "zona": "Sierra/Costa", "keiko": 43.4, "sanchez": 56.6, "ganador": "Sánchez" },
+    { "region": "Apurímac", "zona": "Sierra sur", "keiko": 18.838, "sanchez": 81.162, "ganador": "Sánchez" },
+    { "region": "Arequipa", "zona": "Sur", "keiko": 36.406, "sanchez": 63.594, "ganador": "Sánchez" },
+    { "region": "Ayacucho", "zona": "Sierra sur", "keiko": 20.683, "sanchez": 79.317, "ganador": "Sánchez" },
+    { "region": "Cajamarca", "zona": "Sierra norte", "keiko": 33.24, "sanchez": 66.76, "ganador": "Sánchez" },
+    { "region": "Callao", "zona": "Costa centro", "keiko": 65.606, "sanchez": 34.394, "ganador": "Keiko" },
+    { "region": "Cusco", "zona": "Sierra sur", "keiko": 21.869, "sanchez": 78.131, "ganador": "Sánchez" },
+    { "region": "Huancavelica", "zona": "Sierra sur", "keiko": 18.598, "sanchez": 81.402, "ganador": "Sánchez" },
+    { "region": "Huánuco", "zona": "Sierra centro", "keiko": 35.860, "sanchez": 64.140, "ganador": "Sánchez" },
+    { "region": "Ica", "zona": "Costa sur", "keiko": 51.911, "sanchez": 48.089, "ganador": "Keiko" },
+    { "region": "Junín", "zona": "Sierra centro", "keiko": 45.069, "sanchez": 54.931, "ganador": "Sánchez" },
+    { "region": "La Libertad", "zona": "Costa norte", "keiko": 57.524, "sanchez": 42.476, "ganador": "Keiko" },
+    { "region": "Lambayeque", "zona": "Costa norte", "keiko": 58.848, "sanchez": 41.152, "ganador": "Keiko" },
+    { "region": "Lima Metropolitana", "zona": "Lima", "keiko": 63.55, "sanchez": 36.45, "ganador": "Keiko" },
+    { "region": "Lima Provincias", "zona": "Lima", "keiko": null, "sanchez": null, "ganador": "Sánchez (tendencia)", "nota": "Dato porcentual no disponible en esta extracción; ONPE la reporta con tendencia a favor de Sánchez." },
+    { "region": "Loreto", "zona": "Selva", "keiko": 53.002, "sanchez": 46.998, "ganador": "Keiko" },
+    { "region": "Madre de Dios", "zona": "Selva sur", "keiko": 30.794, "sanchez": 69.206, "ganador": "Sánchez" },
+    { "region": "Moquegua", "zona": "Sur", "keiko": 27.431, "sanchez": 72.569, "ganador": "Sánchez" },
+    { "region": "Pasco", "zona": "Sierra centro", "keiko": 39.236, "sanchez": 60.764, "ganador": "Sánchez" },
+    { "region": "Piura", "zona": "Costa norte", "keiko": 56.975, "sanchez": 43.025, "ganador": "Keiko" },
+    { "region": "Puno", "zona": "Altiplano", "keiko": 13.578, "sanchez": 86.422, "ganador": "Sánchez" },
+    { "region": "San Martín", "zona": "Selva", "keiko": 45.376, "sanchez": 54.624, "ganador": "Sánchez" },
+    { "region": "Tacna", "zona": "Sur", "keiko": 28.635, "sanchez": 71.365, "ganador": "Sánchez" },
+    { "region": "Tumbes", "zona": "Costa norte", "keiko": 64.339, "sanchez": 35.661, "ganador": "Keiko" },
+    { "region": "Ucayali", "zona": "Selva", "keiko": 52.54, "sanchez": 47.46, "ganador": "Keiko" }
+  ],
+  "extranjero": {
+    "total": { "keiko_votos": 184621, "keiko_pct": 63.396, "sanchez_votos": 106697, "sanchez_pct": 36.604, "diferencia": 77924 },
+    "continentes": [
+      { "continente": "América", "keiko_votos": 115584, "sanchez_votos": 57744, "keiko_pct": 66.69, "sanchez_pct": 33.31 },
+      { "continente": "Europa", "keiko_votos": 59726, "sanchez_votos": 47226, "keiko_pct": 55.84, "sanchez_pct": 44.16 },
+      { "continente": "Asia", "keiko_votos": 7974, "sanchez_votos": 976, "keiko_pct": 89.095, "sanchez_pct": 10.905 }
+    ]
+  },
+  "proyeccion": {
+    "metodo": "Estimación a partir del cómputo al 99.08%, asumiendo que el ~0.92% de actas pendientes y los votos impugnados/extranjeros restantes mantienen una distribución cercana a la observada (lead estable y en leve crecimiento entre 99.03% y 99.08%).",
+    "keiko_pct_estimado": 50.09,
+    "keiko_ic95": [50.02, 50.16],
+    "sanchez_pct_estimado": 49.91,
+    "sanchez_ic95": [49.84, 49.98],
+    "margen_votos_estimado": [30000, 50000],
+    "probabilidad_keiko": 0.97,
+    "estado": "Tendencia favorable a Keiko Fujimori. NO es resultado oficial: ONPE/JNE aún no proclaman ganador y restan actas e impugnaciones por resolver."
+  }
+}
