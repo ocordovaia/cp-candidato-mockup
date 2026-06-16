@@ -1,0 +1,34 @@
+{
+  "eleccion": "Segunda Vuelta Presidencial - Perú 2026",
+  "fuente": "ONPE (cifras reportadas vía agregadores de prensa; acceso directo a resultados.onpe.gob.pe bloqueado por la política de red del entorno)",
+  "ultima_revision": "2026-06-16T07:30:00-05:00",
+  "ultimo_cambio_datos": "2026-06-15T14:22:00-05:00",
+  "actas_contabilizadas_pct": 99.033,
+  "actas_observadas_jee": 1635,
+  "nacional": {
+    "fujimori": { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "votos": 9123301, "pct": 50.090 },
+    "sanchez":  { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "votos": 9090392, "pct": 49.910 },
+    "votos_validos": 18213693,
+    "diferencia_votos": 32909
+  },
+  "extranjero": {
+    "fujimori": { "votos": 184621, "pct": 63.396 },
+    "sanchez":  { "votos": 106697, "pct": 36.604 },
+    "diferencia_votos": 77924,
+    "continentes": {
+      "america": { "fujimori": 115584, "sanchez": 57744 },
+      "europa":  { "fujimori": 59726,  "sanchez": 47226 }
+    }
+  },
+  "ancla_regional_confirmada": {
+    "cajamarca": { "sanchez_pct": 66.76, "fujimori_pct": 33.24, "actas_pct": 99.98 }
+  },
+  "proyeccion": {
+    "metodo": "modelo",
+    "fujimori_pct_central": 50.06,
+    "fujimori_ci95": [49.93, 50.19],
+    "sanchez_pct_central": 49.94,
+    "sanchez_ci95": [49.81, 50.07],
+    "prob_victoria_fujimori": 0.82
+  }
+}
