@@ -1,0 +1,38 @@
+{
+  "_comment": "Snapshot used by the scheduled routine to detect new ONPE data. If onpe_actas_pct and votes are unchanged from a prior run, skip the dashboard update.",
+  "election": "Peru 2026 - Segunda Vuelta Presidencial",
+  "candidates": {
+    "fujimori": { "party": "Fuerza Popular", "pct": 50.090, "votes": 9123301 },
+    "sanchez":  { "party": "Juntos por el Perú", "pct": 49.910, "votes": 9090392 }
+  },
+  "national": {
+    "onpe_actas_contabilizadas_pct": 99.03,
+    "onpe_actas_procesadas_pct": 100.0,
+    "actas_en_jee": 997,
+    "diferencia_votos": 32909,
+    "lider": "fujimori"
+  },
+  "extranjero": {
+    "as_of": "2026-06-11",
+    "fujimori": { "pct": 63.396, "votes": 184621 },
+    "sanchez":  { "pct": 36.604, "votes": 106697 },
+    "por_continente": {
+      "America": { "fujimori": 115380, "sanchez": 57475 },
+      "Europa":  { "fujimori": 59726,  "sanchez": 47226 },
+      "Asia":    { "fujimori": 7974,   "sanchez": 976 },
+      "Africa":  { "fujimori": 30,     "sanchez": 20 }
+    }
+  },
+  "proyeccion": {
+    "ganador_central": "fujimori",
+    "margen_central_votos": 30000,
+    "ic95_votos": [5000, 55000],
+    "prob_fujimori": 0.82,
+    "prob_recuento_jee": 0.10,
+    "prob_sanchez": 0.08
+  },
+  "regiones": { "ganadas_sanchez": 17, "ganadas_fujimori": 8, "total": 25 },
+  "data_as_of": "2026-06-15",
+  "last_onpe_change_detected": "2026-06-15",
+  "dashboard_generated": "2026-06-16"
+}
