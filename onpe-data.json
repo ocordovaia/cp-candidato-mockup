@@ -1,0 +1,29 @@
+{
+  "fuente": "ONPE - Resultados oficiales Segunda Vuelta Elecciones Generales 2026",
+  "ultimo_cambio_onpe": "2026-06-15T22:05:00-05:00",
+  "actualizado_dashboard": "2026-06-16T03:20:00-05:00",
+  "actas_procesadas_pct": 99.019,
+  "actas_total": 92766,
+  "actas_en_transito": 970,
+  "nacional": {
+    "fujimori": { "votos": 9112912, "pct": 50.077 },
+    "sanchez": { "votos": 9084786, "pct": 49.923 },
+    "diferencia_votos": 28126,
+    "total_emitidos": 19399319,
+    "validos": 18197698,
+    "blancos": 116396,
+    "blancos_pct": 0.60,
+    "nulos": 1150380,
+    "nulos_pct": 5.93
+  },
+  "extranjero": {
+    "fujimori": { "votos": 184621, "pct": 63.396 },
+    "sanchez": { "votos": 106697, "pct": 36.604 },
+    "continentes": {
+      "America":  { "fujimori": 115584, "sanchez": 57744 },
+      "Europa":   { "fujimori": 59726,  "sanchez": 47226 },
+      "Asia_OM":  { "fujimori": 7974,   "sanchez": 976 }
+    }
+  },
+  "nota": "Snapshot usado por la rutina programada para detectar nuevos datos (compara actas_procesadas_pct + ultimo_cambio_onpe)."
+}
