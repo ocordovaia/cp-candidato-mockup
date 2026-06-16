@@ -1,0 +1,52 @@
+{
+  "eleccion": "Segunda Vuelta Presidencial Perú 2026",
+  "fecha_eleccion": "2026-06-07",
+  "fuente": "ONPE - conteo oficial (segundavuelta.onpe.gob.pe)",
+  "actas_procesadas_pct": 100.0,
+  "actas_contabilizadas_pct": 98.593,
+  "onpe_ultimo_cambio": "2026-06-15T06:50:00-05:00",
+  "dashboard_generado": "2026-06-16T05:12:15Z",
+  "total_votos_emitidos": 19399319,
+  "votos_blancos_pct": 0.6,
+  "votos_nulos_pct": 5.93,
+  "nacional": {
+    "fujimori": { "partido": "Fuerza Popular", "pct": 50.052, "votos_validos": 9075519 },
+    "sanchez": { "partido": "Juntos por el Perú", "pct": 49.948, "votos_validos": 9057024 },
+    "margen_votos": 18478
+  },
+  "extranjero": {
+    "actas_pct": 94.495,
+    "fujimori": { "pct": 63.429, "votos": 184435 },
+    "sanchez": { "pct": 36.571, "votos": 106338 },
+    "por_continente_fujimori_pct": {
+      "Africa": 60.000, "America": 67.750, "Asia": 89.095, "Europa": 55.898, "Oceania": 64.132
+    }
+  },
+  "regiones": [
+    { "region": "Amazonas", "fujimori": 35.543, "sanchez": 64.457 },
+    { "region": "Áncash", "fujimori": 43.400, "sanchez": 56.600 },
+    { "region": "Apurímac", "fujimori": 18.838, "sanchez": 81.162 },
+    { "region": "Arequipa", "fujimori": 36.406, "sanchez": 63.594 },
+    { "region": "Ayacucho", "fujimori": 20.683, "sanchez": 79.317 },
+    { "region": "Cajamarca", "fujimori": 34.000, "sanchez": 66.000, "aprox": true },
+    { "region": "Callao", "fujimori": 65.606, "sanchez": 34.394 },
+    { "region": "Cusco", "fujimori": 21.869, "sanchez": 78.131 },
+    { "region": "Huancavelica", "fujimori": 18.598, "sanchez": 81.402 },
+    { "region": "Huánuco", "fujimori": 35.860, "sanchez": 64.140 },
+    { "region": "Ica", "fujimori": 51.911, "sanchez": 48.089 },
+    { "region": "Junín", "fujimori": 45.069, "sanchez": 54.931 },
+    { "region": "La Libertad", "fujimori": 57.525, "sanchez": 42.475 },
+    { "region": "Lambayeque", "fujimori": 58.848, "sanchez": 41.152 },
+    { "region": "Lima", "fujimori": 63.550, "sanchez": 36.450 },
+    { "region": "Loreto", "fujimori": 53.788, "sanchez": 46.212 },
+    { "region": "Madre de Dios", "fujimori": 30.794, "sanchez": 69.206 },
+    { "region": "Moquegua", "fujimori": 27.431, "sanchez": 72.569 },
+    { "region": "Pasco", "fujimori": 39.236, "sanchez": 60.764 },
+    { "region": "Piura", "fujimori": 56.975, "sanchez": 43.025 },
+    { "region": "Puno", "fujimori": 13.578, "sanchez": 86.422 },
+    { "region": "San Martín", "fujimori": 45.376, "sanchez": 54.624 },
+    { "region": "Tacna", "fujimori": 28.635, "sanchez": 71.365 },
+    { "region": "Tumbes", "fujimori": 64.339, "sanchez": 35.661 },
+    { "region": "Ucayali", "fujimori": 52.545, "sanchez": 47.455 }
+  ]
+}
