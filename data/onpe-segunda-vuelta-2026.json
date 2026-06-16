@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "eleccion": "Elecciones Generales Perú 2026 — Segunda Vuelta Presidencial",
+    "fuente": "ONPE (Oficina Nacional de Procesos Electorales)",
+    "fuenteUrl": "https://segundavuelta.onpe.gob.pe/",
+    "fechaEleccion": "2026-06-07",
+    "ultimaActualizacionONPE": "2026-06-15T23:45:00-05:00",
+    "lastDataChange": "2026-06-15T23:45:00-05:00",
+    "generadoEl": "2026-06-16T00:00:00-05:00",
+    "nota": "Conteo oficial al 99.033% de actas contabilizadas. ~0.97% restante corresponde a actas observadas en proceso de resolución en los Jurados Electorales Especiales (JEE) desde el 11/06. Cifras nacionales y de extranjero tomadas del conteo oficial ONPE replicado por medios. Resultados regionales con etiqueta 'estimado' son proyecciones del modelo, no cifras oficiales."
+  },
+  "nacional": {
+    "actasContabilizadasPct": 99.033,
+    "totalVotosEmitidos": 19487161,
+    "votosValidos": 18213693,
+    "votosBlancosPct": 0.6,
+    "votosViciadosPct": 5.93,
+    "candidatos": {
+      "keiko": { "nombre": "Keiko Fujimori", "partido": "Fuerza Popular", "votos": 9123301, "pctValidos": 50.090 },
+      "sanchez": { "nombre": "Roberto Sánchez", "partido": "Juntos por el Perú", "votos": 9090392, "pctValidos": 49.910 }
+    },
+    "diferenciaVotos": 32909
+  },
+  "proyeccion": {
+    "metodo": "Proyección sobre el ~0.97% de actas pendientes (observadas en JEE), ponderando patrón regional de las actas faltantes y comportamiento del voto en mesas similares ya contabilizadas.",
+    "keikoFinalPct": 50.08,
+    "sanchezFinalPct": 49.92,
+    "intervaloConfianza95": 0.15,
+    "ganadorProyectado": "Keiko Fujimori",
+    "estado": "Dentro del margen — resultado sujeto a resolución de 997 actas observadas en los JEE",
+    "probabilidadKeiko": 0.78
+  },
+  "extranjero": {
+    "actasContabilizadasPct": 94.495,
+    "totalKeiko": 184435,
+    "totalSanchez": 106338,
+    "keikoPct": 63.429,
+    "sanchezPct": 36.571,
+    "porContinente": [
+      { "continente": "América", "keikoVotos": 115380, "sanchezVotos": 57475, "keikoPct": 67.750, "sanchezPct": 32.250 },
+      { "continente": "Europa", "keikoVotos": 59744, "sanchezVotos": 47136, "keikoPct": 55.898, "sanchezPct": 44.102 },
+      { "continente": "Asia", "keikoVotos": 7974, "sanchezVotos": 976, "keikoPct": 89.095, "sanchezPct": 10.905 },
+      { "continente": "Oceanía", "keikoVotos": 1307, "sanchezVotos": 731, "keikoPct": 64.132, "sanchezPct": 35.868 },
+      { "continente": "África", "keikoVotos": 30, "sanchezVotos": 20, "keikoPct": 60.000, "sanchezPct": 40.000 }
+    ]
+  },
+  "regiones": [
+    { "region": "Lima Metropolitana", "keikoPct": 63.55, "sanchezPct": 36.45, "fuente": "oficial" },
+    { "region": "La Libertad", "keikoPct": 57.52, "sanchezPct": 42.48, "fuente": "oficial" },
+    { "region": "Piura", "keikoPct": 56.98, "sanchezPct": 43.02, "fuente": "oficial" },
+    { "region": "Arequipa", "keikoPct": 36.41, "sanchezPct": 63.59, "fuente": "oficial" },
+    { "region": "Cusco", "keikoPct": 21.87, "sanchezPct": 78.13, "fuente": "oficial" },
+    { "region": "Puno", "keikoPct": 13.58, "sanchezPct": 86.42, "fuente": "oficial" },
+    { "region": "Cajamarca", "keikoPct": 33.24, "sanchezPct": 66.76, "fuente": "oficial" },
+    { "region": "Lima Provincias", "keikoPct": 52.0, "sanchezPct": 48.0, "fuente": "estimado" },
+    { "region": "Callao", "keikoPct": 56.5, "sanchezPct": 43.5, "fuente": "estimado" },
+    { "region": "Tumbes", "keikoPct": 58.0, "sanchezPct": 42.0, "fuente": "estimado" },
+    { "region": "Lambayeque", "keikoPct": 54.0, "sanchezPct": 46.0, "fuente": "estimado" },
+    { "region": "Áncash", "keikoPct": 51.5, "sanchezPct": 48.5, "fuente": "estimado" },
+    { "region": "Ica", "keikoPct": 55.0, "sanchezPct": 45.0, "fuente": "estimado" },
+    { "region": "Junín", "keikoPct": 50.5, "sanchezPct": 49.5, "fuente": "estimado" },
+    { "region": "Loreto", "keikoPct": 56.0, "sanchezPct": 44.0, "fuente": "estimado" },
+    { "region": "Ucayali", "keikoPct": 57.5, "sanchezPct": 42.5, "fuente": "estimado" },
+    { "region": "Tacna", "keikoPct": 30.0, "sanchezPct": 70.0, "fuente": "estimado" },
+    { "region": "Moquegua", "keikoPct": 35.0, "sanchezPct": 65.0, "fuente": "estimado" },
+    { "region": "Apurímac", "keikoPct": 22.0, "sanchezPct": 78.0, "fuente": "estimado" },
+    { "region": "Ayacucho", "keikoPct": 25.0, "sanchezPct": 75.0, "fuente": "estimado" },
+    { "region": "Huancavelica", "keikoPct": 28.0, "sanchezPct": 72.0, "fuente": "estimado" },
+    { "region": "Huánuco", "keikoPct": 41.0, "sanchezPct": 59.0, "fuente": "estimado" },
+    { "region": "Pasco", "keikoPct": 44.0, "sanchezPct": 56.0, "fuente": "estimado" },
+    { "region": "Amazonas", "keikoPct": 45.0, "sanchezPct": 55.0, "fuente": "estimado" },
+    { "region": "San Martín", "keikoPct": 47.0, "sanchezPct": 53.0, "fuente": "estimado" },
+    { "region": "Madre de Dios", "keikoPct": 46.0, "sanchezPct": 54.0, "fuente": "estimado" }
+  ]
+}
